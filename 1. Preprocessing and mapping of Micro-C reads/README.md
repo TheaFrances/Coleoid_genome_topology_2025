@@ -54,7 +54,7 @@ perl getSize.pl Lachesis_assembly.fasta > Lachesis_assembly_chrsize.txt
 The merged sample **409493** was mapped using [HiC-Pro].
 
 This step was run using the script [`hicpro_mapping.sh`](hicpro_mapping.sh).  
-The HiC-Pro configuration used is provided in [`config-hicpro_scolopes1_all.txt`](config-hicpro_scolopes1_all.txt).
+The HiC-Pro configuration used is provided in [`config-hicpro_eupsc.txt`](config-hicpro_eupsc.txt).
 
 ## Remove interchromosomal interactions from .allValidPairs file (from the HiC-Pro output)
 
