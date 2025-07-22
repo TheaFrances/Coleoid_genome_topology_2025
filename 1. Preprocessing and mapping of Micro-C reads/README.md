@@ -1,6 +1,6 @@
 # Preprocessing and mapping of Micro-C reads
 
-This folder contains the commands used to process raw Micro-C reads. These steps include trimming, merging libraries for higher coverage, and mapping with HiC-Pro, and generating a Juicebox `.hic` file. *E. scolopes* stage 29 samples are used as examples throughout this folder. Where applicable, *S. officinalis* is used instead, for example, in the downsampling step, which was not necessary for *E. scolopes*.
+This folder contains the commands used to process raw Micro-C reads. These steps include trimming, concatenating libraries for higher coverage, and mapping with HiC-Pro, and generating a Juicebox `.hic` file. *E. scolopes* stage 29 samples are used as examples throughout this folder. Where applicable, *S. officinalis* is used instead, for example, in the downsampling step, which was not necessary for *E. scolopes*.
 
 
 ## Downsampling
@@ -20,21 +20,14 @@ This step is documented for one stage 29 *E. scolopes* sample in the [`trimming.
 
 ## Read concatenation – *E. scolopes*
 
-To increase read depth, we concatenated two trimmed samples:
-
-- **200409**
-- **212493**
-
-These were merged into a single sample referred to as **409493**, which was used for downstream mapping.
-
-The following command was run directly in the terminal:
+To increase read depth, we concatenated two trimmed samples: **200409** and **212493**. These were concatenated into a single sample referred to as **409493**, which was used for downstream mapping, using the following command:
 
 ```bash
 zcat 200409_R1_trimmed.fastq.gz 212493_R1_trimmed.fastq.gz | gzip -c > 409493_R1.fastq.gz
 zcat 200409_R2_trimmed.fastq.gz 212493_R2_trimmed.fastq.gz | gzip -c > 409493_R2.fastq.gz
 ```
 
-Note: The same approach was also applied to Sepia officinalis, where samples 320992 and 327270 were concatenated into sample 992270. However, only the E. scolopes processing is documented here.
+Note: The same approach was also applied to *S. officinalis*, where samples 320992 and 327270 were concatenated into sample 992270. However, only the *E. scolopes* processing is documented here.
 
 ## Create Bowtie2 index of reference genome for HiC-Pro step
 
@@ -51,7 +44,7 @@ perl getSize.pl Lachesis_assembly.fasta > Lachesis_assembly_chrsize.txt
 
 ## Mapping with HiC-Pro
 
-The merged sample **409493** was mapped using [HiC-Pro].
+The concatenated sample **409493** was mapped using [HiC-Pro].
 
 This step was run using the script [`hicpro_mapping.sh`](hicpro_mapping.sh).  
 The HiC-Pro configuration used is provided in [`config-hicpro_eupsc.txt`](config-hicpro_eupsc.txt).
