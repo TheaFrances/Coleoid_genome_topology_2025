@@ -29,14 +29,14 @@ zcat 200409_R2_trimmed.fastq.gz 212493_R2_trimmed.fastq.gz | gzip -c > 409493_R2
 
 Note: The same approach was also applied to *S. officinalis*, where samples 320992 and 327270 were concatenated into sample 992270. However, only the *E. scolopes* processing is documented here.
 
-### Create Bowtie2 index of reference genome for HiC-Pro step
+### Create Bowtie2 index of reference genome for HiC-Pro mapping
 
 ```bash
 module load bowtie
 bowtie2-build Lachesis_assembly.fasta Lachesis_assembly
 ```
 
-### Make file of chromosome sizes for HiC-Pro step.
+### Make file of chromosome sizes for HiC-Pro mapping
 
 This was run using the script [`getSize.pl`](getSize.pl).
 
