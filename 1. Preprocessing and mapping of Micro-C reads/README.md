@@ -1,7 +1,6 @@
 # Preprocessing and mapping of Micro-C reads
 
-This folder contains the commands used to process raw Micro-C reads. These steps include trimming, merging libraries for higher coverage, and mapping with HiC-Pro, and generating a Juicebox `.hic` file. *E. scolopes* stage 29 samples are used as examples throughout this folder.  
-Where applicable, *S. officinalis* is used instead, for example, in the downsampling step, which was not necessary for *E. scolopes*.
+This folder contains the commands used to process raw Micro-C reads. These steps include trimming, merging libraries for higher coverage, and mapping with HiC-Pro, and generating a Juicebox `.hic` file. *E. scolopes* stage 29 samples are used as examples throughout this folder. Where applicable, *S. officinalis* is used instead, for example, in the downsampling step, which was not necessary for *E. scolopes*.
 
 
 ## Downsampling
