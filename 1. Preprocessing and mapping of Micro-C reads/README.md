@@ -1,6 +1,6 @@
-# Processing and Mapping of Micro-C Reads
+# Preprocessing and mapping of Micro-C reads
 
-This folder contains the commands used to process. These steps include trimming, merging libraries for higher coverage, and mapping with HiC-Pro, and generating a Juicebox `.hic` file. *E. scolopes* stage 29 samples are used as examples throughout this folder.  
+This folder contains the commands used to process raw Micro-C reads. These steps include trimming, merging libraries for higher coverage, and mapping with HiC-Pro, and generating a Juicebox `.hic` file. *E. scolopes* stage 29 samples are used as examples throughout this folder.  
 Where applicable, *S. officinalis* is used instead — for example, in the downsampling step, which was not necessary for *E. scolopes*.
 
 
@@ -19,7 +19,7 @@ Reads were trimmed to 50 bp using **Trimmomatic** with the `CROP:50` setting.
 This step is documented for one stage 29 *E. scolopes* sample in the [`trimming.sh`](trimming.sh) script.
 
 
-## Read Concatenation – *E. scolopes*
+## Read concatenation – *E. scolopes*
 
 To increase read depth, we concatenated two trimmed samples:
 
