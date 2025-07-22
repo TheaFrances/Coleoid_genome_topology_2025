@@ -18,7 +18,7 @@ Reads were trimmed to 50 bp using **Trimmomatic** with the `CROP:50` setting.
 This step is documented for one stage 29 *E. scolopes* sample in the [`trimming.sh`](trimming.sh) script.
 
 
-## Read concatenation – *E. scolopes*
+## Read concatenation
 
 To increase read depth, we concatenated two trimmed samples: **200409** and **212493**. These were concatenated into a single sample referred to as **409493**, which was used for downstream mapping, using the following command:
 
@@ -36,7 +36,8 @@ module load bowtie
 bowtie2-build Lachesis_assembly.fasta Lachesis_assembly
 ```
 
-## Make file of chromosome sizes for HiC-Pro step. The script getSize.pl is included in this folder
+## Make file of chromosome sizes for HiC-Pro step. 
+The script getSize.pl is included in this folder
 
 ```bash
 perl getSize.pl Lachesis_assembly.fasta > Lachesis_assembly_chrsize.txt
