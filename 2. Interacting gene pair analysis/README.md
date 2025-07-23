@@ -60,17 +60,16 @@ This command was repeated for *S. officinalis* at 100kb resolution and *O. bimac
 
 ### Check for orthologous genes
 
-The script [`check_orthos_dump.py`](check_orthos_dump.py) was used to assess whether gene pairs in bin interactions have orthologs in other species:
+The script [`check_orthos_dump.py`](check_orthos_dump.py) was then used to assess whether gene pairs in bin interactions have orthologs in other species. The species whose orthologs appear in the first column of the ortholog file (and whose abbreviation appears first in the filename) must correspond to the species from which the interaction matrix was generated.
 
 ```bash
 python3 check_orthos_dump.py EUPgeneOBI.txt 409493_intrachrom_allchrs_KR_100000.dumped.hic_all_genes_int_freq.txt
 ```
-Where the file EUPgeneOBI.txt is a file with *E. scolopes* genes in the first column, and their *O. bimaculoides* orthologs in the second column.  The species whose orthologs appear in the first column of the ortholog file must correspond to the species from which the interaction matrix was generated.
 
 Example output:
 
 ```bash
-Number of reciprocal best hit orthologs for EUP and OBI = 12002
+Number of reciprocal best hit orthologs for EUP and OBI = 12002 #Where EUP is *E. scolopes* and OBI is *O. bimaculoides*
 Number of EUP interactions with at least one ortholog in OBI = 1569457 #Note this file likely contains duplicate entries that have not yet been removed. As such, the reported number is not biologically meaningful at this stage
 Output written to: 409493_intrachrom_allchrs_KR_100000.dumped.hic_all_genes_int_freq_OBIorthos.txt
 ```
