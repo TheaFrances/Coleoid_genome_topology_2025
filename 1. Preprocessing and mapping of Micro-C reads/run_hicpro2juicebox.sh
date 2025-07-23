@@ -9,7 +9,7 @@
 #SBATCH --time=03-00:00:00
 
 
-echo "Job started:"
+echo "Start"
 date
 
 # Run hicpro2juicebox to convert to .hic with KR normalisation
@@ -18,6 +18,6 @@ date
   -g annotation/Lachesis_assembly_chrsize.txt \
   -j juicer_tools_1.22.01.jar
 
-echo "Job finished:"
+echo "Finish"
 date
 
