@@ -7,7 +7,7 @@
 #SBATCH --time=02:00:00
 #SBATCH --mem=16G
 
-echo "Start trimming"
+echo "start"
 date
 
 module load trimmomatic
@@ -18,6 +18,6 @@ trimmomatic PE \
   R2_trimmed.fastq.gz R2_unpaired.fastq.gz \
   CROP:50
 
-echo "Trimming finished"
+echo "Finish"
 date
 
