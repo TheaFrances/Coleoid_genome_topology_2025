@@ -203,10 +203,6 @@ Even though duplicate gene pairs may have different multiple different interacti
 
 ```bash
 awk '!seen[$0]++' 409493_intrachrom_allchrs_KR_100000_eupsc_octbi_genom_dist_sorted_merged.txt > 409493_intrachrom_allchrs_KR_100000_eupsc_octbi_genom_dist_sorted_merged_rm_dups.txt
-# Example output:
-# Number of S. officinalis distances: 410,738
-# Number of S. officinalis gene pairs on different chromosomes not written to outfile: 244,02
-# Output file written to: 409493_intrachrom_allchrs_KR_100000_eupsc_sepof_dists_no_dups.txt
 ```
 
 ### Add ***S. officinalis*** genomic distances to the merged file
@@ -215,6 +211,11 @@ Again, this could be done seperately and with a simpler script than the one used
 
 ```bash
 python3 add_sof_dists.py sepof.bed 409493_intrachrom_allchrs_KR_100000_eupsc_octbi_genom_dist_sorted_merged_rm_dups.txt
+# Example output:
+# Number of S. officinalis distances: 410,738
+# Number of S. officinalis gene pairs on different chromosomes not written to outfile: 244,02
+# Output file written to: 409493_intrachrom_allchrs_KR_100000_eupsc_sepof_dists_no_dups.txt
+
 ```
 
 
