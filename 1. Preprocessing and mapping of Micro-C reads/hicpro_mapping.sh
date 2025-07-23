@@ -17,8 +17,8 @@ module load python3/3.10.8
 module load conda
 conda activate hicpro-3.1.0
 
-HiC-Pro -i input_dir \
-        -o hicpro_output_dir \
+HiC-Pro -i 409493 \
+        -o 409493_hicpro_output \
         -c config-hicpro_eupsc.txt
 
 echo finish
