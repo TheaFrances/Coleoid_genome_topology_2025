@@ -1,4 +1,4 @@
-# Classify different interacting gene pair categories, where gene pairs with 10 or more normalised read pairs as classified as interacting.
+# Classify different interacting gene pair categories, where gene pairs with an interaction frequency of 10 or more (normalised mapped reads) classified as interacting.
 # Then plot boxplots of genomic distance between gene pairs in E. scolopes across interaction categories and colour by P. maximus chromosome status.
 # Test for significant differences between distances for different P. maximus chromosome categories per interaction status using a pairwise Wilcoxon test with BH correction.
 # Then plot barplots and stacked percentage barplots for the number of gene pairs each interaction category and P. maximus status.
@@ -18,17 +18,17 @@ eupsc_100k_obi_50k_pecten_chr <- read.delim("409493_intrachrom_allchrs_KR_100000
 head(eupsc_100k_obi_50k_pecten_chr)
 dim(eupsc_100k_obi_50k_pecten_chr)
 
-#Reading the output of eup_vs_obi_genom_dist_form.py  script -Based on E. scolopes interactions at 100 kb ----
+# Reading the output of eup_vs_obi_genom_dist_form.py  script -Based on E. scolopes interactions at 100 kb ----
 eup_100k_obi_dist  <- read.delim("409493_intrachrom_allchrs_KR_100000_eupsc_octbi_genom_dist_sorted_merged_rm_dups.txt")
 
 head(eup_100k_obi_dist)
 
-#Merge datasets----
+# Merge datasets----
 interactions_pecten_chr_genom_dist <- merge(eup_100k_obi_dist, eupsc_100k_obi_50k_pecten_chr, by=c(1))
 head(interactions_pecten_chr_genom_dist)
 dim(interactions_pecten_chr_genom_dist)
 
-#Add column of interaction status based on your given threshold----
+# Add column of interaction status based on your given threshold----
 interactions_pecten_chr_genom_dist <- interactions_pecten_chr_genom_dist %>%
   mutate(
     Interaction_status = case_when(
@@ -39,7 +39,7 @@ interactions_pecten_chr_genom_dist <- interactions_pecten_chr_genom_dist %>%
     )
   )
 
-#Some checks----
+# Some checks----
 # Count rows with defined conditions
 rows_with_conditions <- interactions_pecten_chr_genom_dist %>%
   filter(!is.na(Interaction_status)) %>%
@@ -61,7 +61,7 @@ interactions_pecten_chr_genom_dist <- interactions_pecten_chr_genom_dist %>%
 # View the updated dataframe
 head(interactions_pecten_chr_genom_dist)
 
-# Average interaction frequencies for duplicate interaction frequencies in each category. This will unbias results caused by longer genes, but doing it for each category keeps cases of genes that may be on TAD borders etc.----
+# Average interaction frequencies for duplicate interaction frequencies in each interaction category. This should unbias results caused by longer genes, but doing it per category keeps cases of genes that may be e.g. on TAD borders (partially interacting).----
 pec_dists_ave <- interactions_pecten_chr_genom_dist %>%
   group_by(Orth_pair_based_on_eupsc_interaction_matrix, Interaction_status, 
            Pecten_chromosome_status,
@@ -75,7 +75,7 @@ pec_dists_ave <- interactions_pecten_chr_genom_dist %>%
 
 head(pec_dists_ave)
 
-# Save merged file for future analyses----
+# Save file with interaction statuses and averaged interaction frequencies for future analyses----
 write.table(pec_dists_ave, "409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.txt", append = FALSE, sep = "\t", dec = ".", col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 # Interaction subsets
