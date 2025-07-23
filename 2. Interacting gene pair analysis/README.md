@@ -52,7 +52,7 @@ Count number of genes left in file:
 wc -l  sanger_sepof_eup_prot_best_hits_rm_scaff.gff
 24431  sanger_sepof_eup_prot_best_hits_rm_scaff.gff # There are 24431 E. scolopes proteins that mapped to the S. officinalis genome that we considered orthologs.
 ```
-The resulting **sanger_sepof_eup_prot_best_hits_rm_scaff.gff** file was then converted into bed format, with chromosome names being from the *S. officinalis* genome file, and gene names being identical to the *E. scolopes* gene names that were the best hits mapped to the *S. officinalis* genome. 
+The resulting **sanger_sepof_eup_prot_best_hits_rm_scaff.gff** file was then converted into bed format into a file called **sepof.bed**, with chromosome names being from the *S. officinalis* genome file, and gene names being identical to the *E. scolopes* gene names that were the best hits mapped to the *S. officinalis* genome. 
 
 Orthology files were also made for downstream analyses: **EUPgeneSOF.txt**, **SOFgeneEUP.txt**, although gene names were identical in both columns, the files were formatted this way to be compatible with downstream scripts.
 
@@ -156,13 +156,60 @@ This step can be done without an ortholog file, since *S. officinalis* orthologs
 ```bash
 python3 add_sof_interactions.py 992270_intrachrom_allchrs_KR_100000.dumped.hic_all_genes_int_freq.txt \
       409493_intrachrom_allchrs_KR_100000_EUPvs50000_OBI_int_freq_PEC_synteny_by_topology.txt
-# Output: 
+# Example output: 
 # S. officinalis interactions: 4,355,779
 # Gene pairs with S. officinalis orthologs: 1,056,029
 # Appended interactions: 4,772,919
 # Output written to: 409493_intrachrom_allchrs_KR_100000_EUPvs50000_OBI_int_freq_PEC_chr_status_with_sof.txt
 ```
 **Note**:  Swapped-bin duplicates were already removed from the second input file and so will not appear in the output of this command. However, the resulting file still contains duplicate gene pairs with differing interaction frequencies, along with all possible gene pair combinations across the three species. This contributes to the large file size. These redundancies will be resolved in later steps.
+
+## Get genomic distance between gene pairs for each species
+
+
+### Get genomic distances for ***E. scolopes*** and ***O. bimaculoides*** orthologous interactions
+
+The script [`eup_vs_obi_genom_dist_form.py `](eup_vs_obi_genom_dist_form.py) was used to generate one output file per species, each containing the genomic distances between gene pairs in that species.
+
+```bash
+python3 eup_vs_obi_genom_dist_form.py eupsc.bed octbi.bed 409493_intrachrom_allchrs_KR_100000.dumped.hic_all_genes_int_freq_OBIorthos_form.txt
+# Example output:
+# Number of E. scolopes interactions with genomic distances: 2,507828
+# Number of O. bimaculoides interactions with genomic distances: 1,307932
+# Output written to: 409493_intrachrom_allchrs_KR_100000_eupsc_genom_dist_orthos_sorted.txt and 409493_intrachrom_allchrs_KR_100000_octbi_genom_dist_orthos_sorted.txt
+```
+### Sort ***E. scolopes*** and ***O. bimaculoides*** genomic distance output files and add headers
+
+```bash
+(echo -e "Orth_pair_based_on_eupsc_interaction_matrix\tGenomic_distance_eupsc_bp"; tail -n +2 eupsc_genom_dist_orthos.txt | sort) > 409493_intrachrom_allchrs_KR_100000_eupsc_genom_dist_orthos_sorted.txt
+(echo -e "Orth_pair_based_on_eupsc_interaction_matrix\tGenomic_distance_octbi_bp"; tail -n +2 octbi_genom_dist_orthos.txt | sort) > 409493_intrachrom_allchrs_KR_100000_octbi_genom_dist_orthos_sorted.txt
+```
+
+### Merge sorted genomic distance files
+
+```bash
+join -t $'\t' -1 1 -2 1 eupsc_genom_dist_orthos_sorted.txt octbi_genom_dist_orthos_sorted.txt > 409493_intrachrom_allchrs_KR_100000_eupsc_octbi_genom_dist_sorted_merged.txt
+```
+
+### Remove duplicate gene pairs
+
+Even though duplicate gene pairs may have different multiple different interaction frequencies, they all have the same genomic distance, so these can be removed from genomic distance files.
+
+```bash
+awk '!seen[$0]++' 409493_intrachrom_allchrs_KR_100000_eupsc_octbi_genom_dist_sorted_merged.txt > 409493_intrachrom_allchrs_KR_100000_eupsc_octbi_genom_dist_sorted_merged_rm_dups.txt
+# Example output:
+# Number of S. officinalis distances =  410,738
+# Number of S. officinalis gene pairs on different chromosomes not written to outfile =  244,02
+# Output file written to: 409493_intrachrom_allchrs_KR_100000_eupsc_sepof_dists_no_dups.txt
+```
+
+### Add ***S. officinalis*** genomic distances to the merged file
+
+Again, this could be done seperately and with a simpler script ([`add_sof_dists.py`](add_sof_dists.py)) than the one use for *O. bimculoides* above, because the *S. officinalis* orthologous gene names are the same as *E. scolopes*. The input file already has duplicates removed from the previous command so it is not necessary to do again. 
+
+```bash
+python3 add_sof_dists.py sepof.bed 409493_intrachrom_allchrs_KR_100000_eupsc_octbi_genom_dist_sorted_merged_rm_dups.txt
+```
 
 
 
