@@ -10,7 +10,13 @@
 	- [Merge interaction frequency values across species](#merge-interaction-frequency-values-across-species)
 	- [Classify interactions by *P. maximus* chromosome status](#classify-interactions-by-pecten-maximus-chromosome-status)
 	- [Add interaction frequency from *S. officinalis*](#add-interaction-frequency-from-s-officinalis)
-
+- [Get genomic distance between gene pairs for each species](#Get-genomic-distance-between-gene-pairs-for-each-species)
+	- [Get genomic distances for *E. scolopes* and *O. bimaculoides* orthologous interactions](#get-genomic-distances-for-e-scolopes-and-o-bimaculoides-orthologous-interactions)
+	- [Sort *E. scolopes* and *O. bimaculoides* genomic distance output files and add headers](#sort-e-scolopes-and-o-bimaculoides-genomic-distance-output-files-and-add-headers)
+	- [Merge sorted genomic distance files](#merge-sorted-genomic-distance-files)
+	- [Remove duplicate gene pairs](#remove-duplicate-gene-pairs)
+	- [Add *S. officinalis* genomic distances to the merged file](#add-s-officinalis-genomic-distances-to-the-merged-file)
+	
 This folder documents the interacting gene pair analyses. Includes gene-bin mapping, and ortholog checks between species. All steps are demonstrated using the *E. scolopes* sample 403493 at 100 kb resolution. Additional commands are provided for the species *S. officinalis* to classify orthologous genes and for downstream analyses, as no gene annotation was available for the *S. officinalis* reference genome at the time of writing this paper.
 
 ## Prepare files of gene pairs, orthologs, and extract their chromosomal distribution in **P. maximus**
@@ -198,8 +204,8 @@ Even though duplicate gene pairs may have different multiple different interacti
 ```bash
 awk '!seen[$0]++' 409493_intrachrom_allchrs_KR_100000_eupsc_octbi_genom_dist_sorted_merged.txt > 409493_intrachrom_allchrs_KR_100000_eupsc_octbi_genom_dist_sorted_merged_rm_dups.txt
 # Example output:
-# Number of S. officinalis distances =  410,738
-# Number of S. officinalis gene pairs on different chromosomes not written to outfile =  244,02
+# Number of S. officinalis distances: 410,738
+# Number of S. officinalis gene pairs on different chromosomes not written to outfile: 244,02
 # Output file written to: 409493_intrachrom_allchrs_KR_100000_eupsc_sepof_dists_no_dups.txt
 ```
 
