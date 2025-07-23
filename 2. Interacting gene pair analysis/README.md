@@ -79,14 +79,10 @@ The script [`check_orthos_dump.py`](check_orthos_dump.py) was then used to asses
 
 ```bash
 python3 check_orthos_dump.py EUPgeneOBI.txt 409493_intrachrom_allchrs_KR_100000.dumped.hic_all_genes_int_freq.txt
-```
-
-Example output:
-
-```bash
-Number of reciprocal best hit orthologs for EUP and OBI = 12002 # Where EUP is E. scolopes and OBI is O. bimaculoides
-Number of EUP interactions with at least one ortholog in OBI = 1569457 # Note this file likely contains duplicate entries that have not yet been removed. As such, the reported number is not biologically meaningful at this stage
-Output written to: 409493_intrachrom_allchrs_KR_100000.dumped.hic_all_genes_int_freq_OBIorthos.txt
+# Example output:
+# Number of reciprocal best hit orthologs for EUP and OBI = 12002 # Where EUP is E. scolopes and OBI is O. bimaculoides
+# Number of EUP interactions with at least one ortholog in OBI = 1569457 # Note this file likely contains duplicate entries that have not yet been removed. As such, the reported number is not biologically meaningful at this stage
+# Output written to: 409493_intrachrom_allchrs_KR_100000.dumped.hic_all_genes_int_freq_OBIorthos.txt
 ```
 
 Commands were repeated for the following species comparisons:
@@ -112,12 +108,14 @@ Before comparing interaction frequencies across species, run the [`format_intera
 ```bash
 # Format E. scolopes (100 kb) with O. bimaculoides orthologs
 python3 format_interactions.py 409493_intrachrom_allchrs_KR_100000.dumped.hic_all_genes_int_freq_OBIorthos.txt
-# Example output: 2,565,954 interactions
+# Example output: 
+# 2,565,954 interactions
 # Output written to: 409493_intrachrom_allchrs_KR_100000.dumped.hic_all_genes_int_freq_OBIorthos_form.txt
 
 # Format E. scolopes (100 kb) with P. maximus orthologs
 python3 format_interactions.py 409493_intrachrom_allchrs_KR_100000.dumped.hic_all_genes_int_freq_PECorthos.txt
-# Example output: 2,426,852 interactions
+# Example output: 
+# 2,426,852 interactions
 # Output written to: 409493_intrachrom_allchrs_KR_100000.dumped.hic_all_genes_int_freq_PECorthos_form.txt
 ```
 
@@ -129,9 +127,12 @@ Use [`eup_vs_obi_int_freq_form.py`](eup_vs_obi_int_freq_form.py) to merge gene-p
 python3 eup_vs_obi_int_freq_form.py 409493_intrachrom_allchrs_KR_100000.dumped.hic_all_genes_int_freq_OBIorthos_form.txt \
                                     212489_intrachrom_allchrs_KR_50000.dumped.hic_all_genes_int_freq_EUPorthos_form.txt \
                                     EUPgeneOBI.txt
-# Output: 3,185,945 matched gene-pair interactions
+# Example output: 
+# 3,185,945 matched gene-pair interactions
 # Output written to: 409493_intrachrom_allchrs_KR_100000_EUPvs50000_OBI_int_freq.txt
 ```
+**Note:** the resulting file still contains duplicate gene pairs with differing interaction frequencies, along with all possible gene pair combinations across the two species. This contributes to the large number of interactions and file size. These redundancies will be resolved in later steps.
+
 
 ### Classify interactions by ***Pecten maximus*** chromosome status
 
@@ -142,9 +143,9 @@ This step uses [`syteny_by_topology_interactions.py`](syteny_by_topology_interac
 ```bash
 python3 synteny_by_topology_interactions.py EUPgenePEC.txt pmax2.bed \
        409493_intrachrom_allchrs_KR_100000_EUPvs50000_OBI_int_freq.txt
-# Output: 
-# Same P. maximus chromosomes: 917,352
-# Different P. maximus chromosomes: 1,493,463
+# Example output: 
+# Interactions on same P. maximus chromosomes: 917,352
+# Interactions on different P. maximus chromosomes: 1,493,463
 # Output written to: 409493_intrachrom_allchrs_KR_100000_EUPvs50000_OBI_int_freq_PEC_MACIs_by_topology.txt
 ```
 
@@ -161,7 +162,7 @@ python3 add_sof_interactions.py 992270_intrachrom_allchrs_KR_100000.dumped.hic_a
 # Appended interactions: 4,772,919
 # Output written to: 409493_intrachrom_allchrs_KR_100000_EUPvs50000_OBI_int_freq_PEC_chr_status_with_sof.txt
 ```
-*Note*:  Swapped-bin duplicates were already removed from the second input file and so will not appear in the output of this command. However, the resulting file still contains duplicate gene pairs with differing interaction frequencies, along with all possible gene pair combinations across the three species. This contributes to the large file size. These redundancies will be resolved in later steps.
+**Note**:  Swapped-bin duplicates were already removed from the second input file and so will not appear in the output of this command. However, the resulting file still contains duplicate gene pairs with differing interaction frequencies, along with all possible gene pair combinations across the three species. This contributes to the large file size. These redundancies will be resolved in later steps.
 
 
 
