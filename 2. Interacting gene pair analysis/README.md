@@ -2,7 +2,7 @@
 
 ## Contents
 
-- [Prepare files of gene pairs, orthologs, and extract their chromosomal distribution in *P. maximus*](#prepare-files-of-gene-pairs-orthologs-and-extract-their-chromosomal-distribution-in-p-maximus)
+- [Prepare files of gene pairs, orthologs, and extract their ancestral chromosome status](#prepare-files-of-gene-pairs-orthologs-and-extract-their-ancestral-chromosome-status)
   - [Make orthology annotation file for *S. officinalis*](#make-orthology-annotation-file-for-s-officinalis)
   - [Match gene pairs to bins](#match-gene-pairs-to-bins)
   - [Check for orthologous genes](#check-for-orthologous-genes)
@@ -29,7 +29,7 @@
 
 This folder documents the interacting gene pair analyses. Initital steps are demonstrated using only the *E. scolopes* (stage 29) sample 403493 at 100 kb resolution, which is later merged with the *O. bimaculoides* interaction matrix at 50 kb resolution and the *S. officinalis* interaction matrix at 100 kb resolution. Boxplots of genomic distances are also only demonstrated using *E. scolopes* distance, but based on this merged interaction matrix. For the species *S. officinalis*, no gene annotation was available for the *S. officinalis* reference genome at the time of writing this paper. Therefore, additional commands are provided at the start to classify orthologous genes as well as for some downstream analyses.
 
-## Prepare files of gene pairs, orthologs, and extract their chromosomal distribution in **P. maximus**
+## Prepare files of gene pairs, orthologs, and extract their ancestral chromosome status
 
 **Notes on input files of orthologous genes:**
 
