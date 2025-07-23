@@ -1,6 +1,10 @@
 # Interacting gene pair analysis
 
-This folder documents the interacting gene pair analyses. Includes gene-bin mapping, and ortholog checks between species. All steps are demonstrated using the *E. scolopes* sample 403493 at 100 kb resolution. Additional commands are provided at the start for *S. officinalis* to classify orthologous genes in this species, as no gene annotation was available for the *S. officinalis* reference genome at the time of writing this paper.
+<pre markdown> ## Contents - [Prepare files of gene pairs, orthologs, and extract their chromosomal distribution in *P. maximus*](#prepare-files-of-gene-pairs-orthologs-and-extract-their-chromosomal-distribution-in-p-maximus) - [Make orthology annotation file for *S. officinalis*](#make-orthology-annotation-file-for-s-officinalis) - [Match gene pairs to bins](#match-gene-pairs-to-bins) - [Check for orthologous genes](#check-for-orthologous-genes) - [Format interaction matrix files](#format-interaction-matrix-files) - [Merge interaction frequency values across species](#merge-interaction-frequency-values-across-species) - [Classify interactions by *Pecten maximus* chromosome status](#classify-interactions-by-pecten-maximus-chromosome-status) - [Add interaction frequency from *S. officinalis*](#add-interaction-frequency-from-s-officinalis) - [Classify by Schmidbauer et al. (2022) synteny](#classify-by-schmidbauer-et-al-2022-synteny) </pre>
+
+This folder documents the interacting gene pair analyses. Includes gene-bin mapping, and ortholog checks between species. All steps are demonstrated using the *E. scolopes* sample 403493 at 100 kb resolution. Additional commands are provided for the species *S. officinalis* to classify orthologous genes and for downstream analyses, as no gene annotation was available for the *S. officinalis* reference genome at the time of writing this paper.
+
+## Prepare files of gene pairs, orthologs, and extract their chromosomal distribution in **P. maximus**
 
 **Notes on input files of orthologous genes:**
 
@@ -87,4 +91,68 @@ Commands were repeated for the following species comparisons:
 *O. bimaculoides* ↔ *P. maximus*
 
 Note: Since *S. officinalis*–*E. scolopes* orthologs were named identically to *E. scolopes* genes, it was not necessary to extract ortholog names separately in this case. *S. officinalis* interactions were added downstream.
+
+
+### Format interaction matrix files
+
+Before comparing interaction frequencies across species, run the [`format_interactions.py`](format_interactions.py) script to:
+- Remove NA values
+- Standardise pairwise gene interactions so that each row contains exactly one pair of interacting genes (i.e. some bins contain many genes, so all pairwise combinations are extracted)
+- Remove swapped-bin duplicates (i.e. if bin1-bin2 and bin2-bin1 are both present, keep only one)
+
+```bash
+# Format E. scolopes (100 kb) with O. bimaculoides orthologs
+python3 format_interactions.py 409493_intrachrom_allchrs_KR_100000.dumped.hic_all_genes_int_freq_OBIorthos.txt
+# Example output: 2,565,954 interactions
+# Output written to: 409493_intrachrom_allchrs_KR_100000.dumped.hic_all_genes_int_freq_OBIorthos_form.txt
+
+# Format E. scolopes (100 kb) with P. maximus orthologs
+python3 format_interactions.py 409493_intrachrom_allchrs_KR_100000.dumped.hic_all_genes_int_freq_PECorthos.txt
+# Example output: 2,426,852 interactions
+# Output written to: 409493_intrachrom_allchrs_KR_100000.dumped.hic_all_genes_int_freq_PECorthos_form.txt
+```
+
+### Merge interaction frequency values across species
+
+Use [`eup_vs_obi_int_freq_form.py`](eup_vs_obi_int_freq_form.py) to merge gene-pair interaction frequencies between species, based on *E. scolopes* bin pairs at 100 kb resolution, handling cases where gene order differs between files.
+
+```bash
+python3 eup_vs_obi_int_freq_form.py 409493_intrachrom_allchrs_KR_100000.dumped.hic_all_genes_int_freq_OBIorthos_form.txt \
+                                    212489_intrachrom_allchrs_KR_50000.dumped.hic_all_genes_int_freq_EUPorthos_form.txt \
+                                    EUPgeneOBI.txt
+# Output: 3,185,945 matched gene-pair interactions
+# Output written to: 409493_intrachrom_allchrs_KR_100000_EUPvs50000_OBI_int_freq.txt
+```
+
+### Classify interactions by ***Pecten maximus*** chromosome status
+
+This step uses [`syteny_by_topology_interactions.py`](syteny_by_topology_interactions.py) to classify gene-pair interactions as:
+- Gene pair on the same *P. maximus* chromosome
+- Gene pair on different *P. maximus* chromosomes
+
+```bash
+python3 synteny_by_topology_interactions.py EUPgenePEC.txt pmax2.bed \
+       409493_intrachrom_allchrs_KR_100000_EUPvs50000_OBI_int_freq.txt
+# Output: 
+# Same P. maximus chromosomes: 917,352
+# Different P. maximus chromosomes: 1,493,463
+# Output written to: 409493_intrachrom_allchrs_KR_100000_EUPvs50000_OBI_int_freq_PEC_MACIs_by_topology.txt
+```
+
+### Add interaction frequency from *S. officinalis*
+
+This step can be done without an ortholog file, since *S. officinalis* orthologs were named the same as *E. scolopes* genes. The script [`add_sof_interactions.py`](add_sof_interactions.py) was used.
+
+```bash
+python3 add_sof_interactions.py 992270_intrachrom_allchrs_KR_100000.dumped.hic_all_genes_int_freq.txt \
+      409493_intrachrom_allchrs_KR_100000_EUPvs50000_OBI_int_freq_PEC_synteny_by_topology.txt
+# Output: 
+# S. officinalis interactions: 4,355,779
+# Gene pairs with S. officinalis orthologs: 1,056,029
+# Appended interactions: 4,772,919
+# Output written to: 409493_intrachrom_allchrs_KR_100000_EUPvs50000_OBI_int_freq_PEC_chr_status_with_sof.txt
+```
+*Note*:  Swapped-bin duplicates were already removed from the second input file and so will not appear in the output of this command. However, the resulting file still contains duplicate gene pairs with differing interaction frequencies, along with all possible gene pair combinations across the three species. This contributes to the large file size. These redundancies will be resolved in later steps.
+
+
 
