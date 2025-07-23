@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=index_map_eupsc_prots_to_sepof
 #SBATCH --cpus-per-task=24
-#SBATCH --mem=50GB
+#SBATCH --mem=40GB
 #SBATCH --mail-type=ALL
 #SBATCH --output=log/%x-%j.out
 #SBATCH --error=log/%x-%j.err

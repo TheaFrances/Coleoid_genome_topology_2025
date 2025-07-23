@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*- 
-#This is Oleg's edited script which is much faster than mine. 
-#NOTE:
-#This script takes all genes within the start and end of both interacting bins. As well as genes overlapping the bins (including spanning the whole bin).
-#For dumped matrices made from .hic files.
-#E.g. python3 check_gene_in_bin_dump_all_fast.py /Users/users/Desktop/Micro-C/topology_strength_analysis/eupsc.bed  409493_intrachrom_allchrs_KR_50000.sorted.dumped.hic.txt 50000
+#This script extracts all genes within the start and end of both interacting bins. As well as genes overlapping the bins (including spanning the whole bin).
+#For dumped matrices made from Juicebox .hic files.
 #==============================================================================
 import argparse
 import sys
@@ -72,7 +69,7 @@ def main():
                     #print("both ok")
                     outfile.write(f"{chrom}\t{bin_start1}\t{','.join(genes_bin[bin_chr1])}\t{bin_start2}\t{','.join(genes_bin[bin_chr2])}\t{int_freq}\n")
         
-        print("Output written to", outname)
+        print("Output written to:", outname)
         
 if __name__ == "__main__":
     main()
