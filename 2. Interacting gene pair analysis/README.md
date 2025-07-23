@@ -211,7 +211,7 @@ awk '!seen[$0]++' 409493_intrachrom_allchrs_KR_100000_eupsc_octbi_genom_dist_sor
 
 ### Add ***S. officinalis*** genomic distances to the merged file
 
-Again, this could be done seperately and with a simpler script than the one used for *O. bimculoides* above, because the *S. officinalis* orthologous gene names are the same as *E. scolopes*. So, the script ([`add_sof_dists.py`](add_sof_dists.py)) was used to add *S. officinalis* distances.The input file already has duplicates removed from the previous command so it is not necessary to do again. 
+Again, this could be done seperately and with a simpler script than the one used for *O. bimculoides* above, because the *S. officinalis* orthologous gene names are the same as *E. scolopes*. So, the script [`add_sof_dists.py`](add_sof_dists.py) was used to add *S. officinalis* distances.The input file already has duplicates removed from the previous command so it is not necessary to do again. 
 
 ```bash
 python3 add_sof_dists.py sepof.bed 409493_intrachrom_allchrs_KR_100000_eupsc_octbi_genom_dist_sorted_merged_rm_dups.txt
