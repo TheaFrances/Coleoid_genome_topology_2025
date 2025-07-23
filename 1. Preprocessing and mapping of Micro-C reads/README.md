@@ -140,7 +140,7 @@ do
 done
 ```
 
-### Remove lines from dumped matrices that start with "WARN" and concatenate all matrices of single chromosomes into one file. 
+### Remove lines from dumped matrices that start with "WARN" and concatenate all matrices of single chromosomes into one file
 
 A chromosome identifier is added to the first column of each line to track the source.
 
