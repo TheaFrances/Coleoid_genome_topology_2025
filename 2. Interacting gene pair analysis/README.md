@@ -78,5 +78,5 @@ Commands were repeated for the following species comparisons:
 
 *O. bimaculoides* ↔ *P. maximus*
 
-Since *S. officinalis* genes were named the same as *E. scolopes* genes, it was not necessary to extract orthologs here.
+Since *S. officinalis E. scolopes* orthologs were named the same as *E. scolopes* genes, it was not necessary to extract orthologs here.
 
