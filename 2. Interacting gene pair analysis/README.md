@@ -2,21 +2,25 @@
 
 ## Contents
 
-- [Prepare files of gene pairs, orthologs, and extract their chromosomal distribution in *P. maximus*](#prepare-files-of-gene-pairs-orthologs-and-extract-their-chromosomal-distribution-in-p-maximus)
-	- [Make orthology annotation file for *S. officinalis*](#make-orthology-annotation-file-for-s-officinalis)
-	- [Match gene pairs to bins](#match-gene-pairs-to-bins)
-	- [Check for orthologous genes](#check-for-orthologous-genes)
-	- [Format interaction matrix files](#format-interaction-matrix-files)
-	- [Merge interaction frequency values across species](#merge-interaction-frequency-values-across-species)
-	- [Classify interactions by their *P. maximus* chromosome status](#classify-interactions-by-their-P.-maximus-chromosome-status)
-	- [Add interaction frequency from *S. officinalis*](#add-interaction-frequency-from-s-officinalis)
+## Contents
+
+- [Prepare files of gene pairs, orthologs, and extract their chromosomal distribution in P maximus](#prepare-files-of-gene-pairs-orthologs-and-extract-their-chromosomal-distribution-in-p-maximus)
+  - [Make orthology annotation file for S officinalis](#make-orthology-annotation-file-for-s-officinalis)
+  - [Match gene pairs to bins](#match-gene-pairs-to-bins)
+  - [Check for orthologous genes](#check-for-orthologous-genes)
+  - [Format interaction matrix files](#format-interaction-matrix-files)
+  - [Merge interaction frequency values across species](#merge-interaction-frequency-values-across-species)
+  - [Classify interactions by their P maximus chromosome status](#classify-interactions-by-their-p-maximus-chromosome-status)
+  - [Add interaction frequency from S officinalis](#add-interaction-frequency-from-s-officinalis)
 - [Get genomic distance between gene pairs for each species](#get-genomic-distance-between-gene-pairs-for-each-species)
-	- [Get genomic distances for *E. scolopes* and *O. bimaculoides* orthologous interactions](#get-genomic-distances-for-e-scolopes-and-o-bimaculoides-orthologous-interactions)
-	- [Sort *E. scolopes* and *O. bimaculoides* genomic distance output files and add headers](#sort-e-scolopes-and-o-bimaculoides-genomic-distance-output-files-and-add-headers)
-	- [Merge sorted genomic distance files](#merge-sorted-genomic-distance-files)
-	- [Remove duplicate gene pairs](#remove-duplicate-gene-pairs)
-	- [Add *S. officinalis* genomic distances to the merged file](#add-s-officinalis-genomic-distances-to-the-merged-file)
-- [Plot scatterplots to define the interaction frequency threshold](#plot-scatterplots-to-define-the-interaction-frequency-threshold)
+  - [Get genomic distances for E scolopes and O bimaculoides orthologous interactions](#get-genomic-distances-for-e-scolopes-and-o-bimaculoides-orthologous-interactions)
+  - [Sort E scolopes and O bimaculoides genomic distance output files and add headers](#sort-e-scolopes-and-o-bimaculoides-genomic-distance-output-files-and-add-headers)
+  - [Merge sorted genomic distance files](#merge-sorted-genomic-distance-files)
+  - [Remove duplicate gene pairs](#remove-duplicate-gene-pairs)
+  - [Add S officinalis genomic distances to the merged file](#add-s-officinalis-genomic-distances-to-the-merged-file)
+- [Plot scatterplots to define the interaction frequency threshold for interacting gene pairs](#plot-scatterplots-to-define-the-interaction-frequency-threshold-for-interacting-gene-pairs)
+- [Plot boxplots of genomic distances between gene pairs across interaction categories, coloured by P maximus chromosomal origin](#plot-boxplots-of-genomic-distances-between-gene-pairs-across-interaction-categories-coloured-by-p-maximus-chromosomal-origin)
+
 
 This folder documents the interacting gene pair analyses. Initital steps are demonstrated using only the *E. scolopes* (stage 29) sample 403493 at 100 kb resolution, which is later merged with the *O. bimaculoides* interaction matrix at 50 kb resolution and the *S. officinalis* interaction matrix at 100 kb resolution. Boxplots of genomic distances are also only demonstrated using *E. scolopes* distance, but based on this merged interaction matrix. For the species *S. officinalis*, no gene annotation was available for the *S. officinalis* reference genome at the time of writing this paper. Therefore, additional commands are provided at the start to classify orthologous genes as well as for some downstream analyses.
 
