@@ -19,7 +19,7 @@
   - [Remove duplicate gene pairs](#remove-duplicate-gene-pairs)
   - [Add S officinalis genomic distances to the merged file](#add-s-officinalis-genomic-distances-to-the-merged-file)
 - [Plot scatterplots to define the interaction frequency threshold for interacting gene pairs](#plot-scatterplots-to-define-the-interaction-frequency-threshold-for-interacting-gene-pairs)
-- [Plot boxplots of genomic distances between gene pairs across interaction categories, coloured by P maximus chromosomal origin](#plot-boxplots-of-genomic-distances-between-gene-pairs)
+- [Plot boxplots of genomic distances between gene pairs](#plot-boxplots-of-genomic-distances-between-gene-pairs)
 
 
 This folder documents the interacting gene pair analyses. Initital steps are demonstrated using only the *E. scolopes* (stage 29) sample 403493 at 100 kb resolution, which is later merged with the *O. bimaculoides* interaction matrix at 50 kb resolution and the *S. officinalis* interaction matrix at 100 kb resolution. Boxplots of genomic distances are also only demonstrated using *E. scolopes* distance, but based on this merged interaction matrix. For the species *S. officinalis*, no gene annotation was available for the *S. officinalis* reference genome at the time of writing this paper. Therefore, additional commands are provided at the start to classify orthologous genes as well as for some downstream analyses.
