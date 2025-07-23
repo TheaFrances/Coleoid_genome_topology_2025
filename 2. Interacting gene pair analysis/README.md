@@ -1,8 +1,10 @@
 # Interacting gene pair analysis
 
-This folder documents the interacting gene pair analyses. Includes  gene-bin mapping, and ortholog checks between species. All steps are demonstrated using the *E. scolopes* sample 403493 at 100 kb resolution. Additional commands are provided for *S. officinalis* to complete orthology comparisons as at the time of writing this paper, no gene annotation was available for *S. officinalis*.
+This folder documents the interacting gene pair analyses. Includes gene-bin mapping, and ortholog checks between species. All steps are demonstrated using the *E. scolopes* sample 403493 at 100 kb resolution. Additional commands are provided at the start for *S. officinalis* to complete orthology comparisons, since at the time of writing this paper, no gene annotation was available for the *S. officinalis* reference genome.
 
-Note: orthology was assessed using reciprocal best BLAST hits for *E. scolopes*, *O. bimaculoides* and *P. maximus* using BLASTP 2.16.0 with the parameters -evalue 1E-2 -max_target_seqs 1 -outfmt 6.
+
+**Note on input files of orthologous genes:**
+BLASTP (v2.16.0) was run with the parameters: -evalue 1E-2 -max_target_seqs 1 -outfmt 6 to classify reciprocal best hit orthologs between *E. scolopes*, O. bimaculoides* and *P. maximus*. *E. scolopes* was used as the reference (database) in all cases, except for identifying *P. maximus* orthologs of *O. bimaculoides* genes, where *O. bimaculoides* was used as the database. Text files of 1:1 orthologs in both directions were generated: **EUPgeneOBI.txt**, **EUPgenePEC.txt**, **OBIgeneEUP.txt**, and **OBIgenePEC.txt**, where: EUP = *E. scolopes*, OBI = *O. bimaculoides*, PEC = *P. maximus*. If the species abbreviation appears first in the filename, this indicates that the species' genes are in the first column of the file. For example, in EUPgeneOBI.txt, *E. scolopes* genes are in the first column, and their best reciprocal orthologs in *O. bimaculoides* are in the second. This directionality matters in the downstream analyses.
 
 ### Make orthology annotation file for *S. officinalis*
 
@@ -32,12 +34,14 @@ Count number of genes left in file
 wc -l  sanger_sepof_eup_prot_best_hits_rm_scaff.gff
 24431  sanger_sepof_eup_prot_best_hits_rm_scaff.gff #There are 24431 *. scolopes* proteins that mapped to the *S. officinalis* genome orthologs that we considered orthologs.
 ```
-The resulting **sanger_sepof_eup_prot_best_hits_rm_scaff.gff** file was then converted into bed format, with chromosome names being from the *S. officinalis* genome file, and gene names being identical to the *E. scolopes* gene names that were the best hits mapped to the *S. officinalis* genome.
+The resulting **sanger_sepof_eup_prot_best_hits_rm_scaff.gff** file was then converted into bed format, with chromosome names being from the *S. officinalis* genome file, and gene names being identical to the *E. scolopes* gene names that were the best hits mapped to the *S. officinalis* genome. 
+
+Orthology files were also made for downstream analyses: **EUPgeneSOF.txt**, **SOFgeneEUP.txt**, although gene names were identical in both columns, the files were formatted this way to be compatible with downstream scripts.
 
 
 ### Match gene pairs to bins
 
-We used a custom Python script  [`check_gene_in_bin_dump_all.py`](check_gene_in_bin_dump_all.py) to identify gene pairs in bins pairs in dumped matrices. This script includes any genes overlapping with the bins in the output files:
+We used a custom Python script  [`check_gene_in_bin_dump_all.py`](check_gene_in_bin_dump_all.py) to identify gene pairs in bins pairs in dumped matrices. The input file is **409493_intrachrom_allchrs_KR_100000.dumped.hic.txt** is from the end of step 1 which creates a dumped matrix of all intrachromosomal interactions. This script includes any genes overlapping with the bins in the output files:
 
 ```bash
 python3 check_gene_in_bin_dump_all.py eupsc.bed 409493_intrachrom_allchrs_KR_100000.dumped.hic.txt 100000
@@ -51,22 +55,22 @@ Output written to: 409493_intrachrom_allchrs_KR_100000.dumped.hic_all_genes_int_
 
 This command was repeated for *S. officinalis* at 100kb resolution and *O. bimaculoides* at 50 kb resolution.
 
-3. Check for orthologous genes
+### Check for orthologous genes
 
 The script [`check_orthos_dump.py`](check_orthos_dump.py) was used to assess whether gene pairs in bin interactions have orthologs in other species:
 
 ```bash
 python3 check_orthos_dump.py EUPgeneOBI.txt 409493_intrachrom_allchrs_KR_100000.dumped.hic_all_genes_int_freq.txt
 ```
-Where the file EUPgeneOBI.txt is a file with *E. scolopes* genes in the first column, and their *O. bimaculoides* orthologs in the second column.
+Where the file EUPgeneOBI.txt is a file with *E. scolopes* genes in the first column, and their *O. bimaculoides* orthologs in the second column.  The species whose orthologs appear in the first column of the ortholog file must correspond to the species from which the interaction matrix was generated.
 
 Example output:
 
 ```bash
 Number of reciprocal best hit orthologs for EUP and OBI = 12002
 Number of EUP interactions with at least one ortholog in OBI = 1569457 #Note this file likely contains duplicate entries that have not yet been removed. As such, the reported number is not biologically meaningful at this stage
+Output written to: 409493_intrachrom_allchrs_KR_100000.dumped.hic_all_genes_int_freq_OBIorthos.txt
 ```
-Where EUP indicates *E. scolopes* orthologs and *O. bimaculoides* orthologs, as the input ortholog file is named.
 
 Commands were repeated for the following species comparisons:
 
@@ -78,5 +82,5 @@ Commands were repeated for the following species comparisons:
 
 *O. bimaculoides* ↔ *P. maximus*
 
-Since *S. officinalis E. scolopes* orthologs were named the same as *E. scolopes* genes, it was not necessary to extract orthologs here.
+Note: Since *S. officinalis*–*E. scolopes* orthologs were named identically to *E. scolopes* genes, it was not necessary to extract ortholog names separately in this case. *S. officinalis* interactions were added downstream.
 

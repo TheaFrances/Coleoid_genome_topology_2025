@@ -96,6 +96,7 @@ def main():
                         ortho_int_list.append(int_freq)
 
     print("Number of", species1, "interactions with at least one ortholog in", species2, "(NOTE there are duplicates in this file) =", len(ortho_int_list))
-
+    print("Output written to:", outname)
+    
 if __name__ == "__main__":
     main()
