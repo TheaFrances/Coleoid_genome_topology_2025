@@ -1,3 +1,5 @@
+#This script outputs repeat files for each interaction category with columns representing repeat type, total repeat count, total genomic distance between gene pairs, normalised repeat count.
+
 # Load necessary libraries
 library(readr)
 library(dplyr)
@@ -6,7 +8,7 @@ library(optparse)
 # Command-line argument parsing
 option_list = list(
   make_option(c("-i", "--input"), type="character", default=NULL, help="Input file path", metavar="character"),
-  make_option(c("-d", "--dists"), type="character", default=NULL, help="Eup dists file path (must be the file that has NA removed and is already averaged for multiple interaction categories per gene pair)", metavar="character"),
+  make_option(c("-d", "--dists"), type="character", default=NULL, help="E. scolopes dists file path (must be the file that has NA removed and is already averaged for multiple interaction categories per gene pair)", metavar="character"),
   make_option(c("-o", "--output"), type="character", default="top_repeats_output", help="Output file name prefix [default= %default]", metavar="character")
 )
 

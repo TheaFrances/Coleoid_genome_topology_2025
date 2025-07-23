@@ -25,6 +25,7 @@
   - [Convert RepeatMasker output to GFF and then BED format](#convert-repeatmasker-output-to-gff-and-then-bed-format)
   - [Run bedtools intersect with a processing script](#run-bedtools-intersect-with-a-processing-script)
   - [Get repeat content summaries per interaction category](#get-repeat-content-summaries-per-interaction-category)
+  - [Get barplots of simple repeats and RND elements](#Get-barplots-of-simple-repeats-and-RND-elements)
 
 
 This folder documents the interacting gene pair analyses. Initital steps are demonstrated using only the *E. scolopes* (stage 29) sample 403493 at 100 kb resolution, which is later merged with the *O. bimaculoides* interaction matrix at 50 kb resolution and the *S. officinalis* interaction matrix at 100 kb resolution. Boxplots of genomic distances are also only demonstrated using *E. scolopes* distance, but based on this merged interaction matrix. For the species *S. officinalis*, no gene annotation was available for the *S. officinalis* reference genome at the time of writing this paper. Therefore, additional commands are provided at the start to classify orthologous genes as well as for some downstream analyses.
@@ -301,7 +302,11 @@ Intersect intergenic gene pair regions with repeats and pipe the output to the P
 
 ### Get repeat content summaries per interaction category
 
-Use [`get_all_norm_repeats_per_category_summed.R`](get_all_norm_repeats_per_category_summed.R) script to summarise repeat content by repeat type and interaction category. This step is documented in the script [`get_all_repeats_sum_norm.sh`](get_all_repeats_sum_norm.sh). This outputs files for each interaction category with the columns: Repeat type, Total repeat count,  Total genomic distance  Normalised count.
+Use [`get_all_norm_repeats_per_category_summed.R`](get_all_norm_repeats_per_category_summed.R) script to summarise repeat content by repeat type and interaction category. This step is documented in the script [`get_all_repeats_sum_norm.sh`](get_all_repeats_sum_norm.sh). This outputs files for each interaction category with columns representing repeat type, total repeat count, total genomic distance between gene pairs, normalised repeat count. Normalised repeat count is calculated as the number of repeats divided by the number of basepairs between gene pairs.
+
+### Get barplots of simple repeats and RND elements
+
+This was done using the R script [`barplot_simple_vs_rnd_repeats.R`](barplot_simple_vs_rnd_repeats.R). Barplots and Wilcoxon rank sum significance tests were done to compare the proportion of simple repeats RND elements per interaction status. [TBC, need to check wilcox is correct, should be quoted in paper and tile if so].
 
 
 
