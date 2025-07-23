@@ -30,7 +30,7 @@ Count number of genes left in file
 
 ```bash
 wc -l  sanger_sepof_eup_prot_best_hits_rm_scaff.gff
-24431  sanger_sepof_eup_prot_best_hits_rm_scaff.gff #There are 24431 orthologs
+24431  sanger_sepof_eup_prot_best_hits_rm_scaff.gff #There are 24431 *. scolopes* proteins that mapped to the *S. officinalis* genome orthologs that we considered orthologs.
 ```
 The resulting **sanger_sepof_eup_prot_best_hits_rm_scaff.gff** file was then converted into bed format, with chromosome names being from the *S. officinalis* genome file, and gene names being identical to the *E. scolopes* gene names that were the best hits mapped to the *S. officinalis* genome.
 
@@ -64,19 +64,19 @@ Example output:
 
 ```bash
 Number of reciprocal best hit orthologs for EUP and OBI = 12002
-Number of EUP interactions with at least one ortholog in OBI = 1569457
+Number of EUP interactions with at least one ortholog in OBI = 1569457 #Note this file likely contains duplicate entries that have not yet been removed. As such, the reported number is not biologically meaningful at this stage
 ```
 Where EUP indicates *E. scolopes* orthologs and *O. bimaculoides* orthologs, as the input ortholog file is named.
 
 Commands were repeated for the following species comparisons:
 
-E. scolopes ↔ O. bimaculoides
+*E. scolopes* ↔ *O. bimaculoides*
 
-E. scolopes ↔ Pecten maximus
+*E. scolopes* ↔ *P. maximus*
 
-O. bimaculoides ↔ E. scolopes
+*O. bimaculoides* ↔ *E. scolopes*
 
-O. bimaculoides ↔ P. maximus
+*O. bimaculoides* ↔ *P. maximus*
 
-Since *S. officinalis* orthologs were named the same as E. scolopes orthologs, these ortholog files were created later on??
+Since *S. officinalis* genes were named the same as *E. scolopes* genes, it was not necessary to extract orthologs here.
 
