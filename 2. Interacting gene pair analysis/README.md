@@ -3,9 +3,11 @@
 This folder documents the interacting gene pair analyses. Includes gene-bin mapping, and ortholog checks between species. All steps are demonstrated using the *E. scolopes* sample 403493 at 100 kb resolution. Additional commands are provided at the start for *S. officinalis* to classify orthologous genes in this species, as no gene annotation was available for the *S. officinalis* reference genome at the time of writing this paper.
 
 **Notes on input files of orthologous genes:**
+
 BLASTP (v2.16.0) was run with the parameters: -evalue 1E-2 -max_target_seqs 1 -outfmt 6 to classify reciprocal best hit orthologs between *E. scolopes*, O. bimaculoides* and *P. maximus*. *E. scolopes* was used as the reference (database) in all cases, except for identifying *P. maximus* orthologs of *O. bimaculoides* genes, where *O. bimaculoides* was used as the database. Text files of 1:1 orthologs in both directions were generated: **EUPgeneOBI.txt**, **EUPgenePEC.txt**, **OBIgeneEUP.txt**, and **OBIgenePEC.txt**, where: EUP = *E. scolopes*, OBI = *O. bimaculoides*, PEC = *P. maximus*. If the species abbreviation appears first in the filename, this indicates that the species' genes are in the first column of the file. For example, in EUPgeneOBI.txt, *E. scolopes* genes are in the first column, and their best reciprocal orthologs in *O. bimaculoides* are in the second. This directionality matters in the downstream analyses.
 
-**Note on species bed files**
+**Note on species bed files:**
+
 Species BED files should contain four columns: chromosome, gene start, gene end, and gene name (in that order), with no additional features. 
 Here, **eupsc.bed** is used as an example, corresponding to *E. scolopes*. 
 
