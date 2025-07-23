@@ -35,7 +35,7 @@ Count number of genes left in file:
 
 ```bash
 wc -l  sanger_sepof_eup_prot_best_hits_rm_scaff.gff
-24431  sanger_sepof_eup_prot_best_hits_rm_scaff.gff # There are 24431 E. scolopes proteins that mapped to the S. officinalis genome orthologs that we considered orthologs.
+24431  sanger_sepof_eup_prot_best_hits_rm_scaff.gff # There are 24431 E. scolopes proteins that mapped to the S. officinalis genome that we considered orthologs.
 ```
 The resulting **sanger_sepof_eup_prot_best_hits_rm_scaff.gff** file was then converted into bed format, with chromosome names being from the *S. officinalis* genome file, and gene names being identical to the *E. scolopes* gene names that were the best hits mapped to the *S. officinalis* genome. 
 
@@ -69,7 +69,7 @@ python3 check_orthos_dump.py EUPgeneOBI.txt 409493_intrachrom_allchrs_KR_100000.
 Example output:
 
 ```bash
-Number of reciprocal best hit orthologs for EUP and OBI = 12002 # Where EUP is E. scolopes* and OBI is *O. bimaculoides
+Number of reciprocal best hit orthologs for EUP and OBI = 12002 # Where EUP is E. scolopes and OBI is O. bimaculoides
 Number of EUP interactions with at least one ortholog in OBI = 1569457 # Note this file likely contains duplicate entries that have not yet been removed. As such, the reported number is not biologically meaningful at this stage
 Output written to: 409493_intrachrom_allchrs_KR_100000.dumped.hic_all_genes_int_freq_OBIorthos.txt
 ```
