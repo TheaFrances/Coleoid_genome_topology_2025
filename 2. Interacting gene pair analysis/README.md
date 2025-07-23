@@ -3,13 +3,13 @@
 ## Contents
 
 - [Prepare files of gene pairs, orthologs, and extract their chromosomal distribution in *P. maximus*](#prepare-files-of-gene-pairs-orthologs-and-extract-their-chromosomal-distribution-in-p-maximus)
-- [Make orthology annotation file for *S. officinalis*](#make-orthology-annotation-file-for-s-officinalis)
-- [Match gene pairs to bins](#match-gene-pairs-to-bins)
-- [Check for orthologous genes](#check-for-orthologous-genes)
-- [Format interaction matrix files](#format-interaction-matrix-files)
-- [Merge interaction frequency values across species](#merge-interaction-frequency-values-across-species)
-- [Classify interactions by *P. maximus* chromosome status](#classify-interactions-by-pecten-maximus-chromosome-status)
-- [Add interaction frequency from *S. officinalis*](#add-interaction-frequency-from-s-officinalis)
+	- [Make orthology annotation file for *S. officinalis*](#make-orthology-annotation-file-for-s-officinalis)
+	- [Match gene pairs to bins](#match-gene-pairs-to-bins)
+	- [Check for orthologous genes](#check-for-orthologous-genes)
+	- [Format interaction matrix files](#format-interaction-matrix-files)
+	- [Merge interaction frequency values across species](#merge-interaction-frequency-values-across-species)
+	- [Classify interactions by *P. maximus* chromosome status](#classify-interactions-by-pecten-maximus-chromosome-status)
+	- [Add interaction frequency from *S. officinalis*](#add-interaction-frequency-from-s-officinalis)
 
 This folder documents the interacting gene pair analyses. Includes gene-bin mapping, and ortholog checks between species. All steps are demonstrated using the *E. scolopes* sample 403493 at 100 kb resolution. Additional commands are provided for the species *S. officinalis* to classify orthologous genes and for downstream analyses, as no gene annotation was available for the *S. officinalis* reference genome at the time of writing this paper.
 
