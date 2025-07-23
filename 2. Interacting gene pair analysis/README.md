@@ -4,20 +4,20 @@
 
 ## Contents
 
-- [Prepare files of gene pairs, orthologs, and extract their chromosomal distribution in P maximus](#prepare-files-of-gene-pairs-orthologs-and-extract-their-chromosomal-distribution-in-p-maximus)
-  - [Make orthology annotation file for S officinalis](#make-orthology-annotation-file-for-s-officinalis)
+- [Prepare files of gene pairs, orthologs, and extract their chromosomal distribution in *P. maximus*](#prepare-files-of-gene-pairs-orthologs-and-extract-their-chromosomal-distribution-in-p-maximus)
+  - [Make orthology annotation file for *S. officinalis*](#make-orthology-annotation-file-for-s-officinalis)
   - [Match gene pairs to bins](#match-gene-pairs-to-bins)
   - [Check for orthologous genes](#check-for-orthologous-genes)
   - [Format interaction matrix files](#format-interaction-matrix-files)
   - [Merge interaction frequency values across species](#merge-interaction-frequency-values-across-species)
-  - [Classify interactions by their P maximus chromosome status](#classify-interactions-by-their-p-maximus-chromosome-status)
-  - [Add interaction frequency from S officinalis](#add-interaction-frequency-from-s-officinalis)
+  - [Classify interactions by their P. maximus chromosome status](#classify-interactions-by-their-p-maximus-chromosome-status)
+  - [Add interaction frequency from S/ officinalis](#add-interaction-frequency-from-s-officinalis)
 - [Get genomic distance between gene pairs for each species](#get-genomic-distance-between-gene-pairs-for-each-species)
-  - [Get genomic distances for E scolopes and O bimaculoides orthologous interactions](#get-genomic-distances-for-e-scolopes-and-o-bimaculoides-orthologous-interactions)
+  - [Get genomic distances for E. scolopes and O. bimaculoides orthologous interactions](#get-genomic-distances-for-e-scolopes-and-o-bimaculoides-orthologous-interactions)
   - [Sort E scolopes and O bimaculoides genomic distance output files and add headers](#sort-e-scolopes-and-o-bimaculoides-genomic-distance-output-files-and-add-headers)
   - [Merge sorted genomic distance files](#merge-sorted-genomic-distance-files)
   - [Remove duplicate gene pairs](#remove-duplicate-gene-pairs)
-  - [Add S officinalis genomic distances to the merged file](#add-s-officinalis-genomic-distances-to-the-merged-file)
+  - [Add S. officinalis genomic distances to the merged file](#add-s-officinalis-genomic-distances-to-the-merged-file)
 - [Plot scatterplots to define the interaction frequency threshold for interacting gene pairs](#plot-scatterplots-to-define-the-interaction-frequency-threshold-for-interacting-gene-pairs)
 - [Plot boxplots of genomic distances and barplots summarising interaction and ancestral chromosomal origin categories for gene pairs](#plot-boxplots-of-genomic-distances-and-barplots-summarising-interaction-and-ancestral-chromosomal-origin-categories-for-gene-pairs)
 
