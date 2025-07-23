@@ -1,7 +1,9 @@
+#Plot interaction frequency in E. scolopes and S. officinalis for every gene pair and colour points by different genomic distance categories.
+
 # Clear workspace
 rm(list = ls())
 
-#Load libraries----
+# Load libraries----
 library(ggplot2)
 library(viridis)
 library(MASS)
