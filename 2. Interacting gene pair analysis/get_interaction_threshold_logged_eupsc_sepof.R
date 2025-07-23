@@ -29,7 +29,7 @@ interaction_freq_file <- interaction_freq_file %>%
 
 # Reading the output of eup_vs_obi_genom_dist_form.py  script - formatted version-----
 # Note do not use filtered version with 'interaction categories' because the categories will not necessarily match interaction frequency when you merge (there is often more than one status per gene pair).
-all_dists  <- read.delim("/Users/users/Desktop/Micro-C/topology_strength_analysis/eupsc_100k/409493_intrachrom_allchrs_KR_100000_interaction_freq_file_no_dups.txt")
+all_dists  <- read.delim("/Users/users/Desktop/Micro-C/topology_strength_analysis/eupsc_100k/409493_intrachrom_allchrs_KR_100000_eupsc_octbi_sepof_dists_no_dups.txt")
  head(all_dists)
  head(interaction_freq_file)
  

@@ -45,7 +45,7 @@ def main():
 
     with open(args.orth_distances, "r") as orth_distances:
         next(orth_distances) #Skip header
-        outname = args.orth_distances.split("_octbi")[0] + "_sepof_dists_no_dups.txt"
+        outname = args.orth_distances.split("_octbi")[0] + "_octbi_sepof_dists_no_dups.txt"
         with open(outname, "w") as outfile:
             outfile.write("Orth_pair_based_on_eupsc_interaction_matrix\tGenomic_distance_eupsc_bp\tGenomic_distance_octbi_bp\tGenomic_distance_sepof_bp\n")
             for line in orth_distances:

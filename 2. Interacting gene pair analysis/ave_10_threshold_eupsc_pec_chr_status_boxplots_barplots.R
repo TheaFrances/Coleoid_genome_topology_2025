@@ -19,6 +19,8 @@ head(eupsc_100k_obi_50k_pecten_chr)
 dim(eupsc_100k_obi_50k_pecten_chr)
 
 # Reading the output of eup_vs_obi_genom_dist_form.py  script -Based on E. scolopes interactions at 100 kb ----
+# Note, S. officinalis distance was added later so it is not uploaded here and not in the dataframe saved from this script, but it is not needed for this step or the majority of downstream steps.
+# It is only needed for the S. officinalis genomic distance boxplots. In that case, we inputted the file 409493_intrachrom_allchrs_KR_100000_eupsc_octbi_sepof_dists_no_dups.txt instead.
 eup_100k_obi_dist  <- read.delim("409493_intrachrom_allchrs_KR_100000_eupsc_octbi_genom_dist_sorted_merged_rm_dups.txt")
 
 head(eup_100k_obi_dist)

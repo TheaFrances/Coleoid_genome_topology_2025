@@ -219,7 +219,7 @@ python3 add_sof_dists.py sepof.bed 409493_intrachrom_allchrs_KR_100000_eupsc_oct
 # Example output:
 # Number of S. officinalis distances: 410,738
 # Number of S. officinalis gene pairs on different chromosomes not written to outfile: 244,02
-# Output file written to: 409493_intrachrom_allchrs_KR_100000_eupsc_sepof_dists_no_dups.txt
+# Output file written to: 409493_intrachrom_allchrs_KR_100000_eupsc_octbi_sepof_dists_no_dups.txt
 ```
 ## Plot scatterplots to define the interaction frequency threshold for interacting gene pairs
 
@@ -234,6 +234,100 @@ Next we used the R script [`ave_10_threshold_eupsc_pec_chr_status_boxplots_barpl
 - With the new dataframe, plot boxplots of genomic distances between gene pairs across interaction categories, coloured by *P. maximus* chromosomal origin
 - Then, test for significant differences between distances for different *P. maximus* chromosome categories per interaction status using a pairwise Wilcoxon test with BH correction
 - Finally, plot barplots and stacked percentage barplots for the number of gene pairs each interaction category and *P. maximus* chromosome status group
+
+## Repeat association analyses of interacting gene pairs
+
+This section outlines the steps taken to identify associations between repetitive elements and regions between gene pairs in each species.
+
+### Run RepeatModeler and RepeaMasker [TBC]
+
+Repeats were identified RepeatModeler v.2.0.674 and RepeatMasker v.4.1.875 using default parameters. [TBC]
+
+### Get intergenic start and end positions for gene pairs
+  
+We outputted intergenic start and end positions for gene pairs using the sctipt ['output_intergenic_start_end_and_dist.py'](output_intergenic_start_end_and_dist.py). This script also re-calculates and outputs genomic distance and can be run on any file with the format eupsc_gene1;octbi_gene1, eupsc_gene2;octbi_gene2 in the first column. This script outputs one file per species bedfile inputed.
+
+```bash
+python3 output_intergenic_start_end_and_dist.py eupsc.bed octbi.bed sepof.bed 409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.txt
+# Example output:
+# Number of interactions in eupsc: 59,761  
+# Output file written to: 409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof_eupsc_intergenic_genom_dist.txt  
+# Number of interactions in octbi: 59,761  
+# Output file written to: 409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof_octbi_intergenic_genom_dist.txt  
+# Number of in sepof: 59,761  
+# Output file written to: 409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof_sepof_intergenic_genom_dist.txt
+
+```
+Where 409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.txt is the file outputted from the script the R script [`ave_10_threshold_eupsc_pec_chr_status_boxplots_barplots.R`](ave_10_threshold_eupsc_pec_chr_status_boxplots_barplots.R) used previosuly.
+
+#YOU ARE HERE!!
+### Step 2: Convert output files to BED format
+
+Headers and lines with `NA` values are removed, and the gene pair ID is placed in the last column.
+
+```bash
+tail -n +2 <input_file> | awk '$0 !~ /NA/ {print $1 "\t" $4 "\t" $5 "\t" $2}' | sort | uniq > <output_file>.bed
+```
+
+Example for *E. scolopes*:
+
+```bash
+tail -n +2 409493_..._eupsc_intergenic_genom_dist.txt | awk '$0 !~ /NA/ {print $1 "\t" $4 "\t" $5 "\t" $2}' | sort | uniq > 409493_..._eupsc_intergenic_genom_dist.bed
+```
+
+### Step 3: Convert RepeatMasker output to GFF and then BED format
+
+Repeat GFF files were created from `.out` files using `rmOutToGFF3.pl`, then converted to BED format:
+
+```bash
+awk 'BEGIN{OFS="\t"} { if ($3 == "dispersed_repeat") print $1, $4 - 1, $5, $9 }' repeats_eupsc.gff3 > repeats_eupsc.bed
+```
+
+Use `grep` to exclude GFF headers for *O. bimaculoides* and *S. officinalis* before formatting:
+
+```bash
+grep "dispersed_repeat" sepof_repeats.gff | awk 'BEGIN{OFS="\t"} { print $1, $4 - 1, $5, $9 }' > repeats_sepof.bed
+```
+
+### Step 4: Fix and sort repeat BED files
+
+Sort all BED files (repeat and intergenic) to enable efficient intersection:
+
+```bash
+sort -k1,1 -k2,2n repeats_eupsc.bed > repeats_eupsc_sorted.bed
+sort -k1,1 -k2,2n intergenic_genom_dist.bed > intergenic_genom_dist_sorted.bed
+```
+
+Use chromosome size files with `bedtools sort` if necessary (e.g., for *S. officinalis*):
+
+```bash
+bedtools sort -i repeats_sepof.bed -g sanger_sepof_assembly_chrsize.txt > repeats_sepof_sorted.bed
+```
+
+### Step 5: Run `bedtools intersect` with a processing script
+
+Intersect intergenic gene-pair regions with repeats and pipe the output to a Python script to reduce file size:
+
+```bash
+bedtools intersect -a intergenic_genom_dist_sorted.bed \
+                   -b repeats_eupsc_sorted.bed \
+                   -sorted -wa -wb | \
+python3 bedtools_intersect_to_repeat_score_pipe.py > overlaps_repeats_gene_pairs.txt
+```
+
+This was submitted as a SLURM batch job for each species.
+
+### Step 6: Get repeat content summaries per interaction category
+
+Use `get_all_repeats_sum_norm_*.sh` scripts to summarize repeat content by repeat type and interaction category:
+
+```bash
+# Example: E. scolopes
+sbatch get_all_repeats_sum_norm_eupsc_with_sepof.sh
+```
+
+This calculates repeat counts normalized by total genomic distance for each interaction category.
+
 
 
 
