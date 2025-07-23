@@ -1,5 +1,20 @@
 # Preprocessing and mapping of Micro-C reads
 
+## Contents
+
+- [Downsampling](#downsampling)
+- [Trimming](#trimming)
+- [Read concatenation](#read-concatenation)
+- [Create Bowtie2 index of reference genome for HiC-Pro mapping](#create-bowtie2-index-of-reference-genome-for-hic-pro-mapping)
+- [Make file of chromosome sizes for HiC-Pro mapping](#make-file-of-chromosome-sizes-for-hic-pro-mapping)
+- [Mapping with HiC-Pro](#mapping-with-hic-pro)
+- [Remove interchromosomal interactions from .allValidPairs file](#remove-interchromosomal-interactions-from-allvalidpairs-file)
+- [Remove unplaced scaffolds from .allValidPairs file](#remove-unplaced-scaffolds-from-allvalidpairs-file)
+- [Generate the .hic file and apply KR normalisation](#generate-the-hic-file-and-apply-kr-normalisation)
+- [Dump .hic matrix at 100 kb resolution with KR normalisation](#dump-hic-matrix-at-100-kb-resolution-with-kr-normalisation)
+- [Remove lines from dumped matrices and concatenate into one file](#remove-lines-from-dumped-matrices-and-concatenate-into-one-file)
+
+
 This folder contains the commands used to process raw Micro-C reads. These steps include trimming, concatenating libraries for higher coverage, and mapping with HiC-Pro, and generating a Juicebox `.hic` file. *E. scolopes* stage 29 samples are used as examples throughout this folder. Where applicable, *S. officinalis* is used instead, for example, in the downsampling step, which was not necessary for *E. scolopes*.
 
 
