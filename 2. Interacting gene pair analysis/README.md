@@ -28,7 +28,7 @@ Remove scaffolds:
 grep OZ sanger_sepof_eup_prot_best_hits.gff > sanger_sepof_eup_prot_best_hits_rm_scaff.gff
 ```
 
-Count number of genes left in file
+Count number of genes left in file:
 
 ```bash
 wc -l  sanger_sepof_eup_prot_best_hits_rm_scaff.gff
