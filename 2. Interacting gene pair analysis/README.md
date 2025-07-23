@@ -233,7 +233,7 @@ The interaction frequency threshold for interacting gene pairs was determined by
 
 ## Plot boxplots of genomic distances and barplots summarising interaction and ancestral chromosomal origin categories for gene pairs
 
-Next we used the R script [`ave_10_threshold_eupsc_pec_chr_status_boxplots_barplots.R`](ave_10_threshold_eupsc_pec_chr_status_boxplots_barplots.R) to:
+Next we used the R script [`classify_int_status_plot_boxplots_barplots_by_pec_status.R`](classify_int_status_plot_boxplots_barplots_by_pec_status.R) to:
 - Classify different interacting gene pair categories, where gene pairs with an interaction frequency of 10 or more (normalised mapped reads) were classified as interacting
 - Average interaction frequencies for duplicate gene pairs within each interaction category. This should unbias results caused by longer genes, but doing it per interaction category keeps cases of genes that may be e.g. on TAD borders (partially interacting and non interacting)
 -  Save the resulting dataframe with interaction statuses and averaged interaction frequencies for future analyses (this file is named **409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.txt**)
@@ -264,7 +264,7 @@ python3 output_intergenic_start_end_and_dist.py eupsc.bed octbi.bed sepof.bed 40
 # Output file written to: 409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof_sepof_intergenic_genom_dist.txt
 
 ```
-Where 409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.txt is the file outputted from the script the R script [`ave_10_threshold_eupsc_pec_chr_status_boxplots_barplots.R`](ave_10_threshold_eupsc_pec_chr_status_boxplots_barplots.R) used previosuly.
+Where 409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.txt is the file outputted from the script the R script [`classify_int_status_plot_boxplots_barplots_by_pec_status.R`](classify_int_status_plot_boxplots_barplots_by_pec_status.R) used previosuly.
 
 
 ### Convert output files to BED format and sort
