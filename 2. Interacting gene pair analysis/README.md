@@ -106,7 +106,7 @@ Commands were repeated for the following species comparisons:
 
 *O. bimaculoides* ↔ *P. maximus*
 
-Note: Since *S. officinalis*–*E. scolopes* orthologs were named identically to *E. scolopes* genes, it was not necessary to extract ortholog names separately in this case. *S. officinalis* interactions were added downstream.
+**Note:** Since *S. officinalis*–*E. scolopes* orthologs were named identically to *E. scolopes* genes, it was not necessary to extract ortholog names separately in this case. *S. officinalis* interactions were added downstream.
 
 
 ### Format interaction matrix files
