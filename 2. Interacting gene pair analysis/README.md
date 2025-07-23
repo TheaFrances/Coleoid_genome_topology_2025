@@ -227,7 +227,7 @@ The interaction frequency threshold for interacting gene pairs was determined by
 
 ## Plot boxplots of genomic distances between gene pairs and barplots
 
-Next we used the R script `ave_10_threshold_eupsc_pec_chr_status_boxplots_barplots.R`](ave_10_threshold_eupsc_pec_chr_status_boxplots_barplots.R) to:
+Next we used the R script [`ave_10_threshold_eupsc_pec_chr_status_boxplots_barplots.R`](ave_10_threshold_eupsc_pec_chr_status_boxplots_barplots.R) to:
 - Plot boxplots of genomic distances between gene pairs across interaction categories, coloured by *P. maximus* chromosomal origin.
 - Test for significant differences between distances for different *P. maximus* chromosome categories per interaction status using a pairwise Wilcoxon test with BH correction. 
 - Plot barplots and stacked percentage barplots for the number of gene pairs each interaction category and *P. maximus* chromosome status group.
