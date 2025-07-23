@@ -68,7 +68,7 @@ awk '$2 == $5 && $2 ~ /Lachesis/' 409493_intrachrom.allValidPairs > 409493_intra
 The filtered data was formatted into a Juicebox .hic file and KR normalised using the script [`run_hicpro2juicebox.sh`](run_hicpro2juicebox.sh).
 The `hicpro2juicebox.sh` script was obtained from the [HiC-Pro GitHub repo](https://github.com/nservant/HiC-Pro/blob/master/bin/utils/hicpro2juicebox.sh).
 
-### Dump .hic matrix at 100 kb resolution for downstream analyses
+### Dump .hic matrix at 100 kb resolution with KR normalisation for every chromosome for downstream analyses
 
 ```bash
 #!/bin/bash
@@ -138,8 +138,13 @@ do
     java -jar "$juicer_tools" dump observed KR "$input_file" "$chromosome" "$chromosome" BP "$bin_size" > "$output_file"
     echo "Processed chromosome $chromosome"
 done
+```
 
-#Remove lines that start with WARN and then concatenate dumped matrices of all single chromosome files, putting chromosome number in first column.
+### Remove lines from dumped matrices that start with "WARN" and concatenate all matrices of single chromosomes into one file. 
+
+A chromosome identifier is added to the first column of each line to track the source.
+
+```bash
 
 #!/bin/bash
 
