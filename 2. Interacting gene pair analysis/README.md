@@ -16,7 +16,7 @@
 	- [Merge sorted genomic distance files](#merge-sorted-genomic-distance-files)
 	- [Remove duplicate gene pairs](#remove-duplicate-gene-pairs)
 	- [Add *S. officinalis* genomic distances to the merged file](#add-s-officinalis-genomic-distances-to-the-merged-file)
-	
+
 This folder documents the interacting gene pair analyses. Includes gene-bin mapping, and ortholog checks between species. All steps are demonstrated using the *E. scolopes* sample 403493 at 100 kb resolution. Additional commands are provided for the species *S. officinalis* to classify orthologous genes and for downstream analyses, as no gene annotation was available for the *S. officinalis* reference genome at the time of writing this paper.
 
 ## Prepare files of gene pairs, orthologs, and extract their chromosomal distribution in **P. maximus**
@@ -211,7 +211,7 @@ awk '!seen[$0]++' 409493_intrachrom_allchrs_KR_100000_eupsc_octbi_genom_dist_sor
 
 ### Add ***S. officinalis*** genomic distances to the merged file
 
-Again, this could be done seperately and with a simpler script ([`add_sof_dists.py`](add_sof_dists.py)) than the one use for *O. bimculoides* above, because the *S. officinalis* orthologous gene names are the same as *E. scolopes*. The input file already has duplicates removed from the previous command so it is not necessary to do again. 
+Again, this could be done seperately and with a simpler script than the one use for *O. bimculoides* above, because the *S. officinalis* orthologous gene names are the same as *E. scolopes*. So, the script ([`add_sof_dists.py`](add_sof_dists.py)) was used to add *S. officinalis* distances.The input file already has duplicates removed from the previous command so it is not necessary to do again. 
 
 ```bash
 python3 add_sof_dists.py sepof.bed 409493_intrachrom_allchrs_KR_100000_eupsc_octbi_genom_dist_sorted_merged_rm_dups.txt
