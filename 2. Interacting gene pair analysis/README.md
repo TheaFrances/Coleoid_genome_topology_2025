@@ -80,21 +80,3 @@ O. bimaculoides ↔ P. maximus
 
 Since *S. officinalis* orthologs were named the same as E. scolopes orthologs, these ortholog files were created later on??
 
-Notes
-
-The number of genes in bin interactions scales with genome size and resolution.
-
-E. scolopes genome is roughly half the size of Octopus, justifying the use of different resolutions (e.g., 100kb in EUP ≈ 50kb in OBI).
-
-The full resolution comparison is retained for completeness, but 50kb–25kb comparisons may be the most reliable.
-
-Scripts Referenced
-
-check_gene_in_bin_dump_all.py
-
-check_orthos_dump.py
-
-mahMbh.pl
-
-These are included in this folder or referenced in the scripts/ subdirectory.
-
