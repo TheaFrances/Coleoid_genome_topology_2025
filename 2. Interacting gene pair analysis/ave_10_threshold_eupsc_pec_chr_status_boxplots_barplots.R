@@ -1,26 +1,25 @@
-#Take interacting pairs from each of the categories of that bar plot and plot distances for them with X axis esc and y axis obi (you may have that already) and additionally X axis esc or obi and y axis pecten.
-#Then plot distribution of this using density and box plots.
-#That will help us understand if or how many of e,g. Non interacting in both esc and obi pairs are genomically close in both esc and obi, and how does that compare to pecten
+# Classify different interacting gene pair categories, where gene pairs with 10 or more normalised read pairs as classified as interacting.
+# Then plot boxplots of genomic distance between gene pairs in E. scolopes across interaction categories and colour by P. maximus chromosome status.
+# Test for significant differences between distances for different P. maximus chromosome categories per interaction status using a pairwise Wilcoxon test with BH correction.
+# Then plot barplots and stacked percentage barplots for the number of gene pairs each interaction category and P. maximus status.
 
+# Clear workspace
 rm(list = ls())
 
-#lapply(paste('package:',names(sessionInfo()$otherPkgs),sep=""),detach,character.only=TRUE,unload=TRUE) #. Use if there's an error with ggplot.
-
-#Load libraries---
+#nLoad libraries---
 library(ggplot2)
 library(dplyr)
 library(ggpubr)
 library(tidyr)
 library(tibble)
 
-#Reading the output of synteny_by_topology_interactions.py script - interaction info based E. scolopes interactions 100Kb. Make some subsets of the data for use later. ----
-eupsc_100k_obi_50k_pecten_chr <- read.delim("/Users/users/Desktop/Micro-C/topology_strength_analysis/eupsc_100k/409493_intrachrom_allchrs_KR_100000_EUPvs50000_OBI_int_freq_PEC_chr_status_with_sof.txt")
+# Reading the output of synteny_by_topology_interactions.py script - interaction info based E. scolopes interactions 100 kb ----
+eupsc_100k_obi_50k_pecten_chr <- read.delim("409493_intrachrom_allchrs_KR_100000_EUPvs50000_OBI_int_freq_PEC_chr_status_with_sof.txt")
 head(eupsc_100k_obi_50k_pecten_chr)
 dim(eupsc_100k_obi_50k_pecten_chr)
 
-#Reading the output of eup_vs_obi_genom_dist.py  script - formatted verson- Based on eupsc interactions at 100----
-#Note do not use filtered version with 'interaction categories' because the categories will not necessarily match interaction frequency when you merge (there is often more than one status per gene pair).
-eup_100k_obi_dist  <- read.delim("/Users/users/Desktop/Micro-C/topology_strength_analysis/eupsc_100k/409493_intrachrom_allchrs_KR_100000_eupsc_octbi_genom_dist_sorted_merged_rm_dups.txt")
+#Reading the output of eup_vs_obi_genom_dist_form.py  script -Based on E. scolopes interactions at 100 kb ----
+eup_100k_obi_dist  <- read.delim("409493_intrachrom_allchrs_KR_100000_eupsc_octbi_genom_dist_sorted_merged_rm_dups.txt")
 
 head(eup_100k_obi_dist)
 
@@ -28,17 +27,6 @@ head(eup_100k_obi_dist)
 interactions_pecten_chr_genom_dist <- merge(eup_100k_obi_dist, eupsc_100k_obi_50k_pecten_chr, by=c(1))
 head(interactions_pecten_chr_genom_dist)
 dim(interactions_pecten_chr_genom_dist)
-
-#Below is just a test to check merging/file standardisation----
-interactions_pecten_chr_genom_dist_all <- merge(eup_100k_obi_dist, eupsc_100k_obi_50k_pecten_chr, by=c(1), all.y= TRUE, all.x = TRUE)
-head(interactions_pecten_chr_genom_dist_all) 
-#Note: There should be no NAs in the genom_dist_cats part of the dataframe here. 
-#There is a few - I think because  genomic distance calculations ignore genes within genes, but this is fine. 
-#There will also always be a lot of NAs in the part of the eupsc_100k_obi_50k_pecten_chr dataframe because this dateframe only includes genes with P. max orthologs unlike genom_dist_cats.
-# Find rows in interactions_pecten_chr_genom_dist_all that are different from interactions_pecten_chr_genom_dist
-different_rows <- anti_join(interactions_pecten_chr_genom_dist_all, interactions_pecten_chr_genom_dist)
-# Print the rows that are different
-print(different_rows)
 
 #Add column of interaction status based on your given threshold----
 interactions_pecten_chr_genom_dist <- interactions_pecten_chr_genom_dist %>%
@@ -73,7 +61,7 @@ interactions_pecten_chr_genom_dist <- interactions_pecten_chr_genom_dist %>%
 # View the updated dataframe
 head(interactions_pecten_chr_genom_dist)
 
-#Average interaction frequencies for duplicate interaction frequencies in each category. This will unbias results caused by longer genes, but doing it for each category keeps cases of genes that may be on TAD borders etc.----
+# Average interaction frequencies for duplicate interaction frequencies in each category. This will unbias results caused by longer genes, but doing it for each category keeps cases of genes that may be on TAD borders etc.----
 pec_dists_ave <- interactions_pecten_chr_genom_dist %>%
   group_by(Orth_pair_based_on_eupsc_interaction_matrix, Interaction_status, 
            Pecten_chromosome_status,
@@ -87,8 +75,8 @@ pec_dists_ave <- interactions_pecten_chr_genom_dist %>%
 
 head(pec_dists_ave)
 
-#Save merged file for future analyses----
-write.table(pec_dists_ave, "/Users/users/Desktop/Micro-C/topology_strength_analysis/eupsc_100k/409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.txt", append = FALSE, sep = "\t", dec = ".", col.names = TRUE, row.names = FALSE, quote = FALSE)
+# Save merged file for future analyses----
+write.table(pec_dists_ave, "409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.txt", append = FALSE, sep = "\t", dec = ".", col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 # Interaction subsets
 interaction_types <- c("interacting_all_species", "not_interacting_any_species", "interacting_deca_only", "interacting_octbi_only")
@@ -109,7 +97,7 @@ gene_counts <- pec_dists_ave %>%
 print(gene_counts)
 
 
-#Subset to make different plots, because they don't all fit in the same one
+# Subset to make different plots, because they don't all fit in the same one
 pec_dists_ave_not_int <- subset(pec_dists_ave, subset=(Interaction_status=="not_interacting_any_species" | Interaction_status=="interacting_octbi_only" ))
 pec_dists_ave_int <- subset(pec_dists_ave, subset=(Interaction_status=="interacting_all_species" | Interaction_status=="interacting_deca_only")) 
 
@@ -140,12 +128,12 @@ grouped_boxplot_not_int <- ggplot(pec_dists_ave_not_int, aes(x = Interaction_sta
   coord_cartesian(y = c(0,200000000))
 
 # Save the plot
-ggsave("/Users/users/Desktop/Micro-C/figs_for_paper/Figure3/grouped_box_>=10_pec_chr_status_ave_eupsc_dist_not_int_with_sof.tiff", 
+ggsave("grouped_box_>=10_pec_chr_status_ave_eupsc_dist_not_int_with_sof.tiff", 
        grouped_boxplot_not_int, 
        width = 15, 
        height = 30, 
        units = "in", 
-       dpi = 400)
+       dpi = 300)
 
 
 # Plotting the grouped boxplot
@@ -166,12 +154,12 @@ grouped_boxplot_int <- ggplot(pec_dists_ave_int, aes(x = Interaction_status, y =
   coord_cartesian(y = c(0,7500000))
 
 # Save the plot
-ggsave("/Users/users/Desktop/Micro-C/figs_for_paper/Figure3/grouped_box_>=10_pec_chr_status_ave_eupsc_dist_int_with_sof.tiff", 
+ggsave("grouped_box_>=10_pec_chr_status_ave_eupsc_dist_int_with_sof.tiff", 
        grouped_boxplot_int, 
        width = 15, 
        height = 30, 
        units = "in", 
-       dpi = 400)
+       dpi = 300)
 
 # Perform pairwise Wilcoxon tests and BH correction
 pairwise_results<- lapply(unique(pec_dists_ave$Interaction_status), function(status) {
@@ -195,17 +183,9 @@ pairwise_results<- lapply(unique(pec_dists_ave$Interaction_status), function(sta
 # Combine results into a single data frame
 pairwise_results_df <- bind_rows(pairwise_results)
 
-# Apply multiple testing correction (already done in pairwise.wilcox.test with p.adjust.method = "BH")
-# If you need to adjust p-values manually after collecting results, you can do it as follows:
-
-# Apply BH correction manually, if necessary
-pairwise_results_df <- pairwise_results_df %>%
-  group_by(Interaction_status) %>%
-  mutate(Adjusted_P_Value = p.adjust(P_Value, method = "BH"))
-
 print(pairwise_results_df)
 
-write.table(pairwise_results_df, "/Users/users/Desktop/Micro-C/tables_for_paper/grouped_box/pec_status_eupsc_dist_wilcox.txt", append = FALSE, sep = "\t", dec = ".", col.names = TRUE, row.names = FALSE, quote = FALSE)
+write.table(pairwise_results_df, "pec_status_eupsc_dist_wilcox.txt", append = FALSE, sep = "\t", dec = ".", col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 # Calculate medians for each group
 median_results <- pec_dists_ave%>%
@@ -215,64 +195,8 @@ median_results <- pec_dists_ave%>%
 # Print the medians
 print(median_results)
 
-#Scatterplot of interaction freq octbi vs interaction freq in Eup, with Pec chr status labeled----
-scatter_int_freq <- ggplot(pec_dists_ave, aes(x = Average_interaction_frequency_spp1, y = Average_interaction_frequency_spp2, color = Pecten_chromosome_status)) +
-  geom_point(size=2, alpha = 0.7) +
-  scale_color_manual(values = c("#d62728", "#1f77b4"), labels = c(
-    expression(paste("Same ", italic(" P. maximus"), " chromosome (n = 18997)")),
-    expression(paste("Different ", italic("P. maximus"), "chromosome (n = 40764)")))) +
-  ylab(expression(paste("Interaction frequency in ", italic("O. bimaculoides"), " (50Kb resolution)"))) +
-  xlab(expression(paste(italic("E. scolopes "), "interaction frequency (100Kb resolution)"))) +
-  theme(axis.title.x = element_text(size = 15.5), axis.title.y = element_text(size = 15.5), legend.text = element_text(hjust = 0, size = 12), legend.title = element_blank()) +
-  ylim(0,550) + xlim(0,550)
 
-ggsave("/Users/users/Desktop/Micro-C/figs_for_paper/Supplementary/fig3_other/scatter_int_freq_chr_status.tiff", scatter_int_freq, dpi = 400, width = 12, height = 8, units = "in")
-
-
-#Logged
-pec_dists_ave_logged <- pec_dists_ave %>%
-  mutate(across(starts_with("Average_interaction_frequency"), ~ log(as.numeric(as.character(.)) + 0.01), .names = "log_{.col}"))
-
-scatter_int_freq_logged <- ggplot(pec_dists_ave_logged, aes(x = log_Average_interaction_frequency_spp1, y = log_Average_interaction_frequency_spp2, color = Pecten_chromosome_status)) +
-  geom_point(size=2, alpha = 0.7) +
-  scale_color_manual(values = c("#d62728", "#1f77b4"), labels = c(
-    expression(paste("Same ", italic(" P. maximus"), " chromosome (n = 18997)")),
-    expression(paste("Different ", italic("P. maximus"), "chromosome (n = 40764)")))) +
-  ylab(expression(paste("Interaction frequency in ", italic("O. bimaculoides"), " (50Kb resolution, logged)"))) +
-  xlab(expression(paste(italic("E. scolopes "), "interaction frequency (100Kb resolution, logged)"))) +
-  theme(axis.title.x = element_text(size = 15.5), axis.title.y = element_text(size = 15.5), legend.text = element_text(hjust = 0, size = 12), legend.title = element_blank()) +
-  ylim(-1.5,6.5) + xlim(-1.5,6.5)
-
-ggsave("/Users/users/Desktop/Micro-C/figs_for_paper/Supplementary/fig3_other/scatter_int_freq_chr_status_logged.tiff", scatter_int_freq_logged, dpi = 400, width = 12, height = 8, units = "in")
-
-#Scatterplot of interaction freq octbi vs interaction freq in Eup, with Pec chr status labeled, Sepia----
-scatter_int_freq_sof <- ggplot(pec_dists_ave, aes(x = Average_interaction_frequency_spp1, y = Average_interaction_frequency_Sepia, color = Pecten_chromosome_status)) +
-  geom_point(size=2, alpha = 0.7) +
-  scale_color_manual(values = c("#d62728", "#1f77b4"), labels = c(
-    expression(paste("Same ", italic(" P. maximus"), " chromosome (n = 18997)")),
-    expression(paste("Different ", italic("P. maximus"), "chromosome (n = 40764)")))) +
-  ylab(expression(paste("Interaction frequency in ", italic("S. officinalis"), " (50Kb resolution)"))) +
-  xlab(expression(paste(italic("E. scolopes "), "interaction frequency (100Kb resolution)"))) +
-  theme(axis.title.x = element_text(size = 15.5), axis.title.y = element_text(size = 15.5), legend.text = element_text(hjust = 0, size = 12), legend.title = element_blank()) +
-  ylim(0,550) + xlim(0,550)
-
-ggsave("/Users/users/Desktop/Micro-C/figs_for_paper/Supplementary/fig3_other/scatter_int_freq_chr_status_with_sof.tiff", scatter_int_freq_sof, dpi = 400, width = 12, height = 8, units = "in")
-
-#Scatterplot of interaction freq octbi vs interaction freq in Eup, with Pec chr status labeled, Sepia----
-scatter_int_freq_sof_logged <- ggplot(pec_dists_ave_logged, aes(x = log_Average_interaction_frequency_spp1, y = log_Average_interaction_frequency_Sepia, color = Pecten_chromosome_status)) +
-  geom_point(size=2, alpha = 0.7) +
-  scale_color_manual(values = c("#d62728", "#1f77b4"), labels = c(
-    expression(paste("Same ", italic(" P. maximus"), " chromosome (n = 18997)")),
-    expression(paste("Different ", italic("P. maximus"), "chromosome (n = 40764)")))) +
-  ylab(expression(paste("Interaction frequency in ", italic("S. officinalis"), " (50Kb resolution, logged)"))) +
-  xlab(expression(paste(italic("E. scolopes "), "interaction frequency (100Kb resolution, logged)"))) +
-  theme(axis.title.x = element_text(size = 15.5), axis.title.y = element_text(size = 15.5), legend.text = element_text(hjust = 0, size = 12), legend.title = element_blank()) +
-  ylim(-1.5,6.5) + xlim(-1.5,6.5)
-
-ggsave("/Users/users/Desktop/Micro-C/figs_for_paper/Supplementary/fig3_other/scatter_int_freq_chr_status_with_sof_logged.tiff", scatter_int_freq_sof_logged, dpi = 400, width = 12, height = 8, units = "in")
-
-
-#Grouped barplot----
+# Grouped barplot----
 pec_dists_ave$Pecten_chromosome_status <- factor(pec_dists_ave$Pecten_chromosome_status, 
                                                  levels = c("same_pec_chrs", "diff_pec_chrs"))  # Red first blue second
 pec_dists_ave$Interaction_status <- factor(pec_dists_ave$Interaction_status, 
@@ -293,24 +217,24 @@ bar_interactions_chr_status_all <- ggplot(pec_dists_ave, aes(x = Interaction_sta
         legend.title = element_blank()) + 
   geom_text(aes(label = ..count..), stat = "count", position = position_dodge(width = 0.7), size = 5.5, vjust = -0.5)
 
-ggsave("/Users/users/Desktop/Micro-C/figs_for_paper/Figure3/bar_interactions_chr_status_10threshold_ave_with_sof.tiff", bar_interactions_chr_status_all, units = "in", dpi = 400,  height = 8, width = 14)
+ggsave("bar_interactions_chr_status_10threshold_ave_with_sof.tiff", bar_interactions_chr_status_all, units = "in", dpi = 300,  height = 8, width = 14)
 
 
-#Stacked percentage barplot
-# Step 1: Calculate percentages
+# Stacked percentage barplot
+# Calculate percentages
 pec_dists_ave_percent <- pec_dists_ave %>%
   group_by(Interaction_status, Pecten_chromosome_status) %>%
   summarise(count = n()) %>%
   group_by(Interaction_status) %>%
   mutate(percent = count / sum(count) * 100)
 
-#Order
+# Order
 pec_dists_ave_percent$Pecten_chromosome_status <- factor(
   pec_dists_ave_percent$Pecten_chromosome_status,
   levels = c("diff_pec_chrs","same_pec_chrs")  # Bottom to top in the stack
 )
 
-# Step 2: Make the stacked barplot
+# Make the stacked barplot
 bar_interactions_chr_status_stacked <- ggplot(pec_dists_ave_percent, aes(x = Interaction_status, y = percent, fill = Pecten_chromosome_status)) +
   geom_col(position = "stack", alpha = 0.9, color = "darkgrey", width = 0.7) +
   labs(x = "Interaction status", y = "Percentage") +
@@ -330,6 +254,6 @@ bar_interactions_chr_status_stacked <- ggplot(pec_dists_ave_percent, aes(x = Int
 print(bar_interactions_chr_status_stacked)
 
 # Save the plot
-ggsave("/Users/users/Desktop/Micro-C/figs_for_paper/Figure3/bar_interactions_chr_status_10threshold_ave_stacked_percent.tiff", 
+ggsave("bar_interactions_chr_status_10threshold_ave_stacked_percent.tiff", 
        bar_interactions_chr_status_stacked, units = "in", dpi = 300, height = 8, width = 14)
 
