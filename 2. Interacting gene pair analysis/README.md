@@ -81,7 +81,7 @@ The script [`check_orthos_dump.py`](check_orthos_dump.py) was then used to asses
 python3 check_orthos_dump.py EUPgeneOBI.txt 409493_intrachrom_allchrs_KR_100000.dumped.hic_all_genes_int_freq.txt
 # Example output:
 # Number of reciprocal best hit orthologs for EUP and OBI = 12002 # Where EUP is E. scolopes and OBI is O. bimaculoides
-# Number of EUP interactions with at least one ortholog in OBI = 1569457 # Note this file likely contains duplicate entries that have not yet been removed. As such, the reported number is not biologically meaningful at this stage
+# Number of EUP interactions with at least one ortholog in OBI = 1569457 # Note this file likely contains duplicate entries that have not yet been removed, as well as multiple interacting gene pairs per line. As such, the reported number is not biologically meaningful at this stage
 # Output written to: 409493_intrachrom_allchrs_KR_100000.dumped.hic_all_genes_int_freq_OBIorthos.txt
 ```
 
