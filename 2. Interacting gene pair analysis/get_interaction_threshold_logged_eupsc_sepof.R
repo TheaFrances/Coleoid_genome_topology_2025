@@ -32,7 +32,6 @@ all_dists  <- read.delim("/Users/users/Desktop/Micro-C/topology_strength_analysi
  head(interaction_freq_file)
  
 # Merge datasets----
-
 # First clean data to speed up process
 all_dists[, 1] <- trimws(all_dists[, 1])
 interaction_freq_file[, 1] <- trimws(interaction_freq_file[, 1])
@@ -51,7 +50,7 @@ interactions_distance_merged <- merge(
 )
 head(interactions_distance_merged)
 
-# Set distances to numeric and check maximum
+# Set distances to numeric and check maximum----
 interactions_distance_merged$Genomic_distance_eupsc_bp <- as.numeric(interactions_distance_merged$Genomic_distance_eupsc_bp)
 interactions_distance_merged$Genomic_distance_octbi_bp <- as.numeric(interactions_distance_merged$Genomic_distance_octbi_bp)
 interactions_distance_merged$Genomic_distance_sepof_bp <- as.numeric(interactions_distance_merged$Genomic_distance_sepof_bp)
@@ -63,7 +62,7 @@ max(interactions_distance_merged$Interaction_frequency_spp1)
 max(interactions_distance_merged$Interaction_frequency_Sepia)
 
 
-# Colouring different distances
+# Plots colouring different distances----
 # Adding a new column 'dist_cat' (distance category) based on genomic distance between gene pairs
 interactions_distance_merged_categories <- interactions_distance_merged%>%
   mutate(
@@ -75,7 +74,7 @@ interactions_distance_merged_categories <- interactions_distance_merged%>%
     )
   )
 
-# Examine plot of all genomic distances
+# Examine plot of all genomic distances----
 ggplot(interactions_distance_merged_categories, aes(x=log_Interaction_frequency_spp1, y=log_Interaction_frequency_Sepia,  color=dist_cat)) + 
   geom_point(size=1) + 
   scale_color_brewer(palette = "Set1", direction=-1)+
@@ -85,7 +84,7 @@ ggplot(interactions_distance_merged_categories, aes(x=log_Interaction_frequency_
   ylab(expression(paste("Interaction frequency in ", italic("S. officinalis"), " (100 kb resolution)"))) +
   xlab(expression(paste(italic("E. scolopes "),  "interaction frequency (100 kb resolution)")))
 
-# Plot without under 1Mb distances different colours and save
+# Plot without under 1Mb distances different colours and save----
 interactions_distance_merged_over_1mb_categories  <- subset(interactions_distance_merged_categories, subset=!(dist_cat=="under_1mb"))
 
 threshold_1_20mb <- ggplot(interactions_distance_merged_over_1mb_categories, aes(x=log_Interaction_frequency_spp1, y=log_Interaction_frequency_Sepia, color=dist_cat)) + 
@@ -100,7 +99,7 @@ threshold_1_20mb <- ggplot(interactions_distance_merged_over_1mb_categories, aes
 
 ggsave("interaction_threshold>=1Mb>=20Mb_eupsc_sepof_logged.tiff", threshold_1_20mb, units = "in", dpi = 200, width = 6.5, height = 5.6)
 
-# Plot without under 10Mb distances and save
+# Plot without under 10Mb distances and save----
 interactions_distance_merged_over_10mb_categories <- subset(interactions_distance_merged_categories, dist_cat %in% c("over_20mb", "10-20mb"))
 
 threshold_10_20mb <- ggplot(interactions_distance_merged_over_10mb_categories, aes(x=log_Interaction_frequency_spp1, y=log_Interaction_frequency_Sepia, color=dist_cat)) + 
