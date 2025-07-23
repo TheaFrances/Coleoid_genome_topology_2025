@@ -1,10 +1,8 @@
-Interacting Gene Pair Analysis
+# Interacting gene pair analysis
 
 This folder documents the interacting gene pair analyses. Includes  gene-bin mapping, and ortholog checks between species. All steps are demonstrated using the *E. scolopes* sample 403493 at 100 kb resolution. Additional commands are provided for *S. officinalis* to complete orthology comparisons as at the time of writing this paper, no gene annotation was available for *S. officinalis*.
 
-
-
-Orthology was assessed using reciprocal best BLAST hits for *E. scolopes*, *O. bimaculoides* and *P. maximus* using BLASTP 2.16.0 with the parameters -evalue 1E-2 -max_target_seqs 1 -outfmt 6.
+Note: orthology was assessed using reciprocal best BLAST hits for *E. scolopes*, *O. bimaculoides* and *P. maximus* using BLASTP 2.16.0 with the parameters -evalue 1E-2 -max_target_seqs 1 -outfmt 6.
 
 ### Make orthology annotation file for *S. officinalis*
 
@@ -37,7 +35,7 @@ wc -l  sanger_sepof_eup_prot_best_hits_rm_scaff.gff
 The resulting **sanger_sepof_eup_prot_best_hits_rm_scaff.gff** file was then converted into bed format, with chromosome names being from the *S. officinalis* genome file, and gene names being identical to the *E. scolopes* gene names that were the best hits mapped to the *S. officinalis* genome.
 
 
-2. Match gene pairs to bins
+### Match gene pairs to bins
 
 We used a custom Python script  [`check_gene_in_bin_dump_all.py`](check_gene_in_bin_dump_all.py) to identify gene pairs in bins pairs in dumped matrices. This script includes any genes overlapping with the bins in the output files:
 
