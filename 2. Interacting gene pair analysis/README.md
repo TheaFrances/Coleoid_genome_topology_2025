@@ -42,29 +42,33 @@ We used a custom Python script  [`check_gene_in_bin_dump_all.py`](check_gene_in_
 ```bash
 python3 check_gene_in_bin_dump_all.py eupsc.bed 409493_intrachrom_allchrs_KR_100000.dumped.hic.txt 100000
 ```
-
-This produced an output like:
+Where **eupsc.bed** is the species BED file containing four columns: chromosome, gene start, gene end, and gene name (in that order), with no additional features. This produced an output like:
 
 ```bash
 Number of bins with genes in = 26197
 Output written to: 409493_intrachrom_allchrs_KR_100000.dumped.hic_all_genes_int_freq.txt
 ```
 
+This command was repeated for *S. officinalis* at 100kb resolution and *O. bimaculoides* at 50 kb resolution.
 
 3. Check for orthologous genes
 
-A second script (check_orthos_dump.py) was used to assess whether gene pairs in bin interactions have orthologs in other species:
+The script [`check_orthos_dump.py`](check_orthos_dump.py) was used to assess whether gene pairs in bin interactions have orthologs in other species:
 
-Example command:
-
+```bash
 python3 check_orthos_dump.py EUPgeneOBI.txt 409493_intrachrom_allchrs_KR_100000.dumped.hic_all_genes_int_freq.txt
+```
+Where the file EUPgeneOBI.txt is a file with *E. scolopes* genes in the first column, and their *O. bimaculoides* orthologs in the second column.
 
-Output:
+Example output:
 
+```bash
 Number of reciprocal best hit orthologs for EUP and OBI = 12002
 Number of EUP interactions with at least one ortholog in OBI = 1569457
+```
+Where EUP indicates *E. scolopes* orthologs and *O. bimaculoides* orthologs, as the input ortholog file is named.
 
-Commands were repeated for all relevant species comparisons:
+Commands were repeated for the following species comparisons:
 
 E. scolopes ↔ O. bimaculoides
 
@@ -73,6 +77,8 @@ E. scolopes ↔ Pecten maximus
 O. bimaculoides ↔ E. scolopes
 
 O. bimaculoides ↔ P. maximus
+
+Since *S. officinalis* orthologs were named the same as E. scolopes orthologs, these ortholog files were created later on??
 
 Notes
 
