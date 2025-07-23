@@ -23,7 +23,7 @@
   - [Get intergenic start and end positions for gene pairs](#get-intergenic-start-and-end-positions-for-gene-pairs)
   - [Convert output files to BED format and sort](#convert-output-files-to-bed-format-and-sort)
   - [Convert RepeatMasker output to GFF and then BED format](#convert-repeatmasker-output-to-gff-and-then-bed-format)
-  - [Run `bedtools intersect` with a processing script](#run-bedtools-intersect-with-a-processing-script)
+  - [Run bedtools intersect with a processing script](#run-bedtools-intersect-with-a-processing-script)
   - [Get repeat content summaries per interaction category](#get-repeat-content-summaries-per-interaction-category)
 
 
@@ -273,7 +273,7 @@ Headers and lines with `NA` values are removed, and the gene pair ID is placed i
 ```bash
 tail -n +2 409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof_eupsc_intergenic_genom_dist.txt | awk '$0 !~ /NA/ {print $1 "\t" $4 "\t" $5 "\t" $2}' | sort | uniq > 409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof_eupsc_intergenic_genom_dist.bed
 ```
-Then, the file was sorted for downstream bedtools analysis:
+Then, the output file was sorted for downstream bedtools analysis:
 
 ```bash
 sort -k1,1 -k2,2n 409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof_eupsc_intergenic_genom_dist.bed > 409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof_eupsc_intergenic_genom_dist.bed
@@ -289,7 +289,7 @@ Next, the output gff was converted into bed format:
 awk 'BEGIN{OFS="\t"} { if ($3 == "dispersed_repeat") print $1, $4 - 1, $5, $9 }' repeats_eupsc.gff3 > repeats_eupsc.bed
 ```
 
-Then, the bed file was sorted for downstream bedtools analyses:
+Then, the output bed file was sorted for downstream bedtools analyses:
 
 ```bash
 sort -k1,1 -k2,2n repeats_eupsc.bed > repeats_eupsc_sorted.bed
