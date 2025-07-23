@@ -2,8 +2,6 @@
 
 ## Contents
 
-## Contents
-
 - [Prepare files of gene pairs, orthologs, and extract their chromosomal distribution in *P. maximus*](#prepare-files-of-gene-pairs-orthologs-and-extract-their-chromosomal-distribution-in-p-maximus)
   - [Make orthology annotation file for *S. officinalis*](#make-orthology-annotation-file-for-s-officinalis)
   - [Match gene pairs to bins](#match-gene-pairs-to-bins)
