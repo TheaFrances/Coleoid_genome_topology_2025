@@ -15,5 +15,4 @@ makeOrgPackage( gene_info=gene, go=go,
                 species="octbi",
                 goTable="go")
 
-
 install.packages("./org.Ooctbi.eg.db", repos = NULL, type = "source")
