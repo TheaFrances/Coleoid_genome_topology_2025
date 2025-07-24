@@ -34,6 +34,8 @@
   - [Plot TAD boundary status for gene pairs](#plot-tad-boundary-status-for-gene-pairs)
 - [Tissue-specific expression enrichment across interaction categories](#tissue-specific-expression-enrichment-across-interaction-categories)
 - [GO analyses for gene pairs across interaction categories](#GO-analyses-for-gene-pairs-across-interaction-categories)
+  - [Run InterProScan and prepare files for GO analyses](#run-interproscan-and-prepare-files-for-go-analyses)
+  - [Perform GO term enrichment and generate dotplots of enriched GO terms](#perform-go-term-enrichment-and-generate-dotplots-of-enriched-go-terms)
 
 This folder documents the interacting gene pair analyses. Initital steps are demonstrated using only the *E. scolopes* (stage 29) sample 403493 at 100 kb resolution, which is later merged with the *O. bimaculoides* interaction matrix at 50 kb resolution and the *S. officinalis* interaction matrix at 100 kb resolution. Boxplots of genomic distances are also only demonstrated using *E. scolopes* distance, but based on this merged interaction matrix. For the species *S. officinalis*, no gene annotation was available for the *S. officinalis* reference genome at the time of writing this paper. Therefore, additional commands are provided at the start to classify orthologous genes as well as for some downstream analyses.
 
@@ -256,7 +258,7 @@ python3 synteny_by_topology_interactions_add_pec_dist.py EUPgenePEC.txt pmax2.be
 # Number of P. maximus distances added to file including NAs =  18,997 # These will be removed later. These are when the two genes are the same gene or when one gene is located 'within'  another
 # Output written to: 409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof_PEC_dist.txt
 ````
-Next we used the R script ['plot_boxplots_barplots_by_pecten_dist_bin.R'](plot_boxplots_barplots_by_pecten_dist_bin.R) to:
+We also used the R script ['plot_boxplots_barplots_by_pecten_dist_bin.R'](plot_boxplots_barplots_by_pecten_dist_bin.R) to:
 - Split gene pairs into three groups, <5 Mb, 5–15 Mb, and ≥15 Mb distance between orthologs on *P. maximus* chromosomes
 - Save the resulting dataframe with these groups for future analyses (this file is named ***409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_pec_bins_with_sof.txt**)
 - Create boxplots of genomic distance between orthologous gene pairs across interaction statuses, coloured by these *P. maximus* distance groups
