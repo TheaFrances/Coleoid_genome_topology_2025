@@ -26,7 +26,7 @@
   - [Run bedtools intersect with a processing script](#run-bedtools-intersect-with-a-processing-script)
   - [Get repeat content summaries per interaction category](#get-repeat-content-summaries-per-interaction-category)
   - [Get barplots of simple repeats and RND elements \[TBC\]](#Get-barplots-of-simple-repeats-and-RND-elements)
-- [Calculate co-expression of gene pairs across different interaction categories]#Calculate-coexpression-of-gene-pairs-across-different-interaction-categories)
+- [Calculate co-expression of gene pairs across different interaction categories](#Calculate-coexpression-of-gene-pairs-across-different-interaction-categories)
 
 
 This folder documents the interacting gene pair analyses. Initital steps are demonstrated using only the *E. scolopes* (stage 29) sample 403493 at 100 kb resolution, which is later merged with the *O. bimaculoides* interaction matrix at 50 kb resolution and the *S. officinalis* interaction matrix at 100 kb resolution. Boxplots of genomic distances are also only demonstrated using *E. scolopes* distance, but based on this merged interaction matrix. For the species *S. officinalis*, no gene annotation was available for the *S. officinalis* reference genome at the time of writing this paper. Therefore, additional commands are provided at the start to classify orthologous genes as well as for some downstream analyses.
