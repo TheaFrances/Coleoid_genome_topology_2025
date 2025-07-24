@@ -397,13 +397,15 @@ The R script [`expression_enrichment_across_interaction_categories_with_pec_chro
 - Calculate Tau, the tissue-specificity index, for each gene and compare across combined categories
 
 
-### GO analyses for gene pairs across interaction categories
+## GO analyses for gene pairs across interaction categories
 
 Gene ontology (GO) analyses were performed using the *O. bimaculoides* gene IDs. An example is shown below for the "gene pairs interacting across the coleoids" category, although this was also done for the other three interaction categories, as well as combinations of interaction categories and chromosome status in *P. maximus* (i.e. same vs. different chromosome in *P. maximus*).
 
-First, protein sequences were annotated using InterProScan. This is documented in the script: [`interproscan_octbi.sh `](interproscan_octbi.sh) 
+### Run InterProScan and prepare files for GO analyses
 
-Then, the InterProScan output was used to create the files **gid.go**, **gname.go** and **term2gene** with the script[`createTerm2Gene.pl`](createTerm2Gene.pl) as follows:
+First, protein sequences were annotated using `InterProScan`. This is documented in the script [`interproscan_octbi.sh`](interproscan_octbi.sh).
+
+Then, the `InterProScan` output was used to create the files **gid.go**, **gname.go**, and **term2gene** with the script [`createTerm2Gene.pl`](createTerm2Gene.pl) as follows:
 ```bash
 perl createTerm2Gene.pl interproscan/interproscan_octbi_ncbi.tsv  > term2gene
 ```
@@ -416,6 +418,8 @@ Next, the R script [`make_octbi_db.R`](make_octbi_db.R) was used to create a cus
 - Loads GO term and gene name tables (gid.go and gname.go)
 - Builds an annotation package with `makeOrgPackage()`
 - Installs the resulting `org.Ooctbi.eg.db` package locally
+
+### Perform GO term enrichment and generate dotplots of enriched GO terms
 
 Lastly, the R script [`GO_analyses_interacting_all_octbi.R`](GO_analyses_interacting_all_octbi.R) was used to carry out the following steps:
 - Load interacting gene pairs conserved across all species and extract unique *O. bimaculoides* gene IDs
