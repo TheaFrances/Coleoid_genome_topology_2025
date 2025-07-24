@@ -399,14 +399,11 @@ The R script [`expression_enrichment_across_interaction_categories_with_pec_chro
 
 ### GO analyses for gene pairs across interaction categories
 
-Gene ontology (GO) analyses were done using the *O. bimaculoides* gene IDs. An example is shown below for the "gene pairs interacting across the coleoids" category, although this was also done for the other three interaction categories, as well as combinations of interaction categories and chromosome status in *P. maximus* (i.e. same vs. different chromosome in *P. maximus*).
+Gene ontology (GO) analyses were performed using the *O. bimaculoides* gene IDs. An example is shown below for the "gene pairs interacting across the coleoids" category, although this was also done for the other three interaction categories, as well as combinations of interaction categories and chromosome status in *P. maximus* (i.e. same vs. different chromosome in *P. maximus*).
 
-First, prepare InterProScan annotation for *O. bimaculoides*
+First, protein sequences were annotated using InterProScan. This is documented in the script: [`interproscan_octbi.sh `](interproscan_octbi.sh) 
 
-
-First, protein sequences were annotated using InterProScan. In older annotations, asterisks (`*`) needed to be removed first. This is documented in the script: [`interproscan_octbi.sh `](interproscan_octbi.sh) 
-
-Then, the InterProScan output was used to create the **gid.go**, **gname.go** and **term2gene** files with the script[`createTerm2Gene.pl`](createTerm2Gene.pl) as follows:
+Then, the InterProScan output was used to create the files **gid.go**, **gname.go** and **term2gene** with the script[`createTerm2Gene.pl`](createTerm2Gene.pl) as follows:
 ```bash
 perl createTerm2Gene.pl interproscan/interproscan_octbi_ncbi.tsv  > term2gene
 ```
