@@ -408,9 +408,9 @@ Then, the InterProScan output was used to create the files **gid.go**, **gname.g
 perl createTerm2Gene.pl interproscan/interproscan_octbi_ncbi.tsv  > term2gene
 ```
 Where:
-- **gid.go**: Maps internal gene IDs to GO terms with evidence codes to be used in building the GO annotation database
-- **gname.go**: Links internal gene IDs to O. bimaculoides gene names for use in the GO annotation database
-- **term2gene**: Maps GO terms directly to O. bimaculoides gene IDs for enrichment analysis with `clusterProfiler`
+- **gid.go**: Maps internal gene IDs to GO terms with evidence codes to be used in building the GO annotation database (`org.Ooctbi.eg.db`)
+- **gname.go**: Links internal gene IDs to *O. bimaculoides* gene names, also for use in the GO annotation database
+- **term2gene**: Maps GO terms directly to *O. bimaculoides* gene IDs used as the background gene universe in GO enrichment analysis with`clusterProfiler`
 
 Next, the R script [`make_octbi_db.R`](make_octbi_db.R) was used to create a custom GO annotation database for *O. bimaculoides* using the `AnnotationForge` package. This script:
 - Loads GO term and gene name tables (gid.go and gname.go)
