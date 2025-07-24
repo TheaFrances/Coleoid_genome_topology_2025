@@ -25,7 +25,7 @@
   - [Convert RepeatMasker output to GFF and then BED format](#convert-repeatmasker-output-to-gff-and-then-bed-format)
   - [Run bedtools intersect with a processing script](#run-bedtools-intersect-with-a-processing-script)
   - [Get repeat content summaries per interaction category](#get-repeat-content-summaries-per-interaction-category)
-  - [Get barplots of simple repeats and RND elements \[TBC\]](#Get-barplots-of-simple-repeats-and-RND-elements)
+  - [Get barplots of simple repeats and RND elements (TBC)]](#Get-barplots-of-simple-repeats-and-RND-elements)
 -[Calculate co-expression of gene pairs across different interaction categories \[TBC\]]([#Calculate-co-expression-of-gene-pairs-across-different-interaction-categories)
 
 
