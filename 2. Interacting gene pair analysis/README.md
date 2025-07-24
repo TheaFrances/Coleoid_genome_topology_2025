@@ -33,6 +33,7 @@
   - [Plot density plot of insulation scores between gene pairs across interaction categories](#plot-density-plot-of-insulation-scores-between-gene-pairs-across-interaction-categories)
   - [Plot TAD boundary status for gene pairs](#plot-tad-boundary-status-for-gene-pairs)
  - [Expression enrichment across interaction categories](#Expression-enrichment-across-interaction-categories)
+ - [GO analyses for gene pairs across interaction categories](#GO-analyses-for-gene-pairs-across-interaction-categories)
 
 This folder documents the interacting gene pair analyses. Initital steps are demonstrated using only the *E. scolopes* (stage 29) sample 403493 at 100 kb resolution, which is later merged with the *O. bimaculoides* interaction matrix at 50 kb resolution and the *S. officinalis* interaction matrix at 100 kb resolution. Boxplots of genomic distances are also only demonstrated using *E. scolopes* distance, but based on this merged interaction matrix. For the species *S. officinalis*, no gene annotation was available for the *S. officinalis* reference genome at the time of writing this paper. Therefore, additional commands are provided at the start to classify orthologous genes as well as for some downstream analyses.
 
@@ -398,18 +399,32 @@ The R script [`expression_enrichment_across_interaction_categories_with_pec_chro
 
 ### GO analyses for gene pairs across interaction categories
 
-These analyses were done using the *O. bimaculoides* gene IDs. An example is shown below for the "gene pairs interacting across the coleoids" category, although this was also done for the other three interaction categories, as well as combinations of interaction categories and chromosome status in *P. maximus* (i.e. same vs. different chromosome in *P. maximus*).
+Gene ontology (GO) analyses were done using the *O. bimaculoides* gene IDs. An example is shown below for the "gene pairs interacting across the coleoids" category, although this was also done for the other three interaction categories, as well as combinations of interaction categories and chromosome status in *P. maximus* (i.e. same vs. different chromosome in *P. maximus*).
 
-First, the R script [`make_octbi_db.R`](make_octbi_db.R) was used to create a custom GO annotation database for *O. bimaculoides* using the AnnotationForge package. This script:
+First, prepare InterProScan annotation for *O. bimaculoides*
+
+
+First, protein sequences were annotated using InterProScan. In older annotations, asterisks (`*`) needed to be removed first. This is documented in the script: [`interproscan_octbi.sh `](interproscan_octbi.sh) 
+
+Then, the InterProScan output was used to create the **gid.go**, **gname.go** and **term2gene** files with the script[`createTerm2Gene.pl`](createTerm2Gene.pl) as follows:
+```bash
+perl createTerm2Gene.pl interproscan/interproscan_octbi_ncbi.tsv  > term2gene
+```
+Where:
+- **gid.go**: Maps internal gene IDs to GO terms with evidence codes to be used in building the GO annotation database
+- **gname.go**: Links internal gene IDs to O. bimaculoides gene names for use in the GO annotation database
+- **term2gene**: Maps GO terms directly to O. bimaculoides gene IDs for enrichment analysis with `clusterProfiler`
+
+Next, the R script [`make_octbi_db.R`](make_octbi_db.R) was used to create a custom GO annotation database for *O. bimaculoides* using the `AnnotationForge` package. This script:
 - Loads GO term and gene name tables (gid.go and gname.go)
-- Builds an annotation package with makeOrgPackage()
-- Installs the resulting org.Ooctbi.eg.db package locally
+- Builds an annotation package with `makeOrgPackage()`
+- Installs the resulting `org.Ooctbi.eg.db` package locally
 
-The R script [`GO_analyses_interacting_all_octbi.R`](GO_analyses_interacting_all_octbi.R) was used to carry out the following steps:
+Next, the R script [`GO_analyses_interacting_all_octbi.R`](GO_analyses_interacting_all_octbi.R) was used to carry out the following steps:
 - Load interacting gene pairs conserved across all species and extract unique *O. bimaculoides* gene IDs
 - Prioritise genes in conserved interactions by keeping them even if also involved in other categories, and only retain genes in the "not in conserved interaction" category if unique to it
 - Split gene pairs into individual gene IDs for GO enrichment
-- Perform GO term enrichment using the clusterProfiler package, testing enrichment of interacting genes against the full gene background (all *O. bimaculoides* genes)
+- Perform GO term enrichment using the `clusterProfiler` package, testing enrichment of interacting genes against the full gene background (all *O. bimaculoides* genes)
 - Generate dotplots of enriched GO terms for biological process (BP), molecular function (MF), and cellular component (CC) ontologies
 
 
