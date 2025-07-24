@@ -32,8 +32,7 @@
   - [Average insulation scores between gene pairs](#average-insulation-scores-between-gene-pairs)
   - [Plot density plot of insulation scores between gene pairs across interaction categories](#plot-density-plot-of-insulation-scores-between-gene-pairs-across-interaction-categories)
   - [Plot TAD boundary status for gene pairs](#plot-tad-boundary-status-for-gene-pairs)
-
-
+  - [Expression enrichment across interaction categories](#Expression-enrichment-across-interaction-categories)
 
 This folder documents the interacting gene pair analyses. Initital steps are demonstrated using only the *E. scolopes* (stage 29) sample 403493 at 100 kb resolution, which is later merged with the *O. bimaculoides* interaction matrix at 50 kb resolution and the *S. officinalis* interaction matrix at 100 kb resolution. Boxplots of genomic distances are also only demonstrated using *E. scolopes* distance, but based on this merged interaction matrix. For the species *S. officinalis*, no gene annotation was available for the *S. officinalis* reference genome at the time of writing this paper. Therefore, additional commands are provided at the start to classify orthologous genes as well as for some downstream analyses.
 
