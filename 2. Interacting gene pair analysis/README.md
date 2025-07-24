@@ -403,7 +403,7 @@ Gene ontology (GO) analyses were performed using the *O. bimaculoides* gene IDs.
 
 ### Run InterProScan and prepare files for GO analyses
 
-First, protein sequences were annotated using `InterProScan`. This is documented in the script [`interproscan_octbi.sh`](interproscan_octbi.sh).
+Firstly, protein sequences were annotated using `InterProScan`. This is documented in the script [`interproscan_octbi.sh`](interproscan_octbi.sh).
 
 Then, the `InterProScan` output was used to create the files **gid.go**, **gname.go**, and **term2gene** with the script [`createTerm2Gene.pl`](createTerm2Gene.pl) as follows:
 ```bash
