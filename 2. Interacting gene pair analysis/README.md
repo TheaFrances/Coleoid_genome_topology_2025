@@ -356,7 +356,7 @@ Secondly, the script [`tad_boundary_status_across_pec_chrom_and_dist_categories.
 tad_boundary_status_across_pec_chrom_and_dist_categories.R
 - Merges insulation scores across species and categorises gene pairs into whether they are within TADs or on TAD boundaries using a threshold of insulation score ±0.2 in each species
 - Visualizes the distribution of gene pairs across using stacked barplots across both:
-  - *P. maximus* chromosomal status (same vs different chromosomes)
+  - *P. maximus* chromosomal status (same vs. different chromosomes)
   - Intrachromosomal *P. maximus* genomic distance bins
 
 
