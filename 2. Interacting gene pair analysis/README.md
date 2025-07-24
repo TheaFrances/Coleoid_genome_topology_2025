@@ -267,10 +267,9 @@ Next we used the R script ['plot_boxplots_barplots_by_pecten_dist_bin.R'](plot_b
 
 This section outlines the steps taken to identify associations between repetitive elements and regions between gene pairs in each species.
 
-### Run RepeatModeler and RepeaMasker [TBC]
+### Run RepeatModeler and RepeaMasker
 
-Repeats were identified RepeatModeler v.2.0.674 and RepeatMasker v.4.1.875 using default parameters. Repeatmodeler identifies highly repeated regions and constructs consensus sequences and repeatmasker searches these consensus sequences in the genome an identified their positions. [Scripts, outfile names....TBC]
-
+Repeats were previously identified RepeatModeler v.2.0.674 and RepeatMasker v.4.1.875 using default parameters. Repeatmodeler identifies highly repeated regions and constructs consensus sequences and repeatmasker searches these consensus sequences in the genome an identified their positions.
 ### Get intergenic start and end positions for gene pairs
   
 We outputted intergenic start and end positions for gene pairs using the sctipt ['output_intergenic_start_end_and_dist.py'](output_intergenic_start_end_and_dist.py). This script also recalculates and outputs genomic distance and can be run on any file with the format eupsc_gene1;octbi_gene1, eupsc_gene2;octbi_gene2 in the first column. This script outputs one file per species bedfile inputed.
