@@ -315,7 +315,8 @@ This was done using the R script [`barplot_simple_vs_rnd_repeats.R`](barplot_sim
 
 The R script [`co-expression_analysis_of_interacting_gene_pairs_and_categories_expression_logged.R`](co-expression_analysis_of_interacting_gene_pairs_and_categories_expression_logged.R) was used to:
 - Log and TPM normalise *E. scolopes* expression data across tissues
-- Calculate  Pearson’s correlation coefficients for co-expression per gene pair across *E. scolopes* tissues for each interaction category and plot it as a density plot
+- Calculate Pearson’s correlation coefficients for co-expression per gene pair across *E. scolopes* tissues for each interaction category, ignoring gene pairs with zero variance in expression 
+- Plot gene pair co-expression values across interaction categories as a density plot
 - Calculate significant differences (Wilcoxon test with BH correction), means, and medians in co-expression coefficients for gene pairs across different interaction categories
 
 ## Insulation score analyses
@@ -323,6 +324,20 @@ The R script [`co-expression_analysis_of_interacting_gene_pairs_and_categories_e
 ### Generate insulation scores
 
 This was done for various resolutions and window sizes using FAN-C v.0.9.287, and files were outputted in both bed and bigwig format. This step is documented in the script [`get_ins_score_fan-c.sh`](get_ins_score_fan-c.sh).
+
+### Average insulation scores between gene pairs
+
+We used the script [`get_ave_ins_score_between_gene_pairs.py`](get_ave_ins_score_between_gene_pairs.py) to calculate the mean insulation score across bins between gene pairs. This script requires the gene pair input file to be based on the *E. scolopes* interaction matrix, with *E. scolopes* gene names before the semicolons and *O. bimaculoides* (or other species) gene names after the semicolons. It must be modified for use with other formats.
+
+```bash
+python3 get_ave_ins_score_between_gene_pairs.py 409493_intrachrom.allValidPairs.hic@100kb_350kb.bed eupsc.bed 409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi.txt
+```
+### Plot density plot of insulation scores between gene pairs across interaction categories
+
+This step uses the R script [`plot_ins_score_density.R`](plot_ins_score_density.R). This plots the mean insulation scores between gene pairs in each interaction category and tests for significant differences across categories using pairwise T tests with BH correction.
+
+### Plot TAD boundary status for gene pairs across interaction categories
+
 
 
 
