@@ -373,6 +373,30 @@ tad_boundary_status_across_pec_chrom_and_dist_categories.R
   - *P. maximus* chromosomal status (same vs. different chromosomes)
   - Intrachromosomal *P. maximus* genomic distance bins
 
+### Expression enrichment across interaction categories
+
+The R script [`expression_enrichment_across_interaction_categories.R`](expression_enrichment_across_interaction_categories) was used to carry out the following steps:
+- Log-transform the TPM-normalised gene expression data for *E. scolopes* tissues
+- Prioritise genes in conserved interactions by keeping them even if also involved in other categories, and only retain genes in the "not in conserved interaction" category if unique to it
+- Generate boxplots of expression per tissue across interaction categories
+- Generate heatmaps of expression per category (with and without gene clustering)
+- Generate Venn diagram of gene overlaps across categories
+- Performs Wilcoxon tests with BH correction to compare expression levels between interaction categories within each tissue
+- Calculate Tau, the tissue-specificity index for each gene and compare across categories
+
+The R script [`expression_enrichment_across_interaction_categories_with_pec_chrom_status.R`](expression_enrichment_across_interaction_categories_with_pec_chrom_status.R) was used to carry out the following steps:
+- Log-transform the TPM-normalised gene expression data for *E. scolopes* tissues
+- Prioritise genes in conserved interactions by keeping them even if also involved in other categories, and only retain genes in the "not in conserved interaction" category if unique to it
+- Combine interaction category and shared *P. maximus* chromosome status into a single Combined_status label
+- Generate boxplots of expression per tissue across combined categories
+- Generate heatmaps of expression per combined category (with and without gene clustering)
+- Generate Venn diagram of gene overlaps across combined categories
+- Perform Wilcoxon tests with BH correction to compare expression levels between combined categories within each tissue
+- Calculate Tau, the tissue-specificity index, for each gene and compare across combined categories
+
+
+
+
 
 
 
