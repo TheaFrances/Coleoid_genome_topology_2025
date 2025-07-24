@@ -375,7 +375,7 @@ tad_boundary_status_across_pec_chrom_and_dist_categories.R
   - Intrachromosomal *P. maximus* genomic distance bins
 
 
-NEED TO ADD BINNED DISTS!! Nautilus!!
+
 
 
 
