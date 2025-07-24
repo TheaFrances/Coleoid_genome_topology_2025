@@ -1,4 +1,4 @@
-#Check expression of different interaction categories
+# Check expression of different interaction categories by plotting boxplots, heatmaps, Venn diagrams, and performing significance tests and calculation of tau (tissue specificity) For E. scolopes tissues
 
 # Clear workspace
 rm(list = ls())
@@ -71,7 +71,7 @@ merged_data <- interaction_data %>%
   inner_join(averaged_expression_data, by = c("Gene1" = "gene_id")) %>%
   inner_join(averaged_expression_data, by = c("Gene2" = "gene_id"), suffix = c(".Gene1", ".Gene2"))
 
-#Seperate gene 1 and 2 data and put them on top of eachother----
+# Seperate gene 1 and 2 data and put them on top of eachother----
 # Extract columns related to Gene1
 gene1_columns <- grep("\\.Gene1$", names(merged_data), value = TRUE)
 
@@ -131,38 +131,6 @@ combined_data <- combined_data %>%
       (Interaction_status == "not_interacting_any_species" & !Gene %in% interacting_genes)  # Keep only exclusive non-interacting genes
   )
 
-
-#Normalisation checks----
-central_brain_data <- combined_data %>% filter(Tissue == "Central brain") %>% pull(Expression)
-testes_data <- combined_data %>% filter(Tissue == "Testes") %>% pull(Expression)
-ang_data <- combined_data %>% filter(Tissue == "ANG") %>% pull(Expression)
-
-# Plotting the histogram in R
-hist(central_brain_data, 
-     main = "Histogram of gene expression in central brain tissue", 
-     xlab = "Expression level", 
-     col = "blue", 
-     border = "black", 
-     breaks = 30)
-
-
-# Plotting the histogram in R
-hist(testes_data, 
-     main = "Histogram of gene expression in testes tissue", 
-     xlab = "Expression level", 
-     col = "blue", 
-     border = "black", 
-     breaks = 30)
-
-
-# Plotting the histogram in R
-hist(ang_data, 
-     main = "Histogram of gene expression in ANG tissue", 
-     xlab = "Expression level", 
-     col = "blue", 
-     border = "black", 
-     breaks = 30)
-
 # Enrichment analysis----
 # Perform pairwise Wilcoxon tests within each tissue comparing Interaction_status categories
 pairwise_wilcox_results <- combined_data %>%
@@ -202,10 +170,8 @@ pairwise_wilcox_results <- combined_data %>%
 pairwise_wilcox_results <- pairwise_wilcox_results %>%
   mutate(p_adjusted = p.adjust(p_value, method = "BH"))  # Benjamini-Hochberg FDR
 
-
 # Save results
 write.table(pairwise_wilcox_results, file = "/Users/users/Desktop/Micro-C/tables_for_paper/expression_of_spatiosyntenies/tissue_expression_wilcox_eupsc_prioritise_both_unique_neither_with_sof.txt", row.names = FALSE, quote = FALSE, sep = "\t")
-
 
 # Plot boxplots for each tissue, with each Interaction_status represented as a boxplot within each tissue----
 
@@ -260,7 +226,6 @@ print(tissue_boxplots)
 
 # Save the plot
 ggsave(tissue_boxplots, file = "/Users/users/Desktop/Micro-C/figs_for_paper/Supplementary/tissue_expression/tissue_expression_boxplot_prioritise_both_unique_neither_eupsc_with_sof.tiff", height = 6, width = 9)
-
 
 #Heatmaps----
 
@@ -500,74 +465,3 @@ write.table(wilcox_results,
 print(head(tau_results))
 print(summary_tau)
 print(wilcox_results)
-
-
-#Tau for development
-# Clear environment
-rm(list = ls())
-
-# Load libraries
-library(dplyr)
-library(tidyr)
-
-# Load developmental expression data
-dev_expr_data <- read.delim("/Users/users/Desktop/Micro-C/expression_data/Hannah_TPM_normalizedcounts_development.txt", header = TRUE)
-
-# Log-transform with pseudocount
-dev_expr_data[,-1] <- lapply(dev_expr_data[,-1], function(x) log(as.numeric(as.character(x)) + 0.01))
-
-# Replace NA with 0 (optional)
-dev_expr_data[,-1][is.na(dev_expr_data[,-1])] <- 0
-
-# Load interaction data with Interaction_status and Gene columns
-interaction_data <- read.delim("/Users/users/Desktop/Micro-C/tables_for_paper/expression_of_spatiosyntenies/tau_tissue_specificity.txt")
-
-# Make sure only needed columns are kept
-gene_status <- interaction_data %>%
-  dplyr::select(Gene, Interaction_status) %>%
-  distinct()
-
-# Filter expression data to matching genes
-dev_expr_data_filtered <- dev_expr_data %>%
-  filter(gene_id %in% gene_status$Gene)
-
-# Pivot to long format and join with interaction status
-dev_long <- dev_expr_data_filtered %>%
-  pivot_longer(-gene_id, names_to = "Stage", values_to = "Expression") %>%
-  inner_join(gene_status, by = c("gene_id" = "Gene"))
-
-# Tau function
-calculate_tau <- function(expression_values) {
-  x_max <- max(expression_values, na.rm = TRUE)
-  if (x_max <= 0) return(0)
-  n <- sum(!is.na(expression_values))
-  if (n <= 1) return(0)
-  tau <- sum(1 - (expression_values / x_max), na.rm = TRUE) / (n - 1)
-  return(max(0, min(tau, 1)))
-}
-
-# Compute Tau per gene per interaction category
-tau_results_dev <- dev_long %>%
-  group_by(gene_id, Interaction_status) %>%
-  summarise(Tau = calculate_tau(Expression), .groups = 'drop')
-
-# Summary statistics per interaction status
-summary_tau_dev <- tau_results_dev %>%
-  group_by(Interaction_status) %>%
-  summarise(
-    Mean_Tau = mean(Tau, na.rm = TRUE),
-    Median_Tau = median(Tau, na.rm = TRUE),
-    .groups = 'drop'
-  )
-
-# Save results
-write.table(tau_results_dev,
-            file = "/Users/users/Desktop/Micro-C/tables_for_paper/expression_of_spatiosyntenies/tau_development_by_interaction_status.txt",
-            row.names = FALSE, quote = FALSE, sep = "\t")
-
-write.table(summary_tau_dev,
-            file = "/Users/users/Desktop/Micro-C/tables_for_paper/expression_of_spatiosyntenies/summary_tau_development_by_interaction_status.txt",
-            row.names = FALSE, quote = FALSE, sep = "\t")
-
-# Print
-print(summary_tau_dev)

@@ -1,8 +1,4 @@
-#Check expression of different interaction categories but this time:
-#Keep all genes in interacting both, but only keep genes that in interacting neither species if they are ONLY in this category i.e. unique to this category, not in the other 3. 
-#I.e. prioritise interacting both species. 
-#If two genes are linked by a conserved interaction, of course they may have weak interaction elsewhere, but what matters is the conserved one.
-#This time label points by combined status: Pmax chr status AND interactions status.
+# # Check expression of different interaction and P. maximus chromosome status categories by plotting boxplots, heatmaps, Venn diagrams, and performing significance tests and calculation of tau (tissue specificity) For E. scolopes tissues
 
 rm(list = ls())
 
@@ -372,7 +368,6 @@ for (status in unique_combined_statuses) {
   plot_heatmap_for_status_gene_cluster(combined_data, status)
 }
 
-
 #Venn diagrams of each category ----
 
 # Close the current plot device if open
@@ -482,65 +477,4 @@ write.table(wilcox_results_combined,
 print(head(tau_results_combined))
 print(summary_tau_combined)
 print(wilcox_results_combined)
-
-#Tau for development
-# Load developmental stage expression data
-dev_expr_data <- read.table("/Users/users/Desktop/Micro-C/expression_data/Hannah_TPM_normalizedcounts_development.txt",
-                            header = TRUE, sep = "\t")
-
-# Replace NA with 0 and filter genes expressed in at least one stage
-dev_expr_data[,-1][is.na(dev_expr_data[,-1])] <- 0
-dev_expr_data <- dev_expr_data[rowSums(dev_expr_data[,-1]) != 0, ]
-
-# Log-transform (TPM + 0.01)
-dev_expr_data[,-1] <- lapply(dev_expr_data[,-1], function(x) log(as.numeric(as.character(x)) + 0.01))
-
-# Filter to genes present in combined_data
-dev_expr_data_filtered <- dev_expr_data %>%
-  filter(gene_id %in% combined_data$Gene)
-
-# PRIORITIZE strongest interaction per gene ----
-# Define levels for priority
-priority_levels <- c("interacting_all_species_same_pec_chrs", 
-                     "interacting_all_species_diff_pec_chrs", 
-                     "not_interacting_any_species_same_pec_chrs", 
-                     "not_interacting_any_species_diff_pec_chrs")
-
-# Create prioritised status table
-gene_status <- combined_data %>%
-  mutate(Combined_status = factor(Combined_status, levels = priority_levels)) %>%
-  arrange(Gene, Combined_status) %>%
-  distinct(Gene, .keep_all = TRUE) %>%
-  dplyr::select(Gene, Combined_status)
-
-# Pivot expression data and join
-dev_long <- dev_expr_data_filtered %>%
-  pivot_longer(-gene_id, names_to = "Stage", values_to = "Expression") %>%
-  inner_join(gene_status, by = c("gene_id" = "Gene"))
-
-# Compute Tau per gene per Combined_status
-tau_results_dev_combined <- dev_long %>%
-  group_by(gene_id, Combined_status) %>%
-  summarise(Tau = calculate_tau(Expression), .groups = "drop")
-
-# Summary stats
-summary_tau_dev_combined <- tau_results_dev_combined %>%
-  group_by(Combined_status) %>%
-  summarise(
-    Mean_Tau = mean(Tau, na.rm = TRUE),
-    Median_Tau = median(Tau, na.rm = TRUE),
-    .groups = "drop"
-  )
-
-# Save to file
-write.table(tau_results_dev_combined,
-            file = "/Users/users/Desktop/Micro-C/tables_for_paper/expression_of_spatiosyntenies/tau_development_combined_status.txt",
-            row.names = FALSE, quote = FALSE, sep = "\t")
-
-write.table(summary_tau_dev_combined,
-            file = "/Users/users/Desktop/Micro-C/tables_for_paper/expression_of_spatiosyntenies/summary_tau_development_combined_status.txt",
-            row.names = FALSE, quote = FALSE, sep = "\t")
-
-# Optional: print summary
-print(summary_tau_dev_combined)
 
