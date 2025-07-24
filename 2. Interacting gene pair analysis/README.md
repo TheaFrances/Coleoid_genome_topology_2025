@@ -331,12 +331,32 @@ We used the script [`get_ave_ins_score_between_gene_pairs.py`](get_ave_ins_score
 
 ```bash
 python3 get_ave_ins_score_between_gene_pairs.py 409493_intrachrom.allValidPairs.hic@100kb_350kb.bed eupsc.bed 409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi.txt
+# Example output
+#Species: eupsc # i.e the species whose bed file you inputted
+#Window size: 350kb
+#Results saved to: interactions_pecten_chr_genom_dist_ave_threshold10_eupsc_window350kb_ins_score.txt
 ```
 ### Plot density plot of insulation scores between gene pairs across interaction categories
 
 This step uses the R script [`plot_ins_score_density.R`](plot_ins_score_density.R). This plots the mean insulation scores between gene pairs in each interaction category and tests for significant differences across categories using pairwise T tests with BH correction.
 
-### Plot TAD boundary status for gene pairs across interaction categories
+### Plot TAD boundary status for gene pairs
+
+This was done by two R scripts. 
+
+Firstly, the script [`tad_boundary_status_across_interaction_categories.R`](tad_boundary_status_across_interaction_categories.R):
+- Merges insulation scores across species and categorises gene pairs into whether they are within TADs or on TAD boundaries using a threshold of insulation score ±0.2 in each species
+- Visualizes the distribution of gene pairs across interaction categories using grouped and stacked barplots
+
+Secondly,[`the script tad_boundary_status_across_pec_chrom_and_dist_categories.R`](tad_boundary_status_across_pec_chrom_and_dist_categories.R):
+tad_boundary_status_across_pec_chrom_and_dist_categories.R
+- Merges insulation scores across species and categorises gene pairs into whether they are within TADs or on TAD boundaries using a threshold of insulation score ±0.2 in each species
+- Visualizes the distribution of gene pairs across using stacked barplots across both:
+  - *P. maximus* chromosomal status (same vs different chromosomes)
+  - Intrachromosomal *P. maximus* genomic distance bins
+
+
+NEED TO ADD BINNED DISTS!!
 
 
 
