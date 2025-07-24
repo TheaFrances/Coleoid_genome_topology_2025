@@ -374,7 +374,7 @@ tad_boundary_status_across_pec_chrom_and_dist_categories.R
 
 ### Expression enrichment across interaction categories
 
-The R script [`expression_enrichment_across_interaction_categories.R`](expression_enrichment_across_interaction_categories) was used to carry out the following steps:
+The R script [`expression_enrichment_across_interaction_categories.R`](expression_enrichment_across_interaction_categories.R) was used to carry out the following steps:
 - Log-transform the TPM-normalised gene expression data for *E. scolopes* tissues
 - Split gene pairs into individual genes for per-gene expression analysis
 - Prioritise genes in conserved interactions by keeping them even if also involved in other categories, and only retain genes in the "not in conserved interaction" category if unique to it
