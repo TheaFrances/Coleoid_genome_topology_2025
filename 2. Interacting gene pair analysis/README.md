@@ -313,7 +313,7 @@ This was done using the R script [`barplot_simple_vs_rnd_repeats.R`](barplot_sim
 
 [TBC, check why you used paired = false for correlation expression calculation wicox and change if necess. also add all pairwise comparisons sig diff in the legend for fig 3. is this default??]
 
-The R script [`Coexpression_analysis_of_interacting_gene_pairs_and_categories_expression_logged.R`](Coexpression_analysis_of_interacting_gene_pairs_and_categories_expression_logged.R) was used to:
+The R script [`coexpression_analysis_of_interacting_gene_pairs_and_categories_expression_logged.R`](coexpression_analysis_of_interacting_gene_pairs_and_categories_expression_logged.R) was used to:
 - Log and TPM normalise *E. scolopes* expression data across tissues
 - Calculate  Pearson’s correlation coefficients for co-expression per gene pair across *E. scolopes* tissues for each interaction category and plot it as a density plot
 - Calculate significant differences (Wilcoxon test with BH correction), means, and medians in co-expression coefficients for gene pairs across different interaction categories.
