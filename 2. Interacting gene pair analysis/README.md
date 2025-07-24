@@ -159,7 +159,7 @@ python3 eup_vs_obi_int_freq_form.py 409493_intrachrom_allchrs_KR_100000.dumped.h
 
 ### Classify interactions by their ***P. maximus*** chromosome status
 
-This step uses [`syteny_by_topology_interactions.py`](syteny_by_topology_interactions.py) to classify gene-pair interactions as:
+This step uses [`synteny_by_topology_interactions.py`](synteny_by_topology_interactions.py) to classify gene-pair interactions as:
 - Gene pair on the same *P. maximus* chromosome
 - Gene pair on different *P. maximus* chromosomes
 
@@ -169,7 +169,7 @@ python3 synteny_by_topology_interactions.py EUPgenePEC.txt pmax2.bed \
 # Example output: 
 # Interactions on same P. maximus chromosomes: 917,352
 # Interactions on different P. maximus chromosomes: 1,493,463
-# Output written to: 409493_intrachrom_allchrs_KR_100000_EUPvs50000_OBI_int_freq_PEC_MACIs_by_topology.txt
+# Output written to: 409493_intrachrom_allchrs_KR_100000_EUPvs50000_OBI_int_freq_PEC_synteny_by_topology.txt
 ```
 
 ### Add interaction frequency from *S. officinalis*
@@ -396,12 +396,21 @@ The R script [`expression_enrichment_across_interaction_categories_with_pec_chro
 - Calculate Tau, the tissue-specificity index, for each gene and compare across combined categories
 
 
+### GO analyses for gene pairs across interaction categories
 
+These analyses were done using the *O. bimaculoides* gene IDs. An example is shown below for the "gene pairs interacting across the coleoids" category, although this was also done for the other three interaction categories, as well as combinations of interaction categories and chromosome status in *P. maximus* (i.e. same vs. different chromosome in *P. maximus*).
 
+First, the R script [`make_octbi_db.R`](make_octbi_db.R) was used to create a custom GO annotation database for *O. bimaculoides* using the AnnotationForge package. This script:
+- Loads GO term and gene name tables (gid.go and gname.go)
+- Builds an annotation package with makeOrgPackage()
+- Installs the resulting org.Ooctbi.eg.db package locally
 
-
-
-
+The R script [`GO_analyses_interacting_all_octbi.R`](GO_analyses_interacting_all_octbi.R) was used to carry out the following steps:
+- Load interacting gene pairs conserved across all species and extract unique *O. bimaculoides* gene IDs
+- Prioritise genes in conserved interactions by keeping them even if also involved in other categories, and only retain genes in the "not in conserved interaction" category if unique to it
+- Split gene pairs into individual gene IDs for GO enrichment
+- Perform GO term enrichment using the clusterProfiler package, testing enrichment of interacting genes against the full gene background (all *O. bimaculoides* genes)
+- Generate dotplots of enriched GO terms for biological process (BP), molecular function (MF), and cellular component (CC) ontologies
 
 
 
