@@ -247,7 +247,7 @@ This section outlines the steps taken to identify associations between repetitiv
 
 ### Run RepeatModeler and RepeaMasker [TBC]
 
-Repeats were identified RepeatModeler v.2.0.674 and RepeatMasker v.4.1.875 using default parameters. [TBC]
+Repeats were identified RepeatModeler v.2.0.674 and RepeatMasker v.4.1.875 using default parameters. Repeatmodeler identifies highly repeated regions and constructs consensus sequences and repeatmasker searches these consensus sequences in the genome an identified their positions.
 
 ### Get intergenic start and end positions for gene pairs
   
