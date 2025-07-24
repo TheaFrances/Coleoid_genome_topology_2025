@@ -414,14 +414,14 @@ Where:
 - **gname.go**: Links internal gene IDs to *O. bimaculoides* gene names, also for use in the GO annotation database
 - **term2gene**: Maps GO terms directly to *O. bimaculoides* gene IDs used as the background gene universe in GO enrichment analysis with`clusterProfiler`
 
-Next, the R script [`make_octbi_db.R`](make_octbi_db.R) was used to create a custom GO annotation database for *O. bimaculoides* using the `AnnotationForge` package. This script:
+Lastly, the R script [`make_octbi_db.R`](make_octbi_db.R) was used to create a custom GO annotation database for *O. bimaculoides* using the `AnnotationForge` package. This script:
 - Loads GO term and gene name tables (gid.go and gname.go)
 - Builds an annotation package with `makeOrgPackage()`
 - Installs the resulting `org.Ooctbi.eg.db` package locally
 
 ### Perform GO term enrichment and generate dotplots of enriched GO terms
 
-Lastly, the R script [`GO_analyses_interacting_all_octbi.R`](GO_analyses_interacting_all_octbi.R) was used to carry out the following steps:
+The R script [`GO_analyses_interacting_all_octbi.R`](GO_analyses_interacting_all_octbi.R) was used to carry out the following steps:
 - Load interacting gene pairs conserved across all species and extract unique *O. bimaculoides* gene IDs
 - Prioritise genes in conserved interactions by keeping them even if also involved in other categories, and only retain genes in the "not in conserved interaction" category if unique to it
 - Split gene pairs into individual gene IDs for GO enrichment
