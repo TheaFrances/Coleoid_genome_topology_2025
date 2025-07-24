@@ -26,7 +26,7 @@
   - [Run bedtools intersect with a processing script](#run-bedtools-intersect-with-a-processing-script)
   - [Get repeat content summaries per interaction category](#get-repeat-content-summaries-per-interaction-category)
   - [Get barplots of simple repeats and RND elements \[TBC\]](#Get-barplots-of-simple-repeats-and-RND-elements)
-- [[Calculate co-expression of gene pairs across different interaction categories \[TBC\]](#Calculate-co-expression-of-gene-pairs-across-different-interaction-categories)
+- [Calculate co-expression of gene pairs across different interaction categories \[TBC\]](#Calculate-co-expression-of-gene-pairs-across-different-interaction-categories)
 
 
 This folder documents the interacting gene pair analyses. Initital steps are demonstrated using only the *E. scolopes* (stage 29) sample 403493 at 100 kb resolution, which is later merged with the *O. bimaculoides* interaction matrix at 50 kb resolution and the *S. officinalis* interaction matrix at 100 kb resolution. Boxplots of genomic distances are also only demonstrated using *E. scolopes* distance, but based on this merged interaction matrix. For the species *S. officinalis*, no gene annotation was available for the *S. officinalis* reference genome at the time of writing this paper. Therefore, additional commands are provided at the start to classify orthologous genes as well as for some downstream analyses.
@@ -311,12 +311,20 @@ This was done using the R script [`barplot_simple_vs_rnd_repeats.R`](barplot_sim
 
 ## Calculate co-expression of gene pairs across different interaction categories [TBC]
 
-[TBC, check why you used paired = false for correlation expression calculation wicox and change if necess. also add all pairwise comparisons sig diff in the legend for fig 3. is this default??]
+[TBC, check why you used paired = false for correlation expression calculation wicox and change if necess. also add all pairwise comparisons sig diff in the legend for fig 3. is this default?? also link is broken!]
 
 The R script [`coexpression_analysis_of_interacting_gene_pairs_and_categories_expression_logged.R`](coexpression_analysis_of_interacting_gene_pairs_and_categories_expression_logged.R) was used to:
 - Log and TPM normalise *E. scolopes* expression data across tissues
 - Calculate  Pearson’s correlation coefficients for co-expression per gene pair across *E. scolopes* tissues for each interaction category and plot it as a density plot
 - Calculate significant differences (Wilcoxon test with BH correction), means, and medians in co-expression coefficients for gene pairs across different interaction categories.
+
+## Insulation score analyses
+
+### Generate insulation score 
+
+This was done for various resolutions and window sizes using FAN-C v.0.9.287, and files were outputted in both bed and bigwig format. This step is documented in the script [`get_ins_score_fan-c.sh`](get_ins_score_fan-c.sh).
+
+
 
 
 
