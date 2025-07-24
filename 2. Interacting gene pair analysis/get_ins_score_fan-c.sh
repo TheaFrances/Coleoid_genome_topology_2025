@@ -6,7 +6,7 @@
 #SBATCH --output=log/%x-%j.out
 #SBATCH --error=log/%x-%j.err
 #SBATCH --partition=himem
-#SBATCH --time 1-00:00:00
+#SBATCH --time 06:00:00
 
 
 echo start
