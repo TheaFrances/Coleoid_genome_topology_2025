@@ -352,7 +352,7 @@ Firstly, the script [`tad_boundary_status_across_interaction_categories.R`](tad_
 - Merges insulation scores across species and categorises gene pairs into whether they are within TADs or on TAD boundaries using a threshold of insulation score ±0.2 in each species
 - Visualizes the distribution of gene pairs across interaction categories using grouped and stacked barplots
 
-Secondly,[`the script tad_boundary_status_across_pec_chrom_and_dist_categories.R`](tad_boundary_status_across_pec_chrom_and_dist_categories.R):
+Secondly, the script [`tad_boundary_status_across_pec_chrom_and_dist_categories.R`](tad_boundary_status_across_pec_chrom_and_dist_categories.R):
 tad_boundary_status_across_pec_chrom_and_dist_categories.R
 - Merges insulation scores across species and categorises gene pairs into whether they are within TADs or on TAD boundaries using a threshold of insulation score ±0.2 in each species
 - Visualizes the distribution of gene pairs across using stacked barplots across both:
