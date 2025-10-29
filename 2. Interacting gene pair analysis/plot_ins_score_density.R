@@ -88,6 +88,6 @@ ttest_results_df_eupsc$Adj_P_Value <- p.adjust(ttest_results_df_eupsc$P_Value, m
 # Print the results in a table and save
 print(ttest_results_df_eupsc)
 
-write.table(ttest_results_df_eupsc, "ns_core_eupsc_wilcox_with_sof.txt", append = FALSE, sep = "\t", dec = ".", col.names = TRUE, row.names = FALSE, quote = FALSE)
+write.table(ttest_results_df_eupsc, "ins_core_eupsc_ttest_with_sof.txt", append = FALSE, sep = "\t", dec = ".", col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 
