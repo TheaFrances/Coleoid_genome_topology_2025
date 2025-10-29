@@ -8,7 +8,7 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
 
 ## Running Mustache for differential loop calling
 
-Mustache was run in differential mode using `.hic` files and absolute BED files for each stage. Below are examples of the commands used:
+[Mustache](https://github.com/ay-lab/mustache) was run in differential mode using `.hic` files and absolute BED files for each stage. Below are examples of the commands used:
 
 ### Example: Stage 25 vs stage 29 (100 kb resolution)
 ```bash
