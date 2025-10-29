@@ -1,4 +1,4 @@
-# Interacting gene pair analysis
+# Chromatin loop analysis
 
 ## Contents
 
@@ -6,11 +6,11 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
 
 ## Differential loop calling
 
-## Running Mustache for Differential Loop Calling
+## Running Mustache for differential loop calling
 
 Mustache was run in differential mode using `.hic` files and absolute BED files for each stage. Below are examples of the commands used:
 
-### Example: Stage 25 vs Stage 29 (100 kb resolution)
+### Example: Stage 25 vs stage 29 (100 kb resolution)
 ```bash
 python3 mustache/diff_mustache.py \
   -f1 212492_intrachrom.allValidPairs.hic \
@@ -19,7 +19,7 @@ python3 mustache/diff_mustache.py \
   -o eupsc_25vs29_100k
 ```
 
-### Additional Comparisons
+### Additional comparisons
 
 These comparisons were also run at various resolutions (50 kb, 100 kb):
 
