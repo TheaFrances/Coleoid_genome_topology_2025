@@ -10,7 +10,7 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
 
 ### Running Mustache for differential loop calling
 
-[Mustache](https://github.com/ay-lab/mustache) was run in differential mode using `.hic` files and absolute BED files for each stage. Below are examples of the commands used:
+[Mustache](https://github.com/ay-lab/mustache) was run in differential mode using `.hic` files and absolute BED files for each sample. Loop calling was restricted to annotated chromosomes, and datasets containing unplaced scaffolds were excluded from analysis. Below are examples of the commands used:
 
 **Example: Stage 25 vs stage 29 (100 kb resolution)**
 ```bash
@@ -20,13 +20,37 @@ python3 mustache/diff_mustache.py \
   -pt 0.05 -pt2 0.1 -st 0.8 -r 100000 \
   -o eupsc_25vs29_100k
 ```
-
 **Additional comparisons**
 
 These comparisons were also run at various resolutions (50 kb, 100 kb):
 
 - Stage 20 vs Stage 29
 - Stage 20 vs Stage 25
+
+Mustache outputs chromatin loops in a simple **tab-separated format** with the following columns:
+
+| Column | Description                          |
+|--------|--------------------------------------|
+| 1      | Chromosome of start anchor           |
+| 2      | Start position of start anchor (bin) |
+| 3      | End position of start anchor (bin)   |
+| 4      | Chromosome of end anchor             |
+| 5      | Start position of end anchor (bin)   |
+| 6      | End position of end anchor (bin)     |
+| 7      | q-value of the loop                  |
+| 8      | log10(p-value)                       |
+| 9      | Normalized interaction count         |
+
+
+When comparing loop calls across stages using Mustache’s differential mode, the following output files are generated:
+
+| File name           | Description                                                                 |
+|---------------------|-----------------------------------------------------------------------------|
+| `output.loop1`      | Loops found in the first dataset (e.g. `data1.hic`)                         |
+| `output.loop2`      | Loops found in the second dataset (e.g. `data2.hic`)                        |
+| `output.diffloop1`  | Loops **present in `data1.hic`** but **weakened or absent** in `data2.hic` |
+| `output.diffloop2`  | Loops **present in `data2.hic`** but **weakened or absent** in `data1.hic` |
+
 
 ### Merge loops across resolutions
 Finally, reproducible loops at 50 kb and 100 kb were merged using the [`merge_loops_in_2_resos.py`](merge_loops_in_2_resos.py) script. Loops in the 100 kb file considered duplicates and removed if they fell within a 50 kb window of those in the 50 kb file. This 50 kb window is specified by the --tolerance parameter.
