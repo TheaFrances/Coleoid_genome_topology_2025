@@ -159,17 +159,17 @@ This script:
   Loops from all three stages (20, 25, 29) are read and mapped to their associated genes using unique loop IDs derived from genomic bin coordinates.
 
 - **Identifies stage-specific loops**  
-  For the focal stage (e.g. stage 29), only loops with unique gene content not shared with other stages are retained for visualization.
+  For the focal stage (e.g. stage 29), only loops with unique gene content not shared with other stages are retained for visualisation.
 
 - **Merges expression data**  
-  TPM-normalized expression data are log-transformed and merged with the loop–gene mappings to generate per-loop gene expression matrices.
+  TPM-normalised expression data are log-transformed and merged with the loop–gene mappings to generate per-loop gene expression matrices.
 
 - **Generates a clustered heatmap**  
   A heatmap is created using `pheatmap`, displaying expression of genes grouped by loop.  
   Genes appearing in multiple loops are shown separately for each loop occurrence, with `gaps_row` separating different loops.
 
 - **Calculates Tau tissue-specificity**  
-  The tissue-specificity index (Tau) is computed for each gene based on log-transformed expression values, then summarized per loop (mean and median Tau).
+  The tissue-specificity index (Tau) is computed for each gene based on log-transformed expression values, then summarised per loop (mean and median Tau).
 
 - **Calculates intra-loop co-expression**  
   For each loop, mean pairwise Pearson correlation between genes is calculated to assess co-regulation within loop domains.
@@ -180,6 +180,44 @@ This script:
   - Summary statistics for Tau and co-expression across loops  
 
 Each stage (20, 25, and 29) was analysed independently, producing separate heatmaps and summary outputs.
+
+### Gene expression comparison across developmental stage-specific loops
+
+The script [`loop_exp_boxplots.R`](loop_exp_boxplots.R) compares gene expression profiles of loop-associated genes that are **unique to stage-specific loops** (Stages 20, 25, and 29) in *E. scolopes*. Expression values are averaged per developmental stage, log-transformed, and statistically compared using Wilcoxon rank-sum tests.
+
+**Overview of analysis steps**:
+
+1. **Input preparation:**
+   - Gene lists were extracted from stage-specific loop–gene mappings (`*.genes_list.txt`).
+   - TPM-normalized expression data were read and averaged across replicates for each developmental stage (Stages 14–28).
+
+2. **Stage-specific filtering:**
+   - For each stage (20, 25, 29), expression data were subset to include only genes uniquely present in that stage’s loop set (i.e., genes not found in loops from other stages).
+
+3. **Expression matrix preparation:**
+   - Data were reshaped into long format (gene × tissue × stage).
+   - Expression values were log-transformed using a pseudocount of 0.01.
+
+4. **Statistical comparisons:**
+   - All pairwise comparisons between stages were tested using **Wilcoxon rank-sum tests** within each tissue.
+   - Significance levels were annotated using the `ggsignif` package.
+
+5. **Visualization:**
+   - A faceted boxplot was created showing gene expression (logTPM) across tissues, grouped by developmental stage.
+   - Custom color schemes and angled axis labels were used for clarity.
+
+6. **Output:**
+   - A multi-panel boxplot (per tissue) of gene expression for genes from stage-specific loops.
+   - A significance summary table including:
+     - Wilcoxon test statistic and p-value
+     - Mean and median expression values per stage
+
+### Notes:
+- Genes appearing in multiple stages were **excluded** to focus on genes unique to a single stage’s loops.
+- Optional sections allow toggling between keeping all genes or filtering for stage-specific ones.
+
+
+
 
 
 
