@@ -66,7 +66,7 @@ This script prints:
 Once loop files are annotated with genes (e.g. .genes files), gene lists were extracted, cleaned, and deduplicated using the following command:
 
 ```bash
-awk -F '\t' '{print $3 "\n" $5}' <input.genes> | tr ', ' '\n' | grep -v '^$' | sort | uniq > <output.genes_list.txt>
+awk -F '\t' '{print $3 "\n" $5}' eupsc_25vs29_50k+100k.diff_loop1.genes | tr ', ' '\n' | grep -v '^$' | sort | uniq > eupsc_25vs29_50k+100k.genes_list.txt
 ```
 This:
 - Extracts gene ID columns (assumed to be columns 3 and 5)
