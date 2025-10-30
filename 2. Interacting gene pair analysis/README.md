@@ -1,5 +1,7 @@
 # Interacting gene pair analysis
 
+This folder documents the interacting gene pair analyses. Initital steps are demonstrated using only the *E. scolopes* (stage 29) sample 403493 at 100 kb resolution, which is later merged with the *O. bimaculoides* interaction matrix at 50 kb resolution and the *S. officinalis* interaction matrix at 100 kb resolution. Boxplots of genomic distances are also only demonstrated using *E. scolopes* distance, but based on this merged interaction matrix. For the species *S. officinalis*, no gene annotation was available for the *S. officinalis* reference genome at the time of writing this paper. Therefore, additional commands are provided at the start to classify orthologous genes as well as for some downstream analyses.
+
 ## Contents
 
 - [Prepare files of gene pairs, orthologs, and extract their ancestral chromosome status](#prepare-files-of-gene-pairs-orthologs-and-extract-their-ancestral-chromosome-status)
@@ -36,8 +38,6 @@
 - [GO analyses for gene pairs across interaction categories](#GO-analyses-for-gene-pairs-across-interaction-categories)
   - [Run InterProScan and prepare files for GO analyses](#run-interproscan-and-prepare-files-for-go-analyses)
   - [Perform GO term enrichment and generate dotplots of enriched GO terms](#perform-go-term-enrichment-and-generate-dotplots-of-enriched-go-terms)
-
-This folder documents the interacting gene pair analyses. Initital steps are demonstrated using only the *E. scolopes* (stage 29) sample 403493 at 100 kb resolution, which is later merged with the *O. bimaculoides* interaction matrix at 50 kb resolution and the *S. officinalis* interaction matrix at 100 kb resolution. Boxplots of genomic distances are also only demonstrated using *E. scolopes* distance, but based on this merged interaction matrix. For the species *S. officinalis*, no gene annotation was available for the *S. officinalis* reference genome at the time of writing this paper. Therefore, additional commands are provided at the start to classify orthologous genes as well as for some downstream analyses.
 
 ## Prepare files of gene pairs, orthologs, and extract their ancestral chromosome status
 

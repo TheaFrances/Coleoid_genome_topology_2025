@@ -1,5 +1,8 @@
 # Preprocessing and mapping of Micro-C reads
 
+This folder contains the commands used to process raw Micro-C reads. These steps include trimming, concatenating libraries for higher coverage, and mapping with HiC-Pro, and generating a Juicebox `.hic` file. *E. scolopes* stage 29 samples are used as examples throughout this folder. Where applicable, *S. officinalis* is used instead, for example, in the downsampling step, which was not necessary for *E. scolopes*.
+
+
 ## Contents
 
 - [Downsampling](#downsampling)
@@ -13,10 +16,6 @@
 - [Generate the .hic file and apply KR normalisation](#generate-the-hic-file-and-apply-kr-normalisation)
 - [Dump .hic matrix at 100 kb resolution with KR normalisation](#dump-hic-matrix-at-100-kb-resolution-with-kr-normalisation)
 - [Remove lines from dumped matrices and concatenate into one file](#remove-lines-from-dumped-matrices-and-concatenate-into-one-file)
-
-
-This folder contains the commands used to process raw Micro-C reads. These steps include trimming, concatenating libraries for higher coverage, and mapping with HiC-Pro, and generating a Juicebox `.hic` file. *E. scolopes* stage 29 samples are used as examples throughout this folder. Where applicable, *S. officinalis* is used instead, for example, in the downsampling step, which was not necessary for *E. scolopes*.
-
 
 ### Downsampling
 We downsampled relevant tissue-specific Micro-C samples to approximately 350 million reads to normalise for read depth across tissues.  
