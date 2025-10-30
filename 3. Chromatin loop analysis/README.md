@@ -2,11 +2,11 @@
 
 ## Contents
 
-This folder documents the chromatin loop analyses demonstrated using the *E. scolopes* (stage 29) sample 212493, and the differential chromatin loop analyses samples demonstrated using the *E. scolopes* (stage 25) sample 212492 and 212493 (stage 29) at 50 and 100 kb resolution.
+This folder documents the chromatin loop analyses demonstrated using the *E. scolopes* (stage 29) sample 212493 at 50 and 100 kb resolution, and the differential chromatin loop analyses samples demonstrated using the *E. scolopes* (stage 25) sample 212492 and 212493 (stage 29) at 50 and 100 kb resolution.
 
-## Differential loop calling
+## Differential loop analysis
 
-## Running Mustache for differential loop calling
+### Running Mustache for differential loop calling
 
 [Mustache](https://github.com/ay-lab/mustache) was run in differential mode using `.hic` files and absolute BED files for each stage. Below are examples of the commands used:
 
@@ -54,7 +54,7 @@ Number of loops in second resolution file = 153
 Number of loops in merged file = 159
 ```
 
-## Extract genes from differential loops
+### Extract genes from differential loops
 
 To identify genes located within differential chromatin loop anchors, we used the script [`check_gene_in_bin_diff_loops.py`](check_gene_in_bin_diff_loops.py), which compares loop anchor coordinates to gene locations.
 
@@ -84,7 +84,7 @@ Number of loop bins with genes in both bins =  15
 Each processed file produces a new output file with the `.genes` suffix, indicating that genes in loop anchors have been added to the file.
 
 
-## Extract gene lists from annotated loop files
+### Extract gene lists from annotated loop files
 
 Once loop files are annotated with genes (e.g. .genes files), gene lists were extracted, cleaned, and deduplicated using the following command:
 
@@ -100,7 +100,7 @@ This:
 
 Repeat for each .genes file to generate clean gene lists per condition or comparison.
 
-## Remove duplicate loops from .genes files based on their interactions
+### Remove duplicate loops from .genes files based on their interactions
 
 To remove duplicate chromatin loops based on overlapping gene interactions, the script [`remove_loop_gene_replicates.py`](remove_loop_gene_replicates.py) was ran on the .genes files.  
 This script identifies and removes redundant loops where the same sets of genes appear multiple times across loop anchors.
