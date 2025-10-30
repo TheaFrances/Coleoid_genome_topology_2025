@@ -44,6 +44,38 @@ python merge_loops_in_2_resos.py \
   --tolerance 50000
 ```
 
+## Extract genes from differential loops
+
+To identify genes located within differential chromatin loop anchors, we used the script [`check_gene_in_bin_diff_loops.py`](check_gene_in_bin_diff_loops.py), which compares loop anchor coordinates to gene locations.
+
+Usage:
+
+python3 check_gene_in_bin_diff_loops.py eupsc.bed eupsc_25vs29_50k+100k.diff_loop1
+
+- Where the first input file is a BED file with gene coordinates (e.g. eupsc.bed for *E. scolopes*)
+- And the seciond input file is a differential loop file in Mustache output format with anchor coordinates
+
+This script prints:
+- Number of differential loops
+- Number of loop anchors containing genes in the start bin
+- Number of loop anchors containing genes in the end bin
+- Number of loops with genes in both bins
+
+## Extract gene lists from annotated loop files
+
+Once loop files are annotated with genes (e.g. .genes files), gene lists were extracted, cleaned, and deduplicated using the following command:
+
+```bash
+awk -F '\t' '{print $3 "\n" $5}' <input.genes> | tr ', ' '\n' | grep -v '^$' | sort | uniq > <output.genes_list.txt>
+```
+This:
+- Extracts gene ID columns (assumed to be columns 3 and 5)
+- Splits comma- or space-separated values into individual lines
+- Removes empty lines
+- Sorts and deduplicates entries
+
+Repeat for each .genes file to generate clean gene lists per condition or comparison.
+
 
 
 
