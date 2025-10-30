@@ -44,6 +44,17 @@ python merge_loops_in_2_resos.py \
   --tolerance 50000
 ```
 
+This command generates an output file with the name specified in the command, e.g., eupsc_25vs29_50k+100k.diff_loop1.
+
+**Example output:**
+
+```
+Number of loops in first resolution file = 7
+Number of loops in second resolution file = 153
+Number of loops in merged file = 159
+```
+
+
 ## Extract genes from differential loops
 
 To identify genes located within differential chromatin loop anchors, we used the script [`check_gene_in_bin_diff_loops.py`](check_gene_in_bin_diff_loops.py), which compares loop anchor coordinates to gene locations.
@@ -53,13 +64,24 @@ Usage:
 python3 check_gene_in_bin_diff_loops.py eupsc.bed eupsc_25vs29_50k+100k.diff_loop1
 
 - Where the first input file is a BED file with gene coordinates (e.g. eupsc.bed for *E. scolopes*)
-- And the seciond input file is a differential loop file in Mustache output format with anchor coordinates
+- And the second input file is a differential loop file in Mustache output format with anchor coordinates
 
 This script prints:
 - Number of differential loops
 - Number of loop anchors containing genes in the start bin
 - Number of loop anchors containing genes in the end bin
 - Number of loops with genes in both bins
+
+**Example output:**
+
+```
+Number of significant, differential loops =  37
+Number of loop bins with genes in (loop start) =  22
+Number of loop bins with genes in (loop end) =  23
+Number of loop bins with genes in both bins =  15
+```
+Each processed file produces a new output file with the `.genes` suffix, indicating that genes in loop anchors have been added to the file.
+
 
 ## Extract gene lists from annotated loop files
 
@@ -75,6 +97,30 @@ This:
 - Sorts and deduplicates entries
 
 Repeat for each .genes file to generate clean gene lists per condition or comparison.
+
+## Remove duplicate loops from .genes files based on their interactions
+
+To remove duplicate chromatin loops based on overlapping gene interactions, the script [`remove_loop_gene_replicates.py`](remove_loop_gene_replicates.py) was ran on the .genes files.  
+This script identifies and removes redundant loops where the same sets of genes appear multiple times across loop anchors.
+
+### Example: *E. scolopes* 25 vs 29 (50 kb + 100 kb)
+
+
+```bash
+    python3 remove_loop_gene_replicates.py eupsc_25vs29_50k+100k.diff_loop1.genes
+done
+```
+
+**Example output:**
+
+```
+Processing loop file: 25_29_50k+100k.diffloop1.genes
+Number of conserved loops in input file =  69
+Number of loops in output with duplicates removed =  68
+Output written to: 25_29_50k+100k.diffloop1.genes_rm_dups
+```
+
+Each processed file produces a new output file with the `_rm_dups` suffix, indicating that duplicate loops have been filtered out.
 
 
 
