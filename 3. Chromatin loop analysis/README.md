@@ -2,7 +2,7 @@
 
 ## Contents
 
-This folder documents the chromatin loop analyses demonstrated using the *E. scolopes* (stage 29) sample 212493 at 50 and 100 kb resolution.
+This folder documents the chromatin loop analyses demonstrated using the *E. scolopes* (stage 29) sample 212493, and the differential chromatin loop analyses samples demonstrated using the *E. scolopes* (stage 25) sample 212492 and 212493 (stage 29) at 50 and 100 kb resolution.
 
 ## Differential loop calling
 
