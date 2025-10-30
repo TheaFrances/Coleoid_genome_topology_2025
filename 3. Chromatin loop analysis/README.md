@@ -10,7 +10,7 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
 
 [Mustache](https://github.com/ay-lab/mustache) was run in differential mode using `.hic` files and absolute BED files for each stage. Below are examples of the commands used:
 
-### Example: Stage 25 vs stage 29 (100 kb resolution)
+**Example: Stage 25 vs stage 29 (100 kb resolution)**
 ```bash
 python3 mustache/diff_mustache.py \
   -f1 212492_intrachrom.allValidPairs.hic \
@@ -19,7 +19,7 @@ python3 mustache/diff_mustache.py \
   -o eupsc_25vs29_100k
 ```
 
-### Additional comparisons
+**Additional comparisons**
 
 These comparisons were also run at various resolutions (50 kb, 100 kb):
 
@@ -29,7 +29,7 @@ These comparisons were also run at various resolutions (50 kb, 100 kb):
 ### Merge loops across resolutions
 Finally, reproducible loops at 50 kb and 100 kb were merged using the [`merge_loops_in_2_resos.py`](merge_loops_in_2_resos.py) script. Loops in the 100 kb file considered duplicates and removed if they fell within a 50 kb window of those in the 50 kb file. This 50 kb window is specified by the --tolerance parameter.
 
-### Example: Stage 25 vs stage 29 50 kb + 100 kb resolution
+**Example: Stage 25 vs stage 29 50 kb + 100 kb resolution**
 ```bash
 python merge_loops_in_2_resos.py \
   eupsc_25vs29_50k.diff_loop1 \
@@ -58,7 +58,7 @@ Number of loops in merged file = 159
 
 To identify genes located within differential chromatin loop anchors, we used the script [`check_gene_in_bin_diff_loops.py`](check_gene_in_bin_diff_loops.py), which compares loop anchor coordinates to gene locations.
 
-### Example:
+**Example:**
 
 ```bash
 python3 check_gene_in_bin_diff_loops.py eupsc.bed eupsc_25vs29_50k+100k.diff_loop1
@@ -88,7 +88,7 @@ Each processed file produces a new output file with the `.genes` suffix, indicat
 
 Once loop files are annotated with genes (e.g. .genes files), gene lists were extracted, cleaned, and deduplicated using the following command:
 
-### Example:
+**Example:**
 ```bash
 awk -F '\t' '{print $3 "\n" $5}' eupsc_25vs29_50k+100k.diff_loop1.genes | tr ', ' '\n' | grep -v '^$' | sort | uniq > eupsc_25vs29_50k+100k.genes_list.txt
 ```
@@ -105,7 +105,7 @@ Repeat for each .genes file to generate clean gene lists per condition or compar
 To remove duplicate chromatin loops based on overlapping gene interactions, the script [`remove_loop_gene_replicates.py`](remove_loop_gene_replicates.py) was ran on the .genes files.  
 This script identifies and removes redundant loops where the same sets of genes appear multiple times across loop anchors.
 
-### Example:
+**Example:**
 
 ```bash
     python3 remove_loop_gene_replicates.py eupsc_25vs29_50k+100k.diff_loop1.genes
