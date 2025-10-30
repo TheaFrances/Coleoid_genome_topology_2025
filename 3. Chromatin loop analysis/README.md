@@ -146,6 +146,42 @@ Output written to: 25_29_50k+100k.diffloop1.genes_rm_dups
 
 Each processed file produces a new output file with the `_rm_dups` suffix, indicating that duplicate loops have been filtered out.
 
+### Clustered heatmaps of loop-associated gene expression across developmental stages
+
+This analysis visualizes expression patterns of genes located within *E. scolopes* chromatin loops for each developmental stage (20, 25, and 29).  
+The script [`heatmaps_tau_coexp.R`](heatmaps_tau_coexp.R) was run **separately for each stage**, using the corresponding loop–gene mapping file.
+
+**Summary of script functionality:**
+
+This script:
+
+- **Loads and processes loop-gene mappings**  
+  Loops from all three stages (20, 25, 29) are read and mapped to their associated genes using unique loop IDs derived from genomic bin coordinates.
+
+- **Identifies stage-specific loops**  
+  For the focal stage (e.g. stage 29), only loops with unique gene content not shared with other stages are retained for visualization.
+
+- **Merges expression data**  
+  TPM-normalized expression data are log-transformed and merged with the loop–gene mappings to generate per-loop gene expression matrices.
+
+- **Generates a clustered heatmap**  
+  A heatmap is created using `pheatmap`, displaying expression of genes grouped by loop.  
+  Genes appearing in multiple loops are shown separately for each loop occurrence, with `gaps_row` separating different loops.
+
+- **Calculates Tau tissue-specificity**  
+  The tissue-specificity index (Tau) is computed for each gene based on log-transformed expression values, then summarized per loop (mean and median Tau).
+
+- **Calculates intra-loop co-expression**  
+  For each loop, mean pairwise Pearson correlation between genes is calculated to assess co-regulation within loop domains.
+
+- **Outputs summary statistics and visualizations**  
+  Final outputs include:
+  - A heatmap for each stage showing loop-level gene expression patterns  
+  - Summary statistics for Tau and co-expression across loops  
+
+Each stage (20, 25, and 29) was analysed independently, producing separate heatmaps and summary outputs.
+
+
 
 
 
