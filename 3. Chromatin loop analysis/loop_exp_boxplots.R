@@ -12,11 +12,10 @@ library(gridExtra)  # For combining plots
 rm(list = ls())
 
 # Read the list of genes for each stage
-genes_to_search_20 <- readLines("/Users/users/Desktop/Micro-C/diff_loop_analysis/eupsc/output/20_tot_loop_count/tot_loops_20_50k+100k_method1.tsv.genes_rm_dups_list.txt")
-genes_to_search_25 <- readLines("/Users/users/Desktop/Micro-C/diff_loop_analysis/eupsc/output/25_tot_loop_count/tot_loops_25_50k+100k_method1.tsv.genes_rm_dups_list.txt")
-genes_to_search_29 <- readLines("/Users/users/Desktop/Micro-C/diff_loop_analysis/eupsc/output/29_tot_loop_count/tot_loops_29_50k+100k_method1.tsv.genes_rm_dups_list.txt")
-#genes_to_search_all <- readLines("/Users/users/Desktop/Micro-C/diff_loop_analysis/eupsc/output/loops_in_all_stages_50k+100k.genes_list.txt")
-#genes_to_search_29cat <- readLines("/Users/users/Desktop/Micro-C/diff_loop_analysis/eupsc/output/stage_29cat_only_loops.genes_list.txt")
+genes_to_search_20 <- readLines("tot_loops_eupsc_20_50k+100k.tsv.genes_rm_dups_list.txt")
+genes_to_search_25 <- readLines("tot_loops_eupsc_25_50k+100k.tsv.genes_rm_dups_list.txt")
+genes_to_search_29 <- readLines("tot_loops_eupsc_29_50k+100k.tsv.genes_rm_dups_list.txt")
+#genes_to_search_all <- readLines("loops_in_all_stages_50k+100k.genes_list.txt")
 
 # Read the TPM normalized data
 tpm_data <- read.table("/Users/users/Desktop/Micro-C/expression_data/Hannah_TPM_normalizedcounts_development.txt", 
@@ -50,17 +49,13 @@ TPM_norm_counts29 <- stage_means[grep(pattern29, stage_means$gene_id), ]
 #patternall <- paste0("\\b(", paste(genes_to_search_all, collapse = "|"), ")\\b")
 #TPM_norm_countsall <- stage_means[grep(patternall, stage_means$gene_id), ]
 
-#pattern29cat <- paste0("\\b(", paste(genes_to_search_29cat, collapse = "|"), ")\\b")
-#TPM_norm_counts29cat <- stage_means[grep(pattern29cat, stage_means$gene_id), ]
-
 # Combine all datasets for plotting
 TPM_norm_counts20$Stage <- "Stage 20"
 TPM_norm_counts25$Stage <- "Stage 25"
 TPM_norm_counts29$Stage <- "Stage 29"
 #TPM_norm_countsall$Stage <- "All stages"
-#TPM_norm_counts29cat$Stage <- "Stage 29cat"
 
-combined_data <- bind_rows(TPM_norm_counts20, TPM_norm_counts25, TPM_norm_counts29) #, TPM_norm_countsall) #Add TPM_norm_counts29cat, TPM_norm_counts29all if you want to check that as well
+combined_data <- bind_rows(TPM_norm_counts20, TPM_norm_counts25, TPM_norm_counts29) #, TPM_norm_countsall) #TPM_norm_counts29all
 
 #Remove genes that appear more than once, this should remove genes that appear in multiple stages
 filtered_data <- combined_data %>%
@@ -106,7 +101,7 @@ boxplot <- ggplot(filtered_data_long, aes(x = Stage, y = Log_Expression, fill = 
 print(boxplot)
 
 #Save
-ggsave(boxplot, file = "/Users/users/Desktop/Micro-C/figs_for_paper/Supplementary/diff_loop_figs/boxplots_eupsc_dev_stage_specific_gene_exp_50k+100k.tiff", height = 9, width = 13)
+ggsave(boxplot, file = "boxplots_eupsc_dev_stage_specific_gene_exp_50k+100k.tiff", height = 9, width = 13)
 
 
 #Extra----
@@ -157,9 +152,8 @@ for (tissue in unique_tissues) {
 TPM_norm_counts20$Stage <- "Stage 20"
 TPM_norm_counts25$Stage <- "Stage 25"
 TPM_norm_counts29$Stage <- "Stage 29"
-TPM_norm_counts29cat$Stage <- "Stage 29cat"
 
-combined_data <- bind_rows(TPM_norm_counts20, TPM_norm_counts25, TPM_norm_counts29) #Add TPM_norm_counts29cat if you want to check that as well
+combined_data <- bind_rows(TPM_norm_counts20, TPM_norm_counts25, TPM_norm_counts29)
 
 
 # Identify genes that appear in multiple stages

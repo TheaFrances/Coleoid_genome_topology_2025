@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*- 
-#Get the genes in/overlapping the differential loops from the output of mustache.
+#Get the genes in/overlapping loop anchors for files in mustache format.
 #This script takes all genes within the start and end of both differential loop bins as well as genes overlapping the bins (including spanning the whole bin).
 #==============================================================================
 import argparse

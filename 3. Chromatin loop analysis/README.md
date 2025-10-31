@@ -4,13 +4,13 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
 
 
 ## Contents
-- [Differential loop analysis](#Differential-loop-analysis)
+- [Get loops and genes in loop anchors](#Get-loops-and-genes-in-loop-anchors)
 
-## Differential loop analysis
+## Get loops and genes in loop anchors
 
-### Running Mustache for differential loop calling
+### Running Mustache for loop calling
 
-[Mustache](https://github.com/ay-lab/mustache) was run in differential mode using `.hic` files and absolute BED files for each sample. Loop calling was restricted to annotated chromosomes, and datasets containing unplaced scaffolds were excluded from analysis. Below are examples of the commands used:
+[Mustache](https://github.com/ay-lab/mustache) was run in differential mode using `.hic` files, to produce files of differential loops across developmental stages, as well as the total number of loops in each stage.  Loop calling was restricted to annotated chromosomes, and datasets containing unplaced scaffolds were excluded from analysis. Below are examples of the commands used:
 
 **Example: Stage 25 vs stage 29 (100 kb resolution)**
 ```bash
@@ -70,7 +70,17 @@ python merge_loops_in_2_resos.py \
   --tolerance 50000
 ```
 
-This command generates an output file with the name specified in the command, e.g., eupsc_25vs29_50k+100k.diff_loop1.
+This command generates an output file with the name specified in the command, e.g., eupsc_25vs29_50k+100k.diff_loop1. 
+
+**Note** the same procedure was applied to files with the suffixes loop1 and loop2, which contain all detected loops for each sample, not just the differential ones, for example:
+
+```bash
+python merge_loops_in_2_resos.py \
+eupsc_25vs29.loop2 \
+eupsc_25vs29.loop2 \
+tot_loops_eupsc_29_50k+100k.tsv \
+  --tolerance 50000
+  ```
 
 **Example output:**
 
@@ -80,14 +90,15 @@ Number of loops in second resolution file = 153
 Number of loops in merged file = 159
 ```
 
-### Extract genes from differential loops
+### Extract genes from differential loop and total loop files
 
-To identify genes located within differential chromatin loop anchors, we used the script [`check_gene_in_bin_diff_loops.py`](check_gene_in_bin_diff_loops.py), which compares loop anchor coordinates to gene locations.
+To identify genes located within differential chromatin loop anchors, the script [`check_gene_in_bin_loops.py`](check_gene_in_bin_loops.py) was used on both differential loop files and  the files of total loops in each stage/ This script compares loop anchor coordinates to gene locations.
 
-**Example:**
+**Examples:**
 
 ```bash
-python3 check_gene_in_bin_diff_loops.py eupsc.bed eupsc_25vs29_50k+100k.diff_loop1
+python3 check_gene_in_bin_loops.py eupsc.bed eupsc_25vs29_50k+100k.diff_loop1
+python3 check_gene_in_bin_loops.py eupsc.bed tot_loops_eupsc_29_50k+100k.tsv
 ```
 
 - Where the first input file is a BED file with gene coordinates (e.g. eupsc.bed for *E. scolopes*)
@@ -114,9 +125,10 @@ Each processed file produces a new output file with the `.genes` suffix, indicat
 
 Once loop files are annotated with genes (e.g. .genes files), gene lists were extracted, cleaned, and deduplicated using the following command:
 
-**Example:**
+**Examples:**
 ```bash
 awk -F '\t' '{print $3 "\n" $5}' eupsc_25vs29_50k+100k.diff_loop1.genes | tr ', ' '\n' | grep -v '^$' | sort | uniq > eupsc_25vs29_50k+100k.genes_list.txt
+awk -F '\t' '{print $3 "\n" $5}' tot_loops_eupsc_29_50k+100k.tsv.genes | tr ', ' '\n' | grep -v '^$' | sort | uniq > tot_loops_eupsc_29_50k+100k.tsv.genes_list.txt
 ```
 This:
 - Extracts gene ID columns (assumed to be columns 3 and 5)
@@ -131,10 +143,11 @@ Repeat for each .genes file to generate clean gene lists per condition or compar
 To remove duplicate chromatin loops based on overlapping gene interactions, the script [`remove_loop_gene_replicates.py`](remove_loop_gene_replicates.py) was ran on the .genes files.  
 This script identifies and removes redundant loops where the same sets of genes appear multiple times across loop anchors.
 
-**Example:**
+**Examples:**
 
 ```bash
     python3 remove_loop_gene_replicates.py eupsc_25vs29_50k+100k.diff_loop1.genes
+    python3 remove_loop_gene_replicates.py tot_loops_eupsc_29_50k+100k.tsv.genes
 ```
 **Example output:**
 ```
@@ -145,6 +158,7 @@ Output written to: 25_29_50k+100k.diffloop1.genes_rm_dups
 ```
 
 Each processed file produces a new output file with the `_rm_dups` suffix, indicating that duplicate loops have been filtered out.
+
 
 ### Clustered heatmaps of loop-associated gene expression across developmental stages
 

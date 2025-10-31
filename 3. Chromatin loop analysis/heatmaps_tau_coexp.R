@@ -50,7 +50,7 @@ read_loop_gene_mapping <- function(loop_file_path) {
 }
 
 # Path to the loop gene mapping file
-loop_file_path <- "/Users/users/Desktop/Micro-C/diff_loop_analysis/eupsc/output/29_tot_loop_count/tot_loops_29_50k+100k_method1.tsv.genes_rm_dups"
+loop_file_path <- "tot_loops_eupsc_29_50k+100k.tsv.genes_rm_dups"
 
 # Read the loop gene mapping
 loop_gene_mapping <- read_loop_gene_mapping(loop_file_path)
@@ -63,7 +63,7 @@ loop_gene_mapping <- loop_gene_mapping %>%
 cat("Original loops (stage 29):", n_distinct(loop_gene_mapping$loop_id), "\n")
 
 # Read expression data----
-genes_to_search_29 <- readLines("/Users/users/Desktop/Micro-C/diff_loop_analysis/eupsc/output/29_tot_loop_count/tot_loops_29_50k+100k_method1.tsv.genes_rm_dups_list.txt")
+genes_to_search_29 <- readLines("tot_loops_eupsc_29_50k+100k.tsv.genes_list.txt")
 
 tpm_data <- read.table("/Users/users/Desktop/Micro-C/expression_data/Hannah_TPM_normalizedcounts_development.txt", 
                        header = TRUE, sep = "\t")
@@ -84,8 +84,8 @@ expression_data_0_rm[,-1] <- lapply(expression_data_0_rm[,-1], function(x) {
 })
 
 # Load loop-gene mappings and tag stage
-loop_20 <- read_loop_gene_mapping("/Users/users/Desktop/Micro-C/diff_loop_analysis/eupsc/output/20_tot_loop_count/tot_loops_20_50k+100k_method1.tsv.genes_rm_dups") %>% mutate(stage = "20")
-loop_25 <- read_loop_gene_mapping("/Users/users/Desktop/Micro-C/diff_loop_analysis/eupsc/output/25_tot_loop_count/tot_loops_25_50k+100k_method1.tsv.genes_rm_dups") %>% mutate(stage = "25")
+loop_20 <- read_loop_gene_mapping("tot_loops_eupsc_20_50k+100k.tsv.genes_rm_dups") %>% mutate(stage = "20")
+loop_25 <- read_loop_gene_mapping("tot_loops_eupsc_25_50k+100k.tsv.genes_rm_dups") %>% mutate(stage = "25")
 loop_29 <- loop_gene_mapping %>% mutate(stage = "29")
 
 # Combine and summarize gene sets
@@ -197,7 +197,7 @@ heatmap_loops_1genes_rm_with_labels_3stages <- pheatmap(
 
 # Save the heatmap to files
 ggsave(heatmap_loops_1genes_rm_with_labels_3stages, 
-       file = "/Users/users/Desktop/Micro-C/figs_for_paper/Supplementary/diff_loop_figs/heatmap_stage_29_only_loop_genes_loops_50k_100k_fixed_loopids.tiff", 
+       file = "heatmap_stage_29_only_loop_genes_50k_100k.tiff", 
        height = 9.5, width = 7, limitsize = FALSE)
 
 #Print number of loops after filtering
