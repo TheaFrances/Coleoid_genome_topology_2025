@@ -5,24 +5,24 @@ rm(list = ls())
 
 # Load contacts
 eupsc_20_50kb <- load_contacts(
-  signal_path = '/Users/users/Desktop/Micro-C/scolopes/microc2/iced/20/320995_50000_iced.matrix',
-  indices_path = '/Users/users/Desktop/Micro-C/scolopes/microc2/iced/20/320995_50000_abs.bed',
+  signal_path = '/320995_50000_iced.matrix',
+  indices_path = '320995_50000_abs.bed',
   sample_name = "Stage 20",
   balancing = "T",
   colour = "goldenrod"
 )
 
 eupsc_25_50kb <- load_contacts(
-  signal_path = '/Users/users/Desktop/Micro-C/scolopes/microc1/iced/25/212492_50000_iced.matrix',
-  indices_path = '/Users/users/Desktop/Micro-C/scolopes/microc1/iced/25/212492_50000_abs.bed',
+  signal_path = '212492_50000_iced.matrix',
+  indices_path = '212492_50000_abs.bed',
   sample_name = "Stage 25",
   balancing = "T",
   colour = "#BB5566"
 )
 
 eupsc_29_50kb <- load_contacts(
-  signal_path = '/Users/users/Desktop/Micro-C/scolopes/microc1/iced/29/212493_50000_iced.matrix', 
-  indices_path = '/Users/users/Desktop/Micro-C/scolopes/microc1/iced/29/212493_50000_abs.bed',
+  signal_path = '212493_50000_iced.matrix', 
+  indices_path = '212493_50000_abs.bed',
   sample_name = "Stage 29",
   balancing = "T",
   colour = "#004488"
@@ -66,6 +66,6 @@ plot_with_annotations <- plot_insulation +
   xlim(c(start = 60e6, end = 65e6))
 
 # Save the plot with annotations
-ggsave("/Users/users/Desktop/Micro-C/figs_for_paper/Figure4/eupsc_20vs25v29_50kb_insulation_dif_650kbwindow_diffloopdev2.tiff",
+ggsave("eupsc_20vs25v29_50kb_insulation_dif_650kbwindow_diffloopdev2.tiff",
        plot = plot_with_annotations, units = "in", dpi = 200, width = 8, height = 6)
 
