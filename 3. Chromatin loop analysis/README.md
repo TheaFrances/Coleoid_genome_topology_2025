@@ -315,7 +315,7 @@ python subsetBigWig.py /path/to/97309_Stage29_bbduk_aln_normalised.bw /output/97
 
 ### Plot loops using Plotgardner
 
-To generate triangle heatmaps of chromatin loops alongside gene models and regulatory tracks (e.g., ATAC-seq), we used the R package [`plotgardner`](https://phanstiellab.github.io/plotgardner/). The R script [`plot_diff_loop_dev_eupsc_50k_plotgardener_st29_with_atac`](plot_diff_loop_dev_eupsc_50k_plotgardener_st29_with_atac)  was used to create Figure 4 of the manuscript, highlighting a developmentally dynamic loop in *E. scolopes* chromosome 5.
+To generate triangle heatmaps of chromatin loops alongside gene models and regulatory tracks (e.g., ATAC-seq), we used the R package [`plotgardner`](https://phanstiellab.github.io/plotgardner/). The R script [`plot_diff_loop_dev_eupsc_50k_plotgardener_st29_with_atac`](plot_diff_loop_dev_eupsc_50k_plotgardener_st29_with_atac)  was used to create Figure 4D of the manuscript, highlighting a developmentally dynamic loop in *E. scolopes* chromosome 5.
 
 The script performs the following steps:
 
@@ -344,6 +344,6 @@ This method enables high-quality visualisation of long-range chromatin interacti
 
 ### Plotting differential insulation score
 
-The R script [`genova_diff_insulation_score.R`](genova_diff_insulation_score.R) calculates and plots insulation scores  from Micro-C contact matrices in *E. scolopes* across the three developmental stages (20, 25, and 29). The goal is to visualise differences in chromatin insulation across the differential loop shown in Figure 4 and annotate potential differential loop regions. Input files for this script are taken directly from the HiC-Pro mapping output (in [1. Preprocessing and mapping of Micro-C reads](../1.%20Preprocessing%20and%20mapping%20of%20Micro-C%20reads/)).
+The R script [`genova_diff_insulation_score.R`](genova_diff_insulation_score.R) uses the [GENOVA R package](https://github.com/robinweide/GENOVA) to calculate insulation scores from *E. scolopes* Micro-C iced matrices and visualise differences in insulation scores across the three developmental stages for the loop region shown in Figure 4D. The script then annotates potential differential loop regions to produce Figure 4E. Input files for this script are taken directly from the HiC-Pro mapping output (detailed in [1. Preprocessing and mapping of Micro-C reads](../1.%20Preprocessing%20and%20mapping%20of%20Micro-C%20reads/)).
 
 
