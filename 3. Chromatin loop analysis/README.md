@@ -6,6 +6,8 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
 ## Contents
 - [Get loops and genes in loop anchors](#Get-loops-and-genes-in-loop-anchors)
 - [Loop anchor gene expression analyses](#Loop-anchor-gene-expression-analyses)
+- [ATAC-seq signal normalisation, peak filtering and file conversion and formatting](#-ATAC-seq-signal-normalisation,-peak-filtering-and-file-conversion-and-formatting)
+- [Plot triangle loop figures with annotation tracks](#Plot-triangle-loop-figures-with-annotation-tracks)
 
 ## Get loops and genes in loop anchors
 
@@ -228,13 +230,115 @@ The script [`loop_exp_boxplots.R`](loop_exp_boxplots.R) compares gene expression
      - Wilcoxon test statistic and p-value
      - Mean and median expression values per stage
 
-### Notes:
+**Notes:**
 - Genes appearing in multiple stages were **excluded** to focus on genes unique to a single stage’s loops.
 - Optional sections allow toggling between keeping all genes or filtering for stage-specific ones.
 
+## ATAC-seq signal normalisation, peak filtering and file conversion and formatting
+
+To allow direct comparison of ATAC-seq signal across developmental stages, we normalised the `.bw` signal tracks to a common mean depth based on `bigWigInfo` statistics. Specifically, we scaled Stage 25 and Stage 29 signals to match the depth of Stage 20, which had the highest mean coverage.
+
+**Mean signal values from `bigWigInfo`:**
+
+| Stage | Mean signal | Relative depth          | Interpretation   |
+|-------|-------------|--------------------------|------------------|
+| 20    | **3.43**     | highest                 | deepest coverage |
+| 25    | **3.35**     | ≈ 0.98×                 | nearly equal     |
+| 29    | **2.81**     | ≈ 0.82×                 | shallower        |
+
+**Scaling factors (relative to Stage 20):**
+
+| Stage | Mean  | Scaling factor |
+|-------|-------|----------------|
+| 20    | 3.428 | **1.00**       |
+| 25    | 3.352 | **1.02**       |
+| 29    | 2.815 | **1.22**       |
+
+Scaling was performed using [`bigwigCompare`](https://deeptools.readthedocs.io/en/develop/content/tools/bigwigCompare.html) from deepTools:
+
+```bash
+# Stage 25 → scale to Stage 20
+bigwigCompare -b1 97308_Stage25_bbduk_aln.bw -b2 97308_Stage25_bbduk_aln.bw \
+  --scaleFactors 1.02288469:1 --operation first \
+  -o 97308_Stage25_bbduk_aln_normalised.bw
+
+# Stage 29 → scale to Stage 20
+bigwigCompare -b1 97309_Stage29_bbduk_aln.bw -b2 97309_Stage29_bbduk_aln.bw \
+  --scaleFactors 1.21804881:1 --operation first \
+  -o 97309_Stage29_bbduk_aln_normalised.bw
+  ```
+
+Normalised files were then converted to bedGraph:
+```bash
+bigWigToBedGraph 97309_Stage29_bbduk_aln_normalised.bw 97309_Stage29_bbduk_aln_normalised.bedgraph
+bigWigToBedGraph 97308_Stage25_bbduk_aln_normalised.bw 97308_Stage25_bbduk_aln_normalised.bedgraph
+bigWigToBedGraph 97307_Stage20_bbduk_aln.bw 97307_Stage20_bbduk_aln_normalised.bedgraph  # For consistency
+```
+
+Next, regions were filtered for signal > 1, i.e. regions of open chromatin:
+```bash
+awk '$4 > 1' 97309_Stage29_bbduk_aln_normalised.bedgraph > 97309_Stage29_bbduk_aln_normalised_peaks.bedgraph
+# The same procedure and subsequent commands were applied to the other stages
+```
+
+Then converted to 3-column BED format:
+```bash
+cut -f1-3 97309_Stage29_bbduk_aln_normalised_peaks.bedgraph > 97309_Stage29_bbduk_aln_normalised_peaks_3col.bed
+```
+
+Next, unplaced scaffolds were removed:
+```bash
+grep Lachesis 97309_Stage29_bbduk_aln_normalised_peaks_3col.bed > 97309_Stage29_bbduk_aln_normalised_peaks_3col_rm_scaf.bed
+```
+
+Sort BED files using chromosome size file (scaffolds removed)
+```bash
+bedtools sort -i 97309_Stage29_bbduk_aln_normalised_peaks_3col_rm_scaf.bed \
+  -g ../Lachesis_assembly_chrsize_rm_scaf.sorted.txt \
+  > 97309_Stage29_bbduk_aln_normalised_peaks_3col_sorted_rm_scaf.bed
+  ```
+
+### Converting and subsetting ATAC-seq BigWig files
+
+To handle large `.bw` files for visualisation or downstream analysis, we subset individual chromosomes and from whole-genome normalised bigWig files to reduce file size for when uploading to Plotgardener. The script used was [`subsetBigWig.py`](https://gist.github.com/dpryan79/740f2d00ce6b509ab9644fc43418996c), which requires the `pyBigWig` and `numpy` packages.
+
+Example using the chromosome Lachesis_group4__56_contigs__length_174030884 (chromosome 5 in *E. scolopes*):
+```bash
+python subsetBigWig.py /path/to/97309_Stage29_bbduk_aln_normalised.bw /output/97309_st29_chr5.bw Lachesis_group4__56_contigs__length_174030884
+```
 
 
+## Plot triangle loop figures with annotation tracks
 
+### Plot loops using plotgardner
+
+
+To generate triangle heatmaps of chromatin loops alongside gene models and regulatory tracks (e.g., ATAC-seq), we used the R package [`plotgardner`](https://phanstiellab.github.io/plotgardner/). The R script provided was used to create Figure 4 of the manuscript, highlighting a developmentally dynamic loop in *E. scolopes* chromosome 5.
+
+The script performs the following steps:
+
+1. Loads a `.hic` file containing KR-normalised Hi-C data for the relevant developmental stage.
+2. Builds a genome assembly using:
+   - A `.fasta` genome file  
+   - A `TxDb` object created from an exon-corrected GFF  
+   - A `BSgenome` object generated from a `.2bit` file  
+   - A custom `OrgDb` package (e.g. `org.Eesc.eg.db`)
+3. Plots a triangular Hi-C map over a specified genomic region using `plotHicTriangle()`.
+4. Adds chromosome labels and tick marks (e.g. 60 Mb, 65 Mb).
+5. Overlays gene models using `plotGenes()`, with specific genes of interest highlighted.
+6. Loads and plots ATAC-seq signal from `.bw` files for three developmental stages, scaling the signal tracks using the 99.5th percentile to match the y-axis range.
+7. Adds a heatmap legend and removes grid guides for clean figure export.
+8. Saves the figure as a high-resolution TIFF image.
+
+**Required input files:**
+
+- `.hic` file (KR-normalised Hi-C matrix)  
+- GFF file with corrected exon annotations  
+- `.2bit` genome sequence file  
+- BigWig (`.bw`) files containing ATAC-seq signal  
+- Optional: `OrgDb` object for gene metadata (used to display gene names)
+
+This method enables high-quality visualisation of long-range chromatin interactions and their associated regulatory context across developmental stages in *E. scolopes*.
 
 
 
