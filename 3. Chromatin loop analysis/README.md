@@ -6,6 +6,7 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
 ## Contents
 - [Get loops and genes in loop anchors](#Get-loops-and-genes-in-loop-anchors)
 - [Loop anchor gene expression analyses](#Loop-anchor-gene-expression-analyses)
+- [Loop anchor GO analysis](#Loop-anchor-GO-analysis)
 - [ATAC-seq signal normalisation, peak filtering and file conversion and formatting](#atac-seq-signal-normalisation-peak-filtering-and-file-conversion-and-formatting)
 - [Plot triangle loop figures with annotation tracks](#Plot-triangle-loop-figures-with-annotation-tracks)
 - [Plotting differential insulation score](#Plotting-differential-insulation-score)
@@ -235,7 +236,7 @@ The script [`loop_exp_boxplots.R`](loop_exp_boxplots.R) compares gene expression
 - Genes appearing in multiple stages were **excluded** to focus on genes unique to a single stage’s loops.
 - Optional sections allow toggling between keeping all genes or filtering for stage-specific ones.
 
-## Loop anchor gene GO analyses
+## Loop anchor GO analysis
 
 The script [`GO_analysis_diff_loops.R`](GO_analysis_diff_loops.R) was used to perform gene ontology analyses on loop anchor genes, using files containing gene lists from all loop anchors in each stage, e.g. tot_loops_eupsc_29_50k+100k.tsv.genes_rm_dups_list.txt as the gene list to test for enrichment. **Note** GO analyses were performed the same way as in [GO_analyses_interacting_all_octbi.R](../2.%20Interacting%20gene%20pair%20analysis/GO_analyses_interacting_all_octbi.R)) from the interacting gene pair analysis. 
 
