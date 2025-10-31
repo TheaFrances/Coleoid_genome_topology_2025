@@ -6,7 +6,7 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
 ## Contents
 - [Get loops and genes in loop anchors](#Get-loops-and-genes-in-loop-anchors)
 - [Loop anchor gene expression analyses](#Loop-anchor-gene-expression-analyses)
-- [ATAC-seq signal normalisation, peak filtering and file conversion and formatting](#-ATAC-seq-signal-normalisation,-peak-filtering-and-file-conversion-and-formatting)
+- [ATAC-seq signal normalisation, peak filtering and file conversion and formatting](#-ATAC-seq-signal-normalisation-and-peak-filtering-and-file-conversion-and-formatting)
 - [Plot triangle loop figures with annotation tracks](#Plot-triangle-loop-figures-with-annotation-tracks)
 
 ## Get loops and genes in loop anchors
@@ -234,7 +234,7 @@ The script [`loop_exp_boxplots.R`](loop_exp_boxplots.R) compares gene expression
 - Genes appearing in multiple stages were **excluded** to focus on genes unique to a single stage’s loops.
 - Optional sections allow toggling between keeping all genes or filtering for stage-specific ones.
 
-## ATAC-seq signal normalisation, peak filtering and file conversion and formatting
+## ATAC-seq signal normalisation and peak filtering and file conversion and formatting
 
 ### ATAC-seq signal normalisation
 
@@ -301,7 +301,7 @@ bedtools sort -i 97309_Stage29_bbduk_aln_normalised_peaks_3col_rm_scaf.bed \
   > 97309_Stage29_bbduk_aln_normalised_peaks_3col_sorted_rm_scaf.bed
   ```
 
-## Converting and subsetting ATAC-seq BigWig files
+### Converting and subsetting ATAC-seq BigWig files
 
 To handle large `.bw` files for visualisation or downstream analysis, we subset individual chromosomes and from whole-genome normalised bigWig files to reduce file size for when uploading to Plotgardener. The script used was [`subsetBigWig.py`](https://gist.github.com/dpryan79/740f2d00ce6b509ab9644fc43418996c), which requires the `pyBigWig` and `numpy` packages.
 
@@ -313,7 +313,7 @@ python subsetBigWig.py /path/to/97309_Stage29_bbduk_aln_normalised.bw /output/97
 ## Plot triangle loop figures with annotation tracks
 
 ### Plot loops using Plotgardner
-
+s
 To generate triangle heatmaps of chromatin loops alongside gene models and regulatory tracks (e.g., ATAC-seq), we used the R package [`plotgardner`](https://phanstiellab.github.io/plotgardner/). The R script [`plot_diff_loop_dev_eupsc_50k_plotgardener_st29_with_atac`](plot_diff_loop_dev_eupsc_50k_plotgardener_st29_with_atac)  was used to create Figure 4 of the manuscript, highlighting a developmentally dynamic loop in *E. scolopes* chromosome 5.
 
 The script performs the following steps:
