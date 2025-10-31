@@ -6,7 +6,7 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
 ## Contents
 - [Get loops and genes in loop anchors](#Get-loops-and-genes-in-loop-anchors)
 - [Loop anchor gene expression analyses](#Loop-anchor-gene-expression-analyses)
-- [ATACseq signal normalisation, peak filtering and file conversion and formatting](#-ATACseq-signal-normalisation,-peak-filtering-and-file-conversion-and-formatting)
+- [ATAC-seq signal normalisation, peak filtering and file conversion and formatting](#atac-seq-signal-normalisation-peak-filtering-and-file-conversion-and-formatting)
 - [Plot triangle loop figures with annotation tracks](#Plot-triangle-loop-figures-with-annotation-tracks)
 
 ## Get loops and genes in loop anchors
@@ -234,7 +234,7 @@ The script [`loop_exp_boxplots.R`](loop_exp_boxplots.R) compares gene expression
 - Genes appearing in multiple stages were **excluded** to focus on genes unique to a single stage’s loops.
 - Optional sections allow toggling between keeping all genes or filtering for stage-specific ones.
 
-## ATACseq signal normalisation and peak filtering and file conversion and formatting
+## ATAC-seq signal normalisation and peak filtering and file conversion and formatting
 
 ### ATAC-seq signal normalisation
 
