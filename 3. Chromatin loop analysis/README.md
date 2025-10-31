@@ -43,7 +43,7 @@ Mustache outputs chromatin loops in a simple **tab-separated format** with the f
 | 6      | End position of end anchor (bin)     |
 | 7      | q-value of the loop                  |
 | 8      | log10(p-value)                       |
-| 9      | Normalized interaction count         |
+| 9      | Normalised interaction count         |
 
 
 When comparing loop calls across stages using Mustache’s differential mode, the following output files are generated:
@@ -167,7 +167,7 @@ Each processed file produces a new output file with the `_rm_dups` suffix, indic
 
 ### Clustered heatmaps of loop-associated gene expression across developmental stages
 
-This analysis visualizes expression patterns of genes located within *E. scolopes* chromatin loops for each developmental stage (20, 25, and 29).  
+This analysis visualises expression patterns of genes located within *E. scolopes* chromatin loops for each developmental stage (20, 25, and 29).  
 The script [`heatmaps_tau_coexp.R`](heatmaps_tau_coexp.R) was run **separately for each stage**, using the corresponding loop–gene mapping file.
 
 **Summary of script functionality:**
@@ -208,7 +208,7 @@ The script [`loop_exp_boxplots.R`](loop_exp_boxplots.R) compares gene expression
 
 1. **Input preparation:**
    - Gene lists were extracted from stage-specific loop–gene mappings (`*.genes_list.txt`).
-   - TPM-normalized expression data were read and averaged across replicates for each developmental stage (Stages 14–28).
+   - TPM-normalised expression data were read and averaged across replicates for each developmental stage (Stages 14–28).
 
 2. **Stage-specific filtering:**
    - For each stage (20, 25, 29), expression data were subset to include only genes uniquely present in that stage’s loop set (i.e., genes not found in loops from other stages).
@@ -234,6 +234,10 @@ The script [`loop_exp_boxplots.R`](loop_exp_boxplots.R) compares gene expression
 **Notes:**
 - Genes appearing in multiple stages were **excluded** to focus on genes unique to a single stage’s loops.
 - Optional sections allow toggling between keeping all genes or filtering for stage-specific ones.
+
+## Loop anchor gene GO analyses
+
+The script [`GO_analysis_diff_loops.R`](GO_analysis_diff_loops.R) was used to perform gene ontology analyses on loop anchor genes, using files containing gene lists from all loop anchors in each stage, e.g. tot_loops_eupsc_29_50k+100k.tsv.genes_rm_dups_list.txt as the gene list to test for enrichment. **Note** GO analyses were performed the same way as in [GO_analyses_interacting_all_octbi.R](../2.%20Interacting%20gene%20pair%20analysis/GO_analyses_interacting_all_octbi.R)) from the interacting gene pair analysis. 
 
 ## ATAC-seq signal normalisation, peak filtering and file conversion and formatting
 
