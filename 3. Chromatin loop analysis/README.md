@@ -5,6 +5,7 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
 
 ## Contents
 - [Get loops and genes in loop anchors](#Get-loops-and-genes-in-loop-anchors)
+- [Loop anchor gene expression analyses](#Loop-anchor-gene-expression-analyses)
 
 ## Get loops and genes in loop anchors
 
@@ -159,6 +160,7 @@ Output written to: 25_29_50k+100k.diffloop1.genes_rm_dups
 
 Each processed file produces a new output file with the `_rm_dups` suffix, indicating that duplicate loops have been filtered out.
 
+## Loop anchor gene expression analyses
 
 ### Clustered heatmaps of loop-associated gene expression across developmental stages
 
