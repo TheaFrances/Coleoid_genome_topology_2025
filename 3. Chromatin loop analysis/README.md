@@ -234,7 +234,7 @@ The script [`loop_exp_boxplots.R`](loop_exp_boxplots.R) compares gene expression
 - Genes appearing in multiple stages were **excluded** to focus on genes unique to a single stage’s loops.
 - Optional sections allow toggling between keeping all genes or filtering for stage-specific ones.
 
-## ATAC-seq signal normalisation and peak filtering and file conversion and formatting
+## ATAC-seq signal normalisation, peak filtering and file conversion and formatting
 
 ### ATAC-seq signal normalisation
 
