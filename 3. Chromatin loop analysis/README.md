@@ -8,6 +8,7 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
 - [Loop anchor gene expression analyses](#Loop-anchor-gene-expression-analyses)
 - [ATAC-seq signal normalisation, peak filtering and file conversion and formatting](#atac-seq-signal-normalisation-peak-filtering-and-file-conversion-and-formatting)
 - [Plot triangle loop figures with annotation tracks](#Plot-triangle-loop-figures-with-annotation-tracks)
+- [Plotting differential insulation score](#Plotting-differential-insulation-score)
 
 ## Get loops and genes in loop anchors
 
@@ -313,7 +314,7 @@ python subsetBigWig.py /path/to/97309_Stage29_bbduk_aln_normalised.bw /output/97
 ## Plot triangle loop figures with annotation tracks
 
 ### Plot loops using Plotgardner
-s
+
 To generate triangle heatmaps of chromatin loops alongside gene models and regulatory tracks (e.g., ATAC-seq), we used the R package [`plotgardner`](https://phanstiellab.github.io/plotgardner/). The R script [`plot_diff_loop_dev_eupsc_50k_plotgardener_st29_with_atac`](plot_diff_loop_dev_eupsc_50k_plotgardener_st29_with_atac)  was used to create Figure 4 of the manuscript, highlighting a developmentally dynamic loop in *E. scolopes* chromosome 5.
 
 The script performs the following steps:
@@ -341,6 +342,8 @@ The script performs the following steps:
 
 This method enables high-quality visualisation of long-range chromatin interactions and their associated regulatory context across developmental stages in *E. scolopes*.
 
+### Plotting differential insulation score
 
+The R script [`genova_diff_insulation_score.R`](genova_diff_insulation_score.R) calculates and plots insulation scores  from Micro-C contact matrices in *E. scolopes* across the three developmental stages (20, 25, and 29). The goal is to visualise differences in chromatin insulation across the differential loop shown in Figure 4 and annotate potential differential loop regions. Input files for this script are taken directly from the HiC-Pro mapping output (in [1. Preprocessing and mapping of Micro-C reads](../1.%20Preprocessing%20and%20mapping%20of%20Micro-C%20reads/)).
 
 
