@@ -18,7 +18,7 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
   - [File formatting and peak filtering](#file-formatting-and-peak-filtering)
   - [Converting and subsetting ATAC-seq BigWig files](#converting-and-subsetting-atac-seq-bigwig-files)
 - [Plot triangle loop figures with annotation tracks](#plot-triangle-loop-figures-with-annotation-tracks)
-  - [Plot loops using Plotgardner](#plot-loops-using-plotgardner)
+  - [Plot loops using Plotgardener](#plot-loops-using-plotgardener)
 - [Plotting differential insulation score](#plotting-differential-insulation-score)
 - [Prepare files of loops for cross-species comparisons](#prepare-files-of-loops-for-cross-species-comparisons)
 - [Check whether loop anchor genes are on the same or different chromosomes in other species](#check-whether-loop-anchor-genes-are-on-the-same-or-different-chromosomes-in-other-species)
@@ -340,9 +340,9 @@ python subsetBigWig.py /path/to/97309_Stage29_bbduk_aln_normalised.bw /output/97
 
 ## Plot triangle loop figures with annotation tracks
 
-### Plot loops using Plotgardner
+### Plot loops using Plotgardener
 
-To generate triangle heatmaps of chromatin loops alongside gene models and regulatory tracks (e.g., ATAC-seq), we used the R package [`plotgardner`](https://phanstiellab.github.io/plotgardner/). The R script [`plot_diff_loop_plotgardener_with_atac.R`](plot_diff_loop_plotgardener_with_atac.R)  was used to create Figure 4D of the manuscript, highlighting a developmentally dynamic loop in *E. scolopes* chromosome 5.
+To generate triangle heatmaps of chromatin loops alongside gene models and regulatory tracks (e.g., ATAC-seq), we used the R package [`plotgardener`](https://phanstiellab.github.io/plotgardener/). The R script [`plot_diff_loop_plotgardener_with_atac.R`](plot_diff_loop_plotgardener_with_atac.R)  was used to create Figure 4D of the manuscript, highlighting a developmentally dynamic loop in *E. scolopes* chromosome 5.
 
 The script performs the following steps:
 
