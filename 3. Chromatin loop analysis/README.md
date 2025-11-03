@@ -29,6 +29,7 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
   - [Identify loops conserved across all three species](#identify-loops-conserved-across-all-three-species)
   - [Check chromosomal status and intergenic distances of conserved loops](#check-chromosomal-status-and-intergenic-distances-of-conserved-loops)
   - [Expression heatmap of conserved loop anchor genes](#expression-heatmap-of-conserved-loop-anchor-genes)
+  - [Correlation of conserved loop size with genome size](#correlation-of-conserved-loop-size-with-genome-size)
 
 ## Get loops and genes in loop anchors
 
@@ -349,12 +350,11 @@ The script performs the following steps:
    - A `TxDb` object created from an exon-corrected GFF  
    - A `BSgenome` object generated from a `.2bit` file  
    - A custom `OrgDb` package (e.g. `org.Eesc.eg.db`)
-3. Plots a triangular Hi-C map over a specified genomic region using `plotHicTriangle()`.
-4. Adds chromosome labels and tick marks (e.g. 60 Mb, 65 Mb).
-5. Overlays gene models using `plotGenes()`, with specific genes of interest highlighted.
-6. Loads and plots ATAC-seq signal from normalised `.bw` files for three developmental stages, scaling the signal tracks using the 99.5th percentile to match the y-axis range.
-7. Adds a heatmap legend and removes grid guides for clean figure export.
-8. Saves the figure.
+3. Plots a triangular Hi-C map over a specified genomic region.
+4. Overlays gene models using `plotGenes()`, with specific genes of interest highlighted.
+5. Loads and plots ATAC-seq signal from normalised `.bw` files for three developmental stages, scaling the signal tracks using the 99.5th percentile to match the y-axis range.
+6. Adds a heatmap legend and removes grid guides for clean figure export.
+7. Saves the figure.
 
 **Required input files:**
 
@@ -475,5 +475,77 @@ The R script [`conserved_loop_exp_heatmap.R`](conserved_loop_exp_heatmap.R) visu
 
 This visualisation is used to explore whether conserved loop anchor genes show tissue-specific expression patterns, particularly in brain and neural tissues.
 
+##Get conserved loop sizes
 
+### Calculate loop sizes for conserved loops
+
+The R script [`conserved_loop_sizes.R`](conserved_loop_sizes.R) calculates loop sizes for chromatin loops conserved between species by subtracting the start coordinate of the first loop bin from the end coordinate of the second bin. The script integrates loop‑size data across *E. scolopes*, *S. officinalis*, and *O. bimaculoides*, matching them to orthologous loop pairs identified in the conserved loop analyses.
+
+**Summary of script functionality:**
+
+1. **Input data processing**
+   - Reads per‑species loop‑size tables from previously processed `.genes_rm_dups` files for *E. scolopes*, *S. officinalis*, and *O. bimaculoides*.
+   - Standardises column names and ensures numeric coordinate formats for the start position of the first loop bin.
+   - Uses a helper function to parse loop IDs of the form `<chromosome>:<start>-<end>` into separate chromosome and start‑position columns.
+   - These parsed identifiers enable consistent joining of loop‑size information across species.
+
+2. **Getting conserved loop sizes**
+   - For each species pair (*E. scolopes–S. officinalis*, *E. scolopes–O. bimaculoides*, and *S. officinalis–O. bimaculoides*), the script joins loop‑size data by matching chromosome and bin‑start coordinates.
+   - This produces new files such as:
+     - `eupsc_sepof_consv_loops_with_sizes.tsv`
+     - `eupsc_octbi_consv_loops_with_sizes.tsv`
+     - `sepof_octbi_consv_loops_with_sizes.tsv`
+   - A combined file containing loops conserved across all three species is read in and joined with loop‑size tables for each species.
+   - The resulting table (`eupsc_octbi_sepof_consv_loops_with_sizes.tsv`) includes loop‑size information from all three species side by side.
+
+3. **Diagnostics**
+   - A simple summary table reports:
+     - The number of loops processed per comparison.
+     - How many loops are missing size information in each species (useful for detecting coordinate mismatches).
+
+**Example output table (diagnostic summary):**
+```
+# A tibble: 4 × 5
+  dataset       n_rows n_missing_eupsc n_missing_sepof n_missing_octbi
+  <chr>           <int>           <int>           <int>           <int>
+1 eupsc-sepof        65               0               3              NA
+2 eupsc-octbi        72               1              NA               2
+3 sepof-octbi        68              NA               0               1
+4 all-three          45               0               2               1
+```
+**Note:**
+- Minor coordinate mismatches between files can lead to missing loop‑size values, which were manually corrected when due to small shifts in overlapping bins.
+
+### Correlation of conserved loop size with genome size
+
+The R script [`conserved_loop_size_correlation.R`](conserved_loop_size_correlation.R) assesses whether the physical size of conserved chromatin loops scales with overall genome size across species.
+
+**Input:**  
+The input file is `loop_sizes_start_end.txt`, which is a simplified version of the full three‑species conserved loop table (`eupsc_octbi_sepof_consv_loops_with_sizes.tsv`). It contains the following columns, with one row per conserved loop, where missing values indicate the loop is not conserved in that species:
+
+```
+eupsc_size    octbi_size    sepof_size
+130000        600000        1450000
+6900000       2300000        5950000
+...
+```
+
+**Summary of analysis steps:**
+
+1. **Input data processing**
+   - Adds a loop ID to each row to track conserved loops.
+   - Removes known outlier loops (e.g., a single loop in *E. scolopes* which is likely due to a genome missassembly).
+   - Pivots the wide format into long format (one row per species per loop).
+   - Assigns genome size values to each species.
+
+2. **Per-loop correlation analysis**
+  - **Linear regression slope**, estimating bp increase per 1 Gb genome size.
+   - Summarises the number and proportion of loops showing a positive correlation with genome size.
+   - Performs Wilcoxon signed-rank tests on the distribution of slopes (vs. 0).
+   - This tests whether conserved loops tend to scale with genome size across species.
+
+3. **Scatter plot of individual loops**
+   - Generates a clean scatter/line plot showing each loop's size across species. Species genome sizes are shown on the x-axis; loop sizes on the y-axis.
+   - Each loop is assigned a unique colour using a distinct HCL-based palette.
+   - The final figure is saved.
 
