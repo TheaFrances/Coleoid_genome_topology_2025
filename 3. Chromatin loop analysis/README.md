@@ -10,6 +10,7 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
 - [ATAC-seq signal normalisation, peak filtering and file conversion and formatting](#atac-seq-signal-normalisation-peak-filtering-and-file-conversion-and-formatting)
 - [Plot triangle loop figures with annotation tracks](#Plot-triangle-loop-figures-with-annotation-tracks)
 - [Plotting differential insulation score](#Plotting-differential-insulation-score)
+- [Conserved loop analyses](#Conserved-loop-analyses)
 
 ## Get loops and genes in loop anchors
 
@@ -347,8 +348,10 @@ The script performs the following steps:
 
 This method enables high-quality visualisation of long-range chromatin interactions and their associated regulatory context across developmental stages in *E. scolopes*.
 
-### Plotting differential insulation score
+## Plotting differential insulation score
 
 The R script [`genova_diff_insulation_score.R`](genova_diff_insulation_score.R) uses the [GENOVA R package](https://github.com/robinweide/GENOVA) to calculate insulation scores from *E. scolopes* Micro-C iced matrices and visualise differences in insulation scores across the three developmental stages for the loop region shown in Figure 4D. The script then annotates potential differential loop regions to produce Figure 4E. Input files for this script are taken directly from the HiC-Pro mapping output (detailed in [1. Preprocessing and mapping of Micro-C reads](../1.%20Preprocessing%20and%20mapping%20of%20Micro-C%20reads/)).
+
+## Conserved loop analyses
 
 
