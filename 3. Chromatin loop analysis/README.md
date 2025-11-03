@@ -339,7 +339,7 @@ python subsetBigWig.py /path/to/97309_Stage29_bbduk_aln_normalised.bw /output/97
 
 ### Plot loops using Plotgardner
 
-To generate triangle heatmaps of chromatin loops alongside gene models and regulatory tracks (e.g., ATAC-seq), we used the R package [`plotgardner`](https://phanstiellab.github.io/plotgardner/). The R script [`plot_diff_loop_dev_eupsc_50k_plotgardener_st29_with_atac.R`](plot_diff_loop_dev_eupsc_50k_plotgardener_st29_with_atac.R)  was used to create Figure 4D of the manuscript, highlighting a developmentally dynamic loop in *E. scolopes* chromosome 5.
+To generate triangle heatmaps of chromatin loops alongside gene models and regulatory tracks (e.g., ATAC-seq), we used the R package [`plotgardner`](https://phanstiellab.github.io/plotgardner/). The R script [`plot_diff_loop_plotgardener_with_atac.R`](plot_diff_loop_plotgardener_with_atac.R)  was used to create Figure 4D of the manuscript, highlighting a developmentally dynamic loop in *E. scolopes* chromosome 5.
 
 The script performs the following steps:
 
