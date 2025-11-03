@@ -197,26 +197,26 @@ The script [`heatmaps_tau_coexp.R`](heatmaps_tau_coexp.R) was run **separately f
 
 This script:
 
-- **Loads and processes loop-gene mappings**  
+1. **Loads and processes loop-gene mappings**  
   Loops from all three stages (20, 25, 29) are read and mapped to their associated genes using unique loop IDs derived from genomic bin coordinates.
 
-- **Identifies stage-specific loops**  
+2. **Identifies stage-specific loops**  
   For the focal stage (e.g. stage 29), only loops with unique gene content not shared with other stages are retained for visualisation.
 
-- **Merges expression data**  
+3. **Merges expression data**  
   TPM-normalised expression data are log-transformed and merged with the loop–gene mappings to generate per-loop gene expression matrices.
 
-- **Generates a clustered heatmap**  
+4. **Generates a clustered heatmap**  
   A heatmap is created using `pheatmap`, displaying expression of genes grouped by loop.  
   Genes appearing in multiple loops are shown separately for each loop occurrence, with `gaps_row` separating different loops.
 
-- **Calculates Tau tissue-specificity**  
+5. **Calculates Tau tissue-specificity**  
   The tissue-specificity index (Tau) is computed for each gene based on log-transformed expression values, then summarised per loop (mean and median Tau).
 
-- **Calculates intra-loop co-expression**  
+6. **Calculates intra-loop co-expression**  
   For each loop, mean pairwise Pearson correlation between genes is calculated to assess co-regulation within loop domains.
 
-- **Outputs summary statistics and visualizations**  
+7. **Outputs summary statistics and visualisations**  
   Final outputs include:
   - A heatmap for each stage showing loop-level gene expression patterns  
   - Summary statistics for Tau and co-expression across loops  
@@ -244,7 +244,7 @@ The script [`loop_exp_boxplots.R`](loop_exp_boxplots.R) compares gene expression
    - All pairwise comparisons between stages were tested using **Wilcoxon rank-sum tests** within each tissue.
    - Significance levels were annotated using the `ggsignif` package.
 
-5. **Visualization:**
+5. **Visualisation:**
    - A faceted boxplot was created showing gene expression (logTPM) across tissues, grouped by developmental stage.
    - Custom color schemes and angled axis labels were used for clarity.
 
