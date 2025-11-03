@@ -555,7 +555,7 @@ eupsc_size    octbi_size    sepof_size
    - Assigns genome size values to each species.
 
 2. **Per-loop correlation analysis**
-  - **Linear regression slope**, estimating bp increase per 1 Gb genome size.
+   - estimating bp increase per 1 Gb genome size.
    - Summarises the number and proportion of loops showing a positive correlation with genome size.
    - Performs Wilcoxon signed-rank tests on the distribution of slopes (vs. 0).
    - This tests whether conserved loops tend to scale with genome size across species.
