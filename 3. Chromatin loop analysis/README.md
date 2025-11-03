@@ -441,7 +441,21 @@ The output file provides a summary of:
 - The minimum genomic distances between start and end loop anchor genes for loops where all genes remain on the same chromosome.
 
 
+### Expression heatmap of conserved loop anchor genes
 
+The R script [`conserved_loop_exp_heatmap.R`](conserved_loop_exp_heatmap.R) visualises the expression of orthologous genes found in chromatin loops conserved across species across a range of *E. scolopes* tissues. The script shows an example for loops conserved across the decapodiform species and performs the following steps:
+
+- Loads TPM-normalised gene expression data across multiple tissues.  
+- Log-transforms the TPM values (adding a pseudocount of 0.01).  
+- Averages expression values across biological replicates for each tissue.  
+- Extracts the *E. scolopes* gene IDs (beginning with `cluster_`) found in conserved loops using the file `eupsc_sepof_consv_loops_50k+100k.txt`.  
+- Filters the expression matrix to include only genes found in conserved loops.  
+- Generates a heatmap of log-transformed, row-scaled expression values using the [`pheatmap`](https://cran.r-project.org/web/packages/pheatmap/index.html) package.  
+- Saves the plot.  
+
+**Note:** Tissue names in the expression matrix are manually mapped to more readable names, and replicates are averaged per tissue group before plotting.
+
+This visualisation is used to explore whether conserved loop anchor genes show tissue-specific expression patterns, particularly in brain and neural tissues.
 
 
 
