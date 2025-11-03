@@ -269,10 +269,10 @@ To allow direct comparison of ATAC-seq signal across developmental stages, we no
 **Mean signal values from `bigWigInfo`:**
 
 | Stage | Mean signal | Relative depth          | Interpretation   |
-|-------|-------------|--------------------------|------------------|
-| 20    | **3.43**     | highest                 | deepest coverage |
-| 25    | **3.35**     | ≈ 0.98×                 | nearly equal     |
-| 29    | **2.81**     | ≈ 0.82×                 | shallower        |
+|-------|-------------|-------------------------|------------------|
+| 20    | **3.43**    | highest                 | deepest coverage |
+| 25    | **3.35**    | ≈ 0.98×                 | nearly equal     |
+| 29    | **2.81**    | ≈ 0.82×                 | shallower        |
 
 **Scaling factors (relative to Stage 20):**
 
