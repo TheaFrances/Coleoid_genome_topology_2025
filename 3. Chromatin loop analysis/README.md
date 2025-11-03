@@ -353,8 +353,7 @@ The script performs the following steps:
 3. Plots a triangular Hi-C map over a specified genomic region.
 4. Overlays gene models using `plotGenes()`, with specific genes of interest highlighted.
 5. Loads and plots ATAC-seq signal from normalised `.bw` files for three developmental stages, scaling the signal tracks using the 99.5th percentile to match the y-axis range.
-6. Adds a heatmap legend and removes grid guides for clean figure export.
-7. Saves the figure.
+6. Saves the figure.
 
 **Required input files:**
 
