@@ -1,6 +1,6 @@
 # Chromatin loop analyses
 
-This folder documents the chromatin loop analyses demonstrated using the *E. scolopes* (stage 29) sample 212493 at 50 and 100 kb resolution, and the differential chromatin loop analyses samples demonstrated using the *E. scolopes* (stage 25) sample 212492 and 212493 (stage 29) at 50 and 100 kb resolution.
+This folder documents the chromatin loop analyses demonstrated using the *E. scolopes* (stage 29) sample 212493 at 50 and 100 kb resolution, and the differential chromatin loop analyses samples demonstrated using the *E. scolopes* (stage 25) sample 212492 and 212493 (stage 29) at 50 and 100 kb resolution as examples. The analyses of chromatin loops conserved across species were done with higher coverage samples and an example shown is for the sample 409493  (samples 200409 and 212493 merged).
 
 
 ## Contents
@@ -10,7 +10,7 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
 - [ATAC-seq signal normalisation, peak filtering and file conversion and formatting](#atac-seq-signal-normalisation-peak-filtering-and-file-conversion-and-formatting)
 - [Plot triangle loop figures with annotation tracks](#Plot-triangle-loop-figures-with-annotation-tracks)
 - [Plotting differential insulation score](#Plotting-differential-insulation-score)
-- [Conserved loop analyses](#Conserved-loop-analyses)
+- [Conserved chromatin loop analyses across speices](#Conserved-chromatin-loop-analyses-across-speices)
 
 ## Get loops and genes in loop anchors
 
@@ -352,6 +352,96 @@ This method enables high-quality visualisation of long-range chromatin interacti
 
 The R script [`genova_diff_insulation_score.R`](genova_diff_insulation_score.R) uses the [GENOVA R package](https://github.com/robinweide/GENOVA) to calculate insulation scores from *E. scolopes* Micro-C iced matrices and visualise differences in insulation scores across the three developmental stages for the loop region shown in Figure 4D. The script then annotates potential differential loop regions to produce Figure 4E. Input files for this script are taken directly from the HiC-Pro mapping output (detailed in [1. Preprocessing and mapping of Micro-C reads](../1.%20Preprocessing%20and%20mapping%20of%20Micro-C%20reads/)).
 
-## Conserved loop analyses
+
+## Conserved chromatin loop analyses across species
+
+To identify chromatin loops that are conserved across coleoid cephalopods (*Euprymna scolopes*, *Octopus bimaculoides*, and *Sepia officinalis*), the following multi-step pipeline was used:
+
+### Loop calling with Mustache
+
+Chromatin loops were identified at 50 kb and 100 resolution using the [Mustache](https://github.com/ay-lab/mustache) peak caller. Loops were called on whole-tissue `.hic` files normalised with KR as follows:
+
+```bash
+python3 mustache.py -f 409493_intrachrom.allValidPairs.hic -r 50kb -norm KR -pt 0.01 -o eupsc_loops_50k.tsv
+```
+
+Where eupsc_50k_loops.tsv is the specified outfile. This was repeated for each species (samples 212489 - *O. bimaculoides* and 992270 - *S. officinalis*) at both 50 and 100 kb resolution.
+
+ Merge loop calls across resolutions
+
+As in the previous loop calling steps, output from resolutions 50 kb and 100 kb resolutions were merged using the script `merge_loops_in_2_resos.py`, allowing a 50 kb tolerance between loop anchors:
+
+```bash
+python3 merge_loops_in_2_resos.py eupsc_loops_50k.tsv eupsc_loops_100k.tsv eupsc_loops_50k+100k.tsv --tolerance 50000
+```
+
+### Annotate loops with genes
+
+Also as in the previous loop calling steps, genes located in the start and end bins of each loop were identified using `check_gene_in_bin_diff_loops.py`. The input is a BED file of gene coordinates and the loop file:
+
+```bash
+python3 check_gene_in_bin_loops.py eupsc.bed eupsc_loops_50k+100k.tsv
+```
+
+This reports how many loop bins contain genes at the start and end, and outputs a `.genes` file.
+
+### Remove duplicate gene-pair annotations
+
+Also as in the previous loop calling steps, to avoid double-counting of orthologous gene pairs that appear in multiple loop calls, duplicate gene-pair entries were removed using:
+
+```bash
+python3 remove_loop_gene_replicates.py eupsc_loops_50k+100k.tsv.genes
+```
+
+This generates a `.genes_rm_dups` file for downstream analysis.
+
+### Identify conserved loops between species
+
+To identify conserved loops between species, ortholog files were used (e.g. `EUPgeneSOF.txt`, `EUPgeneOBI.txt` with *E. scolopes* genes in the first column and *S officinalis* or *O. bimaculoides* genes in the second column. The script [`check_conserved_loops.py`](check_conserved_loops.py) defines a loop as conserved if there is at least one orthologous gene pair in bin 1 and one in bin 2 (allowing reversed bin orientation across species):
+
+```bash
+python3 check_conserved_loops.py EUPgeneSOF.txt eupsc_loops_50k+100k.genes_rm_dups  sepof_loops_50k+100k.genes_rm_dups eupsc_sepof_consv_loops_50k+100k.tsv
+```
+
+Where eupsc_sepof_consv_loops_50k+100k.tsv is the specified output file.
+
+> **Note:** Even after duplicate removal, some loops may share some of the same the same orthologous gene pairs. These should be manually reviewed and considered as a single conserved loop where appropriate.
+
+### Identify loops conserved across all three species
+
+To identify loops conserved across *all three* species, orthologous gene IDs found in conserved loops between species pairs were cross-referenced. For a loop to be considered fully conserved, orthologous genes must appear in both bins across all three species.
+
+### Check chromosomal status and intergenic distances of conserved loops
+
+To assess whether genes involved in conserved loop anchors remain on the same chromosome in other species, the script [`check_chrom_of_conserved_loops_and_dist.py`](check_chrom_of_conserved_loops_and_dist.py) was used. This script checks whether the orthologous genes in each loop anchor are found on the same or different chromosomes in the compared species.
+
+- If **all genes** in a loop are located on the **same chromosome**, the script calculates the **shortest genomic distance** between the genes at the start and end of the loop.
+- If the genes are found on **different chromosomes**, the loop is considered to have been disrupted by a chromosomal rearrangement.
+
+**Example command:**
+```bash
+python3 check_chrom_of_conserved_loops_and_dist.py EUPgeneOBI.txt octbi.bed eupsc_sepof_consv_loops_50k+100k.tsv
+```
+In this example:
+- `eupsc_sepof_consv_loops_50k+100k.tsv` contains loops conserved between *E. scolopes* and *S. officinalis*.
+- The script checks the chromosomal locations of the orthologous genes in *O. bimaculoides*, using `EUPgeneOBI.txt` (ortholog mapping) and `octbi.bed` (gene coordinates).
+
+**Example output:**
+```bash
+Checking chromosome status of conserved loops in: octbi
+Number of conserved loops in input file =  28
+Number of conserved loops with genes on the same chromosome =  20
+Number of conserved loops with genes on different chromosomes =  4
+Output written to: eupsc_sepof_consv_loops_50k+100k.tsv.octbi_chrom_status_dist.tsv
+```
+
+The output file provides a summary of:
+- How many conserved loops are intact (genes still on the same chromosome).
+- How many loops have likely been disrupted (genes on different chromosomes).
+- The minimum genomic distances between start and end loop anchor genes for loops where all genes remain on the same chromosome.
+
+
+
+
 
 
