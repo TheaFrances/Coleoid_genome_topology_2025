@@ -1,6 +1,6 @@
 # Chromatin loop analyses
 
-This folder documents the chromatin loop analyses demonstrated using the *E. scolopes* (stage 29) sample 212493 at 50 and 100 kb resolution, and the differential chromatin loop analyses samples demonstrated using the *E. scolopes* (stage 25) sample 212492 and 212493 (stage 29) at 50 and 100 kb resolution as examples. The analyses of chromatin loops conserved across species were done with higher coverage samples and an example shown is for the sample 409493  (samples 200409 and 212493 merged).
+This folder documents the chromatin loop analyses demonstrated using the *E. scolopes* (stage 29) sample 212493 at 50 and 100 kb resolution, and the differential chromatin loop analyses samples demonstrated using the *E. scolopes* (stage 25) sample 212492 and 212493 (stage 29) at 50 and 100 kb resolution as examples. The analyses of chromatin loops across species were done with higher coverage samples and an example shown is for the sample 409493 (samples 200409 and 212493 merged).
 
 ## Contents
 - [Get loops and genes in loop anchors](#get-loops-and-genes-in-loop-anchors)
@@ -20,6 +20,8 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
 - [Plot triangle loop figures with annotation tracks](#plot-triangle-loop-figures-with-annotation-tracks)
   - [Plot loops using Plotgardner](#plot-loops-using-plotgardner)
 - [Plotting differential insulation score](#plotting-differential-insulation-score)
+- [Prepare files of loops for cross-species comparisons](#prepare-files-of-loops-for-cross-species-comparisons)
+- [Check whether loop genes in *E. scolopes* fall on the same or different chromosomes in *O. bimaculoides*](#check-whether-loop-genes-in-e-scolopes-fall-on-the-same-or-different-chromosomes-in-o-bimaculoides)
 - [Conserved chromatin loop analyses across species](#conserved-chromatin-loop-analyses-across-species)
   - [Loop calling with Mustache](#loop-calling-with-mustache)
   - [Merge loop calls across resolutions](#merge-loop-calls-across-resolutions)
@@ -369,10 +371,7 @@ This method enables high-quality visualisation of long-range chromatin interacti
 
 The R script [`genova_diff_insulation_score.R`](genova_diff_insulation_score.R) uses the [GENOVA R package](https://github.com/robinweide/GENOVA) to calculate insulation scores from *E. scolopes* Micro-C iced matrices and visualise differences in insulation scores across the three developmental stages for the loop region shown in Figure 4D. The script then annotates potential differential loop regions to produce Figure 4E. Input files for this script are taken directly from the HiC-Pro mapping output (detailed in [1. Preprocessing and mapping of Micro-C reads](../1.%20Preprocessing%20and%20mapping%20of%20Micro-C%20reads/)).
 
-
-## Conserved chromatin loop analyses across species
-
-To identify chromatin loops that are conserved across coleoid cephalopods (*Euprymna scolopes*, *Octopus bimaculoides*, and *Sepia officinalis*), the following multi-step pipeline was used:
+## Prepare files of loops for cross-species comparisons
 
 ### Loop calling with Mustache
 
@@ -384,7 +383,7 @@ python3 mustache.py -f 409493_intrachrom.allValidPairs.hic -r 50kb -norm KR -pt 
 
 Where eupsc_50k_loops.tsv is the specified outfile. This was repeated for each species (samples 212489 - *O. bimaculoides* and 992270 - *S. officinalis*) at both 50 and 100 kb resolution.
 
- Merge loop calls across resolutions
+### Merge loop calls across resolutions
 
 As in the previous loop calling steps, output from resolutions 50 kb and 100 kb resolutions were merged using the script `merge_loops_in_2_resos.py`, allowing a 50 kb tolerance between loop anchors:
 
@@ -411,6 +410,24 @@ python3 remove_loop_gene_replicates.py eupsc_loops_50k+100k.tsv.genes
 ```
 
 This generates a `.genes_rm_dups` file for downstream analysis.
+
+## Check whether loop genes in *E. scolopes* fall on the same or different chromosomes in *O. bimaculoides*
+
+To assess whether interacting gene pairs in *E. scolopes* loops are located on the same chromosome in *O. bimaculoides*, the script [`loop_chrom_status.py`](loop_chrom_status.py) was used. This script takes in a filtered loop-gene file, a 2-column ortholog mapping file (with *E. scolopes* gene IDs in the first column and *O. bimaculoides* gene IDs in the second), and a BED file of gene coordinates in *O. bimaculoides*.
+
+**Example command:**
+
+```bash
+python3 loop_chrom_status.py \
+  EUPgeneOBI.txt \
+  octbi.bed eupsc_50k+100k.tsv.genes_rm_dups
+  ```
+
+  #YOU ARE HERE 
+
+## Conserved chromatin loop analyses across species
+
+To identify chromatin loops that are conserved across coleoid cephalopods (*Euprymna scolopes*, *Octopus bimaculoides*, and *Sepia officinalis*), the following multi-step pipeline was used:
 
 ### Identify conserved loops between species
 
