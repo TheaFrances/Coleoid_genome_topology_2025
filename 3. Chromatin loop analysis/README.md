@@ -2,15 +2,33 @@
 
 This folder documents the chromatin loop analyses demonstrated using the *E. scolopes* (stage 29) sample 212493 at 50 and 100 kb resolution, and the differential chromatin loop analyses samples demonstrated using the *E. scolopes* (stage 25) sample 212492 and 212493 (stage 29) at 50 and 100 kb resolution as examples. The analyses of chromatin loops conserved across species were done with higher coverage samples and an example shown is for the sample 409493  (samples 200409 and 212493 merged).
 
-
 ## Contents
-- [Get loops and genes in loop anchors](#Get-loops-and-genes-in-loop-anchors)
-- [Loop anchor gene expression analyses](#Loop-anchor-gene-expression-analyses)
-- [Loop anchor GO analysis](#Loop-anchor-GO-analysis)
+- [Get loops and genes in loop anchors](#get-loops-and-genes-in-loop-anchors)
+  - [Running Mustache for loop calling](#running-mustache-for-loop-calling)
+  - [Merge loops across resolutions](#merge-loops-across-resolutions)
+  - [Extract genes from differential loop and total loop files](#extract-genes-from-differential-loop-and-total-loop-files)
+  - [Extract gene lists from annotated loop files](#extract-gene-lists-from-annotated-loop-files)
+  - [Remove duplicate loops from .genes files based on their interactions](#remove-duplicate-loops-from-genes-files-based-on-their-interactions)
+- [Loop anchor gene expression analyses](#loop-anchor-gene-expression-analyses)
+  - [Clustered heatmaps of loop-associated gene expression across developmental stages](#clustered-heatmaps-of-loop-associated-gene-expression-across-developmental-stages)
+  - [Gene expression comparison across developmental stage-specific loops](#gene-expression-comparison-across-developmental-stage-specific-loops)
+- [Loop anchor GO analysis](#loop-anchor-go-analysis)
 - [ATAC-seq signal normalisation, peak filtering and file conversion and formatting](#atac-seq-signal-normalisation-peak-filtering-and-file-conversion-and-formatting)
-- [Plot triangle loop figures with annotation tracks](#Plot-triangle-loop-figures-with-annotation-tracks)
-- [Plotting differential insulation score](#Plotting-differential-insulation-score)
-- [Conserved chromatin loop analyses across speices](#Conserved-chromatin-loop-analyses-across-speices)
+  - [ATAC-seq signal normalisation](#atac-seq-signal-normalisation)
+  - [File formatting and peak filtering](#file-formatting-and-peak-filtering)
+  - [Converting and subsetting ATAC-seq BigWig files](#converting-and-subsetting-atac-seq-bigwig-files)
+- [Plot triangle loop figures with annotation tracks](#plot-triangle-loop-figures-with-annotation-tracks)
+  - [Plot loops using Plotgardner](#plot-loops-using-plotgardner)
+- [Plotting differential insulation score](#plotting-differential-insulation-score)
+- [Conserved chromatin loop analyses across species](#conserved-chromatin-loop-analyses-across-species)
+  - [Loop calling with Mustache](#loop-calling-with-mustache)
+  - [Merge loop calls across resolutions](#merge-loop-calls-across-resolutions)
+  - [Annotate loops with genes](#annotate-loops-with-genes)
+  - [Remove duplicate gene-pair annotations](#remove-duplicate-gene-pair-annotations)
+  - [Identify conserved loops between species](#identify-conserved-loops-between-species)
+  - [Identify loops conserved across all three species](#identify-loops-conserved-across-all-three-species)
+  - [Check chromosomal status and intergenic distances of conserved loops](#check-chromosomal-status-and-intergenic-distances-of-conserved-loops)
+  - [Expression heatmap of conserved loop anchor genes](#expression-heatmap-of-conserved-loop-anchor-genes)
 
 ## Get loops and genes in loop anchors
 

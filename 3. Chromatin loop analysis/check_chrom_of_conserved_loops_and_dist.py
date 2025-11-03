@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*- 
-# Check if genes in conserved loop files are on the same or different chromosomes other species e.g. O. bimaculoides from conserved loop file output from the script check_conserved_loops.py
+# Check if genes in conserved loop files are on the same or different chromosomes other species e.g. O. bimaculoides from conserved loop file output from the script check_conserved_loops.py.
 # If genes are on the same chromosome, calculate the minimum distance between the genes in the other species.
 # ==============================================================================
 # Imports=======================================================================
@@ -84,7 +84,7 @@ def main():
         with open(output, "w") as outfile:
             for line in consv_loop_file:
                 line = line.strip()
-                if line.endswith("bin2"): #Start of header varies, so use endswith
+                if line.endswith("bin2"): # Start of header varies, so use endswith
                     outfile.write(line + "\t" + chrom_check_species +"_chrom_status\t" + chrom_check_species + "_min_distance\n") #Write header
                 else:
                     counter_loop += 1
@@ -100,7 +100,7 @@ def main():
                             gene_check = ortholog_dict[gene]
                             if gene_check in chrom_dict:
                                 chrom_to_check = chrom_dict[gene_check]
-                                chrom_count.update(chrom_to_check) #Add doesn't work here because it's a list
+                                chrom_count.update(chrom_to_check) # Add doesn't work here because it's a list
                     for gene in spp1_genes_bin2:
                         if gene in ortholog_dict:
                             species_to_check_orthos_bin2 += 1
@@ -113,7 +113,7 @@ def main():
                             # Calculate minimum distance
                             ortho_genes1 = [ortholog_dict[ortho] for ortho in spp1_genes_bin1 if ortho in ortholog_dict and ortholog_dict[ortho] in gene_start_end_dict] #If gene is in ortholog_dict and ortholog_dict[gene] is in gene_start_end_dict, then add ortholog_dict[gene] to genes1
                             ortho_genes2 = [ortholog_dict[ortho] for ortho in spp1_genes_bin2 if ortho in ortholog_dict and ortholog_dict[ortho] in gene_start_end_dict]
-                            if len(ortho_genes1) >=1 and len(ortho_genes2) >=1: #Only calculate distance if the orthologs have POSITION DATA!
+                            if len(ortho_genes1) >=1 and len(ortho_genes2) >=1: # Only calculate distance if the orthologs have POSITION DATA!
                                 min_distance = calculate_min_distance(ortho_genes1, ortho_genes2, gene_start_end_dict)
                                 chrom_status = "same_chrom"
                                 counter_same_chrom += 1
