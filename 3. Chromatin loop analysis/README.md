@@ -292,41 +292,41 @@ bigwigCompare -b1 97308_Stage25_bbduk_aln.bw -b2 97308_Stage25_bbduk_aln.bw \
   -o 97308_Stage25_bbduk_aln_normalised.bw
 
 # Stage 29 → scale to Stage 20
-bigwigCompare -b1 97309_Stage29_bbduk_aln.bw -b2 97309_Stage29_bbduk_aln.bw \
+bigwigCompare -b1 97309_st29.bw -b2 97309_st29.bw \
   --scaleFactors 1.21804881:1 --operation first \
-  -o 97309_Stage29_bbduk_aln_normalised.bw
+  -o 97309_st29_normalised.bw
   ```
 
 ### File formatting and peak filtering
 
 Normalised files were then converted to bedGraph:
 ```bash
-bigWigToBedGraph 97309_Stage29_bbduk_aln_normalised.bw 97309_Stage29_bbduk_aln_normalised.bedgraph
+bigWigToBedGraph 97309_st29_normalised.bw 97309_st29_normalised.bedgraph
 bigWigToBedGraph 97308_Stage25_bbduk_aln_normalised.bw 97308_Stage25_bbduk_aln_normalised.bedgraph
 bigWigToBedGraph 97307_Stage20_bbduk_aln.bw 97307_Stage20_bbduk_aln_normalised.bedgraph  # For consistency
 ```
 
 Next, regions were filtered for signal > 1, i.e. regions of open chromatin:
 ```bash
-awk '$4 > 1' 97309_Stage29_bbduk_aln_normalised.bedgraph > 97309_Stage29_bbduk_aln_normalised_peaks.bedgraph
+awk '$4 > 1' 97309_st29_normalised.bedgraph > 97309_st29_normalised_peaks.bedgraph
 ```
 The same command was then applied to the other stages as well (same with subsequent commands).
 
 Next, files were converted to 3-column BED format:
 ```bash
-cut -f1-3 97309_Stage29_bbduk_aln_normalised_peaks.bedgraph > 97309_Stage29_bbduk_aln_normalised_peaks_3col.bed
+cut -f1-3 97309_st29_normalised_peaks.bedgraph > 97309_st29_normalised_peaks_3col.bed
 ```
 
 Then, unplaced scaffolds were removed:
 ```bash
-grep Lachesis 97309_Stage29_bbduk_aln_normalised_peaks_3col.bed > 97309_Stage29_bbduk_aln_normalised_peaks_3col_rm_scaf.bed
+grep Lachesis 97309_st29_normalised_peaks_3col.bed > 97309_st29_normalised_peaks_3col_rm_scaf.bed
 ```
 
 BED files were sorted using a sorted chromosome size file (with unplaced scaffolds removed):
 ```bash
-bedtools sort -i 97309_Stage29_bbduk_aln_normalised_peaks_3col_rm_scaf.bed \
+bedtools sort -i 97309_st29_normalised_peaks_3col_rm_scaf.bed \
   -g ../Lachesis_assembly_chrsize_rm_scaf.sorted.txt \
-  > 97309_Stage29_bbduk_aln_normalised_peaks_3col_sorted_rm_scaf.bed
+  > 97309_st29_normalised_peaks_3col_sorted_rm_scaf.bed
   ```
 
 ### Converting and subsetting ATAC-seq BigWig files
@@ -335,7 +335,7 @@ To handle large `.bw` files for visualisation or downstream analysis, we subset 
 
 Example using the chromosome Lachesis_group4__56_contigs__length_174030884 (chromosome 5 in *E. scolopes*):
 ```bash
-python subsetBigWig.py /path/to/97309_Stage29_bbduk_aln_normalised.bw /output/97309_st29_chr5.bw Lachesis_group4__56_contigs__length_174030884
+python subsetBigWig.py 97309_st29_normalised.bw 97309_st29_chr5.bw Lachesis_group4__56_contigs__length_174030884
 ```
 
 ## Plot triangle loop figures with annotation tracks
