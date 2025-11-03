@@ -21,7 +21,7 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
   - [Plot loops using Plotgardner](#plot-loops-using-plotgardner)
 - [Plotting differential insulation score](#plotting-differential-insulation-score)
 - [Prepare files of loops for cross-species comparisons](#prepare-files-of-loops-for-cross-species-comparisons)
-- [Check whether loop genes in *E. scolopes* fall on the same or different chromosomes in *O. bimaculoides*](#check-whether-loop-genes-in-e-scolopes-fall-on-the-same-or-different-chromosomes-in-o-bimaculoides)
+- [Check whether loop anchor genes are on the same or different chromosomes in other species](#check-whether-loop-anchor-genes-are-on-the-same-or-different-chromosomes-in-other-species)
 - [Conserved chromatin loop analyses across species](#conserved-chromatin-loop-analyses-across-species)
   - [Loop calling with Mustache](#loop-calling-with-mustache)
   - [Merge loop calls across resolutions](#merge-loop-calls-across-resolutions)
@@ -411,7 +411,7 @@ python3 remove_loop_gene_replicates.py eupsc_loops_50k+100k.tsv.genes
 
 This generates a `.genes_rm_dups` file for downstream analysis.
 
-## Check whether loop genes in *E. scolopes* fall on the same or different chromosomes in *O. bimaculoides*
+## Check whether loop anchor genes are on the same or different chromosomes in other species
 
 To assess whether interacting gene pairs in *E. scolopes* loops are located on the same chromosome in *O. bimaculoides*, the script [`loop_chrom_status.py`](loop_chrom_status.py) was used. This script takes in a filtered loop-gene file, a 2-column ortholog mapping file (with *E. scolopes* gene IDs in the first column and *O. bimaculoides* gene IDs in the second), and a BED file of gene coordinates in *O. bimaculoides*.
 
