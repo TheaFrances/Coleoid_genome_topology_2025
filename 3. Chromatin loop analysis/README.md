@@ -428,7 +428,7 @@ python3 loop_chrom_status.py  EUPgeneOBI.txt octbi.bed eupsc_50k+100k.tsv.genes_
 
 Note that the ortholog file must have species 1 in column 1 and species 2 in column 2 where species 1 is the species with the loops you're checking and species 2 is the species you're checking species chromosome status in.
 
-### Barplot of loops anchor genes on different chromosomes in other coleoid species
+### Barplot of loop anchor genes on different chromosomes in other coleoid species
 
 The R script [`loops_on_diff_chroms_bar_plot_coleoid.R`](loops_on_diff_chroms_bar_plot_coleoid.R) generates a barplot showing the percentage of chromatin loops whose anchor genes fall on different chromosomes in another species, based on orthology and chromosome mapping.
 
@@ -439,7 +439,7 @@ This provides a bar plot of potential genomic rearrangements disrupting loop str
 *O. bimaculoides* loops checked in *E. scolopes*
 *O. bimaculoides* loops checked in *S. officinalis*
 
-### Barplot of loops anchor genes on different chromosomes in *P. maximus*
+### Barplot of loop anchor genes on different chromosomes in *P. maximus*
 
 The R script [`loops_on_diff_chroms_bar_plot_pmax.R`](loops_on_diff_chroms_bar_plot_pmax.R) generates a barplot showing the percentage of chromatin loops whose anchor genes fall on different chromosomes in *P. maximus*, based on orthology and chromosome mapping.
 
