@@ -27,7 +27,7 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
   - [Barplot of loop anchor genes on different chromosomes in *P. maximus*](#barplot-of-loop-anchor-genes-on-different-chromosomes-in-p-maximus)
 - [Loop size and orthologous intergenic distance analysis](#loop-size-and-orthologous-intergenic-distance-analysis)
   - [Get loop sizes](#get-loop-sizes)
-  - [Identify genes within loop bins](#identify-genes-within-loop-bins)
+  - [Identify genes within loop anchors](#identify-genes-within-loop-bins)
   - [Remove duplicate gene interactions](#remove-duplicate-gene-interactions)
   - [Calculate distances between orthologous loop anchor genes](#calculate-distances-between-orthologous-loop-anchor-genes)
   - [Plot loop size distributions for orthologous gene comparisons across species](#plot-loop-size-distributions-for-orthologous-gene-comparisons-across-species)
@@ -471,7 +471,7 @@ This produces a file with the suffix loopsize.tsv e.g. eupsc_loops_50k+100k.loop
 
 > **Note:** The average loop size values are generated before removing potential misassemblies or duplicate loops or loops without genes in, so they may differ slightly from the R‑based values used in downstream analyses.
 
-### Identify genes within loop bins
+### Identify genes within loop anchors
 
 The script [`check_gene_in_bin_loop_size.py`](check_gene_in_bin_loop_size.py) identifies genes located within each loop anchor bin for mustache ouput-formatted files that have an extra loop size column in, which are made using the previous script [`get_loop_size.py`](get_loop_size.py). 
 
