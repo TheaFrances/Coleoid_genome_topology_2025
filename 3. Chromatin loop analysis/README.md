@@ -22,7 +22,7 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
 - [Plotting differential insulation score](#plotting-differential-insulation-score)
 - [Prepare files of loops for cross-species comparisons](#prepare-files-of-loops-for-cross-species-comparisons)
 - [Analysis of loop anchor gene chromosome status in other species](#analysis-of-loop-anchor-gene-chromosome-status-in-other-species)
-  -[Check whether loop anchor genes are on the same or different chromosomes in other species](#check-whether-loop-anchor-genes-are-on-the-same-or-different-chromosomes-in-other-species)
+  - [Check whether loop anchor genes are on the same or different chromosomes in other species](#check-whether-loop-anchor-genes-are-on-the-same-or-different-chromosomes-in-other-species)
   - [Barplot of loop anchor genes on different chromosomes in other coleoid species](#barplot-of-loop-anchor-genes-on-different-chromosomes-in-other-coleoid-species)
   - [Barplot of loop anchor genes on different chromosomes in *P. maximus*](#barplot-of-loop-anchor-genes-on-different-chromosomes-in-p-maximus)
 - [Conserved chromatin loop analyses across species](#conserved-chromatin-loop-analyses-across-species)
