@@ -102,7 +102,7 @@ python merge_loops_in_2_resos.py \
 
 This command generates an output file with the name specified in the command, e.g., eupsc_25vs29_50k+100k.diff_loop1. 
 
-**Note** the same procedure was applied to files with the suffixes loop1 and loop2, which contain all detected loops for each sample, not just the differential ones, for example:
+> **Note:** the same procedure was applied to files with the suffixes loop1 and loop2, which contain all detected loops for each sample, not just the differential ones, for example:
 
 ```bash
 python merge_loops_in_2_resos.py \
@@ -257,7 +257,7 @@ The script [`loop_exp_boxplots.R`](loop_exp_boxplots.R) compares gene expression
      - Wilcoxon test statistic and p-value
      - Mean and median expression values per stage
 
-**Notes:**
+> **Notes:**
 - Genes appearing in multiple stages were **excluded** to focus on genes unique to a single stage’s loops.
 - Optional sections allow toggling between keeping all genes or filtering for stage-specific ones.
 
@@ -426,7 +426,7 @@ Example command to check if *E. scolopes* loop anchor genes scattered across dif
 python3 loop_chrom_status.py  EUPgeneOBI.txt octbi.bed eupsc_50k+100k.tsv.genes_rm_dups
   ```
 
-Note that the ortholog file must have species 1 in column 1 and species 2 in column 2 where species 1 is the species with the loops you're checking and species 2 is the species you're checking species chromosome status in.
+> **Note:** that the ortholog file must have species 1 in column 1 and species 2 in column 2 where species 1 is the species with the loops you're checking and species 2 is the species you're checking species chromosome status in.
 
 ### Barplot of loop anchor genes on different chromosomes in other coleoid species
 
@@ -509,7 +509,7 @@ The R script [`conserved_loop_exp_heatmap.R`](conserved_loop_exp_heatmap.R) visu
 - Generates a heatmap of log-transformed, row-scaled expression values using the [`pheatmap`](https://cran.r-project.org/web/packages/pheatmap/index.html) package.  
 - Saves the plot.  
 
-**Note:** Tissue names in the expression matrix are manually mapped to more readable names, and replicates are averaged per tissue group before plotting.
+> **Note:** Tissue names in the expression matrix are manually mapped to more readable names, and replicates are averaged per tissue group before plotting.
 
 This visualisation is used to explore whether conserved loop anchor genes show tissue-specific expression patterns, particularly in brain and neural tissues.
 
@@ -551,8 +551,7 @@ The R script [`conserved_loop_sizes.R`](conserved_loop_sizes.R) calculates loop 
 3 sepof-octbi        68              NA               0               1
 4 all-three          45               0               2               1
 ```
-**Note:**
-- Minor coordinate mismatches between files can lead to missing loop‑size values, which were manually corrected when due to small shifts in overlapping bins.
+> **Note:** Minor coordinate mismatches between files can lead to missing loop‑size values, which were manually corrected when due to small shifts in overlapping bins.
 
 ### Correlation of conserved loop size with genome size
 
