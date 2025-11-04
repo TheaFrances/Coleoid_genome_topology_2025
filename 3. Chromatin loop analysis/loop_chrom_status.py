@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*- 
 # Check if loops in one species are located on same or across different chromosomes in another species.
-#==============================================================================
+# ==============================================================================
+# Imports=======================================================================
+# ==============================================================================
 import argparse
 import sys
 from collections import defaultdict
@@ -26,8 +28,10 @@ if len(sys.argv)==1:
 	parser.print_help()
 	sys.exit(1)
 args = parser.parse_args()
-#==============================================================================
-#==============================================================================
+# ==============================================================================
+# Main code=====================================================================
+# ==============================================================================
+
 def main():
 
     print("IMPORTANT: Scaffolds must be removed from bed file before running this script. Also make sure you have removed duplicate gene interactions")

@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*- 
-# Get the genes in/overlapping loop anchors for files in mustache format.
-# This script takes all genes within the start and end of both differential loop bins as well as genes overlapping the bins (including spanning the whole bin).
+# Get the genes in loop anchors from file in mustache format.
+# This script takes all genes within the start and end of both differential loop bins. As well as genes overlapping the bins (including spanning the whole bin).
+# It also adds a column of loop size.
 # ==============================================================================
-# Imports=====================================================================
+# Main code=====================================================================
 # ==============================================================================
 import argparse
 import sys
 from collections import defaultdict
 import os
+import random
 import collections
 #==============================================================================
 #Command line options==========================================================
@@ -26,9 +28,9 @@ if len(sys.argv)==1:
 	parser.print_help()
 	sys.exit(1)
 args = parser.parse_args()
-# ==============================================================================
-# Main code=====================================================================
-# ==============================================================================
+
+#==============================================================================
+#==============================================================================
 
 def main():
 
@@ -83,7 +85,7 @@ def main():
     outname = args.diff_loop_table + ".genes"
     with open(outname, "w") as outfile:
         # Write the header
-        outfile.write("chromosome\tbin1_start (bp)\tgenes_bin1\tbin2_start (bp)\tgenes_bin2\tfdr\n")
+        outfile.write("chromosome\tbin1_start (bp)\tgenes_bin1\tbin2_start (bp)\tgenes_bin2\tfdr\tloop_size\n")
         
         #Read the differential loop table again, could be done in loop above, but this is more readable
         with open(args.diff_loop_table, "r") as loops_diff:
@@ -96,6 +98,7 @@ def main():
                 bin2_start = col[4]
                 bin2_end = col[5]
                 fdr = col[6]
+                loop_size = col[8]
                 bin_chr1 = chrom1 + ":" + bin1_start + "-" + bin1_end + "_" + bin2_start + "-" + bin2_end
                 bin_chr2 = chrom2 + ":" + bin1_start + "-" + bin1_end + "_" + bin2_start + "-" + bin2_end
                 if bin_chr1 in genes_bin1 and bin_chr2 in genes_bin2:
@@ -103,8 +106,8 @@ def main():
                     genes_bin1_str = ", ".join(genes_bin1[bin_chr1])
                     genes_bin2_str = ", ".join(genes_bin2[bin_chr2])
                     # Write the data to the output file
-                    outfile.write(f"{chrom1}\t{bin1_start}\t{genes_bin1_str}\t{bin2_start}\t{genes_bin2_str}\t{fdr}\n")
-
+                    outfile.write(f"{chrom1}\t{bin1_start}\t{genes_bin1_str}\t{bin2_start}\t{genes_bin2_str}\t{fdr}\t{loop_size}\n")
+    print("Output written to: ", outname)
 
 if __name__ == "__main__":
     main()

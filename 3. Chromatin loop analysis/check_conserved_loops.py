@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*- 
-#E.g. (base) python3 check_conserved_loops_outfile.py /Users/users/Desktop/Micro-C/topology_strength_analysis/EUPgeneOBI.txt  /Users/users/Desktop/Micro-C/diff_loop_analysis/eupsc/output/eupsc_29cat_50k+100k/eupsc_29cat_50k+100k.tsv.genes /Users/users/Desktop/Micro-C/diff_loop_analysis/octbi/output/octbi_wt_50k+100k/octbi_wt_50k+100k.tsv.genes  /Users/users/Desktop/Micro-C/diff_loop_analysis/conserved_loops/eupsc_octbi_consv_loops_50k+100k.tsv
+# This script defines a loop as conserved if there is at least one orthologous gene pair in bin 1 and one in bin 2 (allowing reversed bin orientation across species).
+# ==============================================================================
+# Imports=====================================================================
+# ==============================================================================
 import sys
 import argparse
-
+# ==============================================================================
+# Main code=====================================================================
+# ==============================================================================
 def main():
     # Check for correct number of arguments
     if len(sys.argv) != 5:

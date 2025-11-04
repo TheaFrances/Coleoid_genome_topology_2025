@@ -443,7 +443,98 @@ The R script [`loops_on_diff_chroms_bar_plot_pmax.R`](loops_on_diff_chroms_bar_p
 
 This provides a bar plot of potential genomic rearrangements disrupting loop structure between species. It includes comparisons for:
 
-  #YOU ARE HERE 
+
+## Calculate loop sizes and orthologous intergenic distances
+
+### Get loop sizes
+
+The script [`get_loop_size.py`](get_loop_size.py) calculates the size of each loop by subtracting the start coordinate of the first bin from the end coordinate of the second bin.
+
+**Example:**
+```bash
+python get_loop_size.py eupsc_loops_50k+100k.tsv
+```
+
+**Example output:**
+```bash
+Total number of significant, differential loops =  329
+Average loop size =  3856079.027355623 bp
+```
+
+This produces a file with the suffix loopsize.tsv e.g. eupsc_loops_50k+100k.loopsize.tsv.
+
+> **Note:** The average loop size values are generated before removing potential misassemblies or duplicate loops or loops without genes in, so they may differ slightly from the R‑based values used in downstream analyses.
+
+### Identify genes within loop bins
+
+The script [`check_gene_in_bin_loop_size.py`](check_gene_in_bin_loop_size.py) identifies genes located within each loop anchor bin for mustache ouput-formatted files that have an extra loop size column in, which are made using the previous script [`get_loop_size.py`](get_loop_size.py). 
+
+**Example:**
+```bash
+python check_gene_in_bin_loop_size.py eupsc.bed eupsc_loops_50k+100k.loopsize.tsv
+```
+
+**Example output:**
+```bash
+Number of significant loops =  329
+Number of loop bins with genes in (loop start) =  213
+Number of loop bins with genes in (loop end) =  216
+Number of loop bins with genes in both bins =  160
+Output written to:  eupsc_29cat_50k+100k.loopsize.tsv.genes
+```
+
+### Remove duplicate gene interactions
+
+The script [`remove_loop_gene_duplicates_loop_size.py`](remove_loop_gene_duplicates_loop_size.py) removes duplicated gene interactions. It also reports the average loop size after filtering.
+
+**Example:**
+```bash
+python remove_loop_gene_duplicates_loop_size.py eupsc_loops_50k+100k.loopsize.tsv.genes
+```
+
+**Example output:**
+```bash
+Species =  eupsc
+Number of conserved loops in input file =  160
+Number of loops in output with duplicates removed =  156
+Average loop size (with genes in) =  3344230.769230769 Mb
+Output written to:  eupsc_loops_50k+100k.loopsize.tsv.genes_rm_dups
+```
+
+### Calculate distances between orthologous loop anchor genes
+
+The script [`get_distance_loop_orthos.py`](get_distance_loop_orthos.py) calculates intergenic distances between orthologous loop anchors in other coleoid species. Only loops where both orthologous anchor genes occur on the same chromosome in the comparison species are retained.
+
+**Example:**
+```bash
+python get_distance_loop_orthos.py EUPgeneOBI.txt octbi.bed eupsc_loops_50k+100k.loopsize.tsv eupsc_loops_50k+100k.genes_rm_dups.octbi_chrom_status.tsv
+```
+
+**Example output:**
+```bash
+Checking loop ortholog distances for species: octbi
+Total number of loops with orthologous intergenic distances printed =  90
+Output written to:  eupsc_loops_50k+100k.genes_rm_dups_octbi_loop_size_dist.tsv
+```
+
+> **Note:** The ortholog file must have species 1 in column 1 and species 2 in column 2 where species 1 is the species with the loops you're checking and species 2 is the species you're checking species chromosome status in.
+
+
+### Plot loop size distributions for orthologous gene comparisons across species
+
+The script [`loop_size_boxplots.R`](loop_size_boxplots.R) makes boxplots comparing loop sizes across species and ortholog contexts. It summarises loops where both anchor genes have orthologs located on:
+
+- the **same chromosome** in the comparison species,
+- **different chromosomes**, or
+- **all loops with genes**, regardless of orthology.
+
+It also calculates and prints **mean** and **median** loop sizes for each comparison.
+
+**Required input files:**
+
+- `.genes_rm_dups_loop_size_dist.tsv` — loop sizes with ortholog and chromosome info
+- `.loopsize.tsv.genes_rm_dups` — loop sizes with gene overlap info (no ortholog filtering)
+
 
 ## Conserved chromatin loop analyses across species
 
