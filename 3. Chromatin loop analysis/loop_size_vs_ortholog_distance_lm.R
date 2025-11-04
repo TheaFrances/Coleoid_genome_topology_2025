@@ -1,3 +1,5 @@
+# Plot distances between coleoid orthologs of loop anchor genes, check R squared for correlation
+
 rm(list = ls())
 
 # Load libraries
@@ -8,10 +10,10 @@ library(dplyr)
 library(tidyr)
 
 # Reading the files of loop size and orthologous distances
-loop_size_dist_eupsc <- read.delim("/Users/users/Desktop/Micro-C/diff_loop_analysis/eupsc/output/eupsc_29cat_50k+100k/eupsc_29cat_50k+100k.genes_rm_dups_octbi_loop_size_dist.tsv", header = TRUE)
-loop_size_dist_sepof <- read.delim("/Users/users/Desktop/Micro-C/diff_loop_analysis/sepof/output/sepof_wt_50k+100k/sepof_wt_50k+100k.genes_rm_dups_octbi_loop_size_dist.tsv", header = TRUE)
-loop_size_dist_octbi_esc_chr <- read.delim("/Users/users/Desktop/Micro-C/diff_loop_analysis/octbi/output/octbi_wt_50k+100k/octbi_wt_50k+100k.genes_rm_dups_eupsc_loop_size_dist.tsv", header = TRUE)
-loop_size_dist_octbi_sof_chr <- read.delim("/Users/users/Desktop/Micro-C/diff_loop_analysis/octbi/output/octbi_wt_50k+100k/octbi_wt_50k+100k.genes_rm_dups_sepof_loop_size_dist.tsv", header = TRUE)
+loop_size_dist_eupsc <- read.delim("eupsc_loops_50k+100k.genes_rm_dups_octbi_loop_size_dist.tsv", header = TRUE)
+loop_size_dist_sepof <- read.delim("sepof_loops_50k+100k.genes_rm_dups_octbi_loop_size_dist.tsv", header = TRUE)
+loop_size_dist_octbi_esc_chr <- read.delim("octbi_loops_50k+100k.genes_rm_dups_eupsc_loop_size_dist.tsv", header = TRUE)
+loop_size_dist_octbi_sof_chr <- read.delim("octbi_loops_50k+100k.genes_rm_dups_sepof_loop_size_dist.tsv", header = TRUE)
 
 # Remove rows with NA values
 loop_size_dist_eupsc <- na.omit(loop_size_dist_eupsc)
@@ -19,8 +21,7 @@ loop_size_dist_sepof <- na.omit(loop_size_dist_sepof)
 loop_size_dist_octbi_esc_chr <- na.omit(loop_size_dist_octbi_esc_chr)
 loop_size_dist_octbi_sof_chr <- na.omit(loop_size_dist_octbi_sof_chr)
 
-
-# Remove specific outliers - THESE NEED CHECKING AGAIN
+# Remove specific outliers that are missassemblies
 loop_size_dist_eupsc <- loop_size_dist_eupsc %>%
   filter(!(loop_size %in% c(14500000, 16700000, 12900000)))
 
@@ -85,6 +86,6 @@ loop_size_vs_dist_all <- loop_size_vs_dist_all +
 # Print and save the plot
 print(loop_size_vs_dist_all)
 
-ggsave("/Users/users/Desktop/Micro-C/figs_for_paper/Supplementary/fig3_other/loop_size_vs_dist_all_species.tiff", 
+ggsave("loop_size_vs_dist_all_species.tiff", 
        loop_size_vs_dist_all, dpi = 400, width = 12, height = 7, units = "in")
 

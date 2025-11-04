@@ -441,8 +441,7 @@ This provides a bar plot of potential genomic rearrangements disrupting loop str
 
 The R script [`loops_on_diff_chroms_bar_plot_pmax.R`](loops_on_diff_chroms_bar_plot_pmax.R) generates a barplot showing the percentage of chromatin loops whose anchor genes fall on different chromosomes in *P. maximus*, based on orthology and chromosome mapping.
 
-This provides a bar plot of potential genomic rearrangements disrupting loop structure between species. It includes comparisons for:
-
+This provides a bar plot of potential genomic rearrangements disrupting loop structure between species.
 
 ## Calculate loop sizes and orthologous intergenic distances
 
@@ -522,18 +521,34 @@ Output written to:  eupsc_loops_50k+100k.genes_rm_dups_octbi_loop_size_dist.tsv
 
 ### Plot loop size distributions for orthologous gene comparisons across species
 
-The script [`loop_size_boxplots.R`](loop_size_boxplots.R) makes boxplots comparing loop sizes across species and ortholog contexts. It summarises loops where both anchor genes have orthologs located on:
+The script [`loop_size_boxplots.R`](loop_size_boxplots.R) makes boxplots comparing loop sizes across species and ortholog contexts. It:
 
-- the **same chromosome** in the comparison species,
-- **different chromosomes**, or
-- **all loops with genes**, regardless of orthology.
+- Removes known outlier loops (e.g., misassemblies).
+- Summarises loops where both anchor genes have orthologs located on:
+  - the **same chromosome** in the comparison species,
+  - **different chromosomes**, or
+  - **all loops with genes**, regardless of orthology.
 
-It also calculates and prints **mean** and **median** loop sizes for each comparison.
+- Calculates and prints **mean** and **median** loop sizes for each comparison.
 
 **Required input files:**
 
 - `.genes_rm_dups_loop_size_dist.tsv` — loop sizes with ortholog and chromosome info
 - `.loopsize.tsv.genes_rm_dups` — loop sizes with gene overlap info (no ortholog filtering)
+
+###  Assess the relationship between loop size and orthologous gene spacing
+
+The [`loop_size_vs_ortholog_distance_lm.R`](loop_size_vs_ortholog_distance_lm.R) script assesses the relationship between chromatin loop size and the average intergenic distance between orthologous loop anchor genes across coleoids.This analysis helps determine whether larger loops tend to have more distantly spaced orthologs. It
+
+- Filters out rows with NA values and removes known outlier loops (e.g., misassemblies).
+- Creates a scatterplot of loop size vs. intergenic distance for orthologous anchor gene pairs, coloured by species pair.
+- Fits a linear model for each species pair and calculates R² (variance explained).
+- Annotates the plot with R² values for each fit.
+- Saves the final figure.
+
+**Required input files:**
+
+- `.genes_rm_dups_loop_size_dist.tsv` — loop sizes with ortholog and chromosome info
 
 
 ## Conserved chromatin loop analyses across species
@@ -665,7 +680,7 @@ eupsc_size    octbi_size    sepof_size
    - Assigns genome size values to each species.
 
 2. **Per-loop correlation analysis**
-   - estimating bp increase per 1 Gb genome size.
+   - Estimates bp increase per 1 Gb genome size.
    - Summarises the number and proportion of loops showing a positive correlation with genome size.
    - Performs Wilcoxon signed-rank tests on the distribution of slopes (vs. 0).
    - This tests whether conserved loops tend to scale with genome size across species.
