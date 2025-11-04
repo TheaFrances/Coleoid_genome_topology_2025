@@ -21,7 +21,10 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
   - [Plot loops using plotgardener](#plot-loops-using-plotgardener)
 - [Plotting differential insulation score](#plotting-differential-insulation-score)
 - [Prepare files of loops for cross-species comparisons](#prepare-files-of-loops-for-cross-species-comparisons)
-- [Check whether loop anchor genes are on the same or different chromosomes in other species](#check-whether-loop-anchor-genes-are-on-the-same-or-different-chromosomes-in-other-species)
+- [Analysis of loop anchor gene chromosome status in other species](#analysis-of-loop-anchor-gene-chromosome-status-in-other-species)
+  -[Check whether loop anchor genes are on the same or different chromosomes in other species](#check-whether-loop-anchor-genes-are-on-the-same-or-different-chromosomes-in-other-species)
+  - [Barplot of loop anchor genes on different chromosomes in other coleoid species](#barplot-of-loop-anchor-genes-on-different-chromosomes-in-other-coleoid-species)
+  - [Barplot of loop anchor genes on different chromosomes in *P. maximus*](#barplot-of-loop-anchor-genes-on-different-chromosomes-in-p-maximus)
 - [Conserved chromatin loop analyses across species](#conserved-chromatin-loop-analyses-across-species)
   - [Loop calling with Mustache](#loop-calling-with-mustache)
   - [Merge loop calls across resolutions](#merge-loop-calls-across-resolutions)
@@ -411,17 +414,36 @@ python3 remove_loop_gene_replicates.py eupsc_loops_50k+100k.tsv.genes
 
 This generates a `.genes_rm_dups` file for downstream analysis.
 
-## Check whether loop anchor genes are on the same or different chromosomes in other species
+## Analysis of loop anchor gene chromosome status in other species
 
-To assess whether interacting gene pairs in *E. scolopes* loops are located on the same chromosome in *O. bimaculoides*, the script [`loop_chrom_status.py`](loop_chrom_status.py) was used. This script takes in a filtered loop-gene file, a 2-column ortholog mapping file (with *E. scolopes* gene IDs in the first column and *O. bimaculoides* gene IDs in the second), and a BED file of gene coordinates in *O. bimaculoides*.
+### Check whether loop anchor genes are on the same or different chromosomes in other species
 
-**Example command:**
+To assess whether loop anchor genes have orthologs on the same or scattered across different chromosome in the other coleoid species or *P. maximus*, the script [`loop_chrom_status.py`](loop_chrom_status.py) was used. This script takes in a filtered loop-gene file, a 2-column ortholog mapping file, and a BED file.
+
+Example command to check if *E. scolopes* loop anchor genes scattered across different chromosomes in *O. bimaculoides*:
 
 ```bash
-python3 loop_chrom_status.py \
-  EUPgeneOBI.txt \
-  octbi.bed eupsc_50k+100k.tsv.genes_rm_dups
+python3 loop_chrom_status.py  EUPgeneOBI.txt octbi.bed eupsc_50k+100k.tsv.genes_rm_dups
   ```
+
+Note that the ortholog file must have species 1 in column 1 and species 2 in column 2 where species 1 is the species with the loops you're checking and species 2 is the species you're checking species chromosome status in.
+
+### Barplot of loops anchor genes on different chromosomes in other coleoid species
+
+The R script [`loops_on_diff_chroms_bar_plot_coleoid.R`](loops_on_diff_chroms_bar_plot_coleoid.R) generates a barplot showing the percentage of chromatin loops whose anchor genes fall on different chromosomes in another species, based on orthology and chromosome mapping.
+
+This provides a bar plot of potential genomic rearrangements disrupting loop structure between species. It includes comparisons for:
+
+*E. scolopes* loops checked in *O. bimaculoides*
+*S. officinalis* loops checked in *O. bimaculoides*
+*O. bimaculoides* loops checked in *E. scolopes*
+*O. bimaculoides* loops checked in *S. officinalis*
+
+### Barplot of loops anchor genes on different chromosomes in *P. maximus*
+
+The R script [`loops_on_diff_chroms_bar_plot_pmax.R`](loops_on_diff_chroms_bar_plot_pmax.R) generates a barplot showing the percentage of chromatin loops whose anchor genes fall on different chromosomes in *P. maximus*, based on orthology and chromosome mapping.
+
+This provides a bar plot of potential genomic rearrangements disrupting loop structure between species. It includes comparisons for:
 
   #YOU ARE HERE 
 
