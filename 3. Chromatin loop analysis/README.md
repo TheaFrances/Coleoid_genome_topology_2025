@@ -102,7 +102,7 @@ python merge_loops_in_2_resos.py \
 
 This command generates an output file with the name specified in the command, e.g., eupsc_25vs29_50k+100k.diff_loop1. 
 
-> **Note:** the same procedure was applied to files with the suffixes loop1 and loop2, which contain all detected loops for each sample, not just the differential ones, for example:
+> **Note:** The same procedure was applied to files with the suffixes loop1 and loop2, which contain all detected loops for each sample, not just the differential ones, for example:
 
 ```bash
 python merge_loops_in_2_resos.py \
@@ -257,9 +257,7 @@ The script [`loop_exp_boxplots.R`](loop_exp_boxplots.R) compares gene expression
      - Wilcoxon test statistic and p-value
      - Mean and median expression values per stage
 
-> **Notes:**
-- Genes appearing in multiple stages were **excluded** to focus on genes unique to a single stage’s loops.
-- Optional sections allow toggling between keeping all genes or filtering for stage-specific ones.
+> **Notes:** Genes appearing in multiple stages were **excluded** to focus on genes unique to a single stage’s loops. Optional sections allow toggling between keeping all genes or filtering for stage-specific ones.
 
 ## Loop anchor GO analysis
 
@@ -426,7 +424,7 @@ Example command to check if *E. scolopes* loop anchor genes scattered across dif
 python3 loop_chrom_status.py  EUPgeneOBI.txt octbi.bed eupsc_50k+100k.tsv.genes_rm_dups
   ```
 
-> **Note:** that the ortholog file must have species 1 in column 1 and species 2 in column 2 where species 1 is the species with the loops you're checking and species 2 is the species you're checking species chromosome status in.
+> **Note:** The ortholog file must have species 1 in column 1 and species 2 in column 2 where species 1 is the species with the loops you're checking and species 2 is the species you're checking species chromosome status in.
 
 ### Barplot of loop anchor genes on different chromosomes in other coleoid species
 
@@ -471,7 +469,7 @@ To identify loops conserved across *all three* species, orthologous gene IDs fou
 
 To assess whether genes involved in conserved loop anchors remain on the same chromosome in other species, the script [`check_chrom_of_conserved_loops_and_dist.py`](check_chrom_of_conserved_loops_and_dist.py) was used. This script checks whether the orthologous genes in each loop anchor are found on the same or different chromosomes in the compared species.
 
-- If **all genes** in a loop are located on the **same chromosome**, the script calculates the **shortest genomic distance** between the genes at the start and end of the loop.
+- If **all genes** in a loop are located on the **same chromosome**, the script calculates the **shortest genotenomic distance** between the genes at the start and end of the loop.
 - If the genes are found on **different chromosomes**, the loop is considered to have been disrupted by a chromosomal rearrangement.
 
 **Example command:**
@@ -564,7 +562,7 @@ The input file is `loop_sizes_start_end.txt`, which is a simplified version of t
 eupsc_size    octbi_size    sepof_size
 130000        600000        1450000
 6900000       2300000        5950000
-...
+...Note
 ```
 
 **Summary of analysis steps:**
