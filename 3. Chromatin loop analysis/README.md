@@ -25,6 +25,13 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
   - [Check whether loop anchor genes are on the same or different chromosomes in other species](#check-whether-loop-anchor-genes-are-on-the-same-or-different-chromosomes-in-other-species)
   - [Barplot of loop anchor genes on different chromosomes in other coleoid species](#barplot-of-loop-anchor-genes-on-different-chromosomes-in-other-coleoid-species)
   - [Barplot of loop anchor genes on different chromosomes in *P. maximus*](#barplot-of-loop-anchor-genes-on-different-chromosomes-in-p-maximus)
+- [Loop size and orthologous intergenic distance analysis](#loop-size-and-orthologous-intergenic-distance-analysis)
+  - [Get loop sizes](#get-loop-sizes)
+  - [Identify genes within loop bins](#identify-genes-within-loop-bins)
+  - [Remove duplicate gene interactions](#remove-duplicate-gene-interactions)
+  - [Calculate distances between orthologous loop anchor genes](#calculate-distances-between-orthologous-loop-anchor-genes)
+  - [Plot loop size distributions for orthologous gene comparisons across species](#plot-loop-size-distributions-for-orthologous-gene-comparisons-across-species)
+  - [Assess the relationship between loop size and orthologous gene spacing](#assess-the-relationship-between-loop-size-and-orthologous-gene-spacing)
 - [Conserved chromatin loop analyses across species](#conserved-chromatin-loop-analyses-across-species)
   - [Loop calling with Mustache](#loop-calling-with-mustache)
   - [Merge loop calls across resolutions](#merge-loop-calls-across-resolutions)
@@ -443,7 +450,7 @@ The R script [`loops_on_diff_chroms_bar_plot_pmax.R`](loops_on_diff_chroms_bar_p
 
 This provides a bar plot of potential genomic rearrangements disrupting loop structure between species.
 
-## Calculate loop sizes and orthologous intergenic distances
+## Loop size and orthologous intergenic distance analysis
 
 ### Get loop sizes
 
@@ -546,10 +553,9 @@ The [`loop_size_vs_ortholog_distance_lm.R`](loop_size_vs_ortholog_distance_lm.R)
 - Annotates the plot with R² values for each fit.
 - Saves the final figure.
 
-**Required input files:**
+**Required input file:**
 
 - `.genes_rm_dups_loop_size_dist.tsv` — loop sizes with ortholog and chromosome info
-
 
 ## Conserved chromatin loop analyses across species
 
