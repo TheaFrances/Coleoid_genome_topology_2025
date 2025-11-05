@@ -7,3 +7,9 @@ Species abbreviations used across scripts and plots:
 - *Sepia officinalis*: sof or sepof
 - *Octopus bimaculoides*: obi or octbi
 
+
+### Other cod
+
+- Code used for dot plot visualisations is available [`here`](https://bitbucket.org/viemet/public/src/master/vamp/)
+
+- Code for multi-locus topology analysis (MLT) is available [`here`](https://github.com/conchoecia/odp/commit/8310442e49a1b26c6cf9b0b6b672ca40779311b9)
