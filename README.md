@@ -8,7 +8,7 @@ Species abbreviations used across scripts and plots:
 - *Octopus bimaculoides*: obi or octbi
 
 
-### Other cod
+### Other code
 
 - Code used for dot plot visualisations is available [`here`](https://bitbucket.org/viemet/public/src/master/vamp/)
 
