@@ -305,7 +305,7 @@ sort -k1,1 -k2,2n 409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_thresh
 
 ### Convert RepeatMasker output to GFF and then BED format
 
-Repeat GFF files were created from RepeatMasker output `.out` files using `rmOutToGFF3.pl` which is documented in the script repeats_to_gff.sh. The `rmOutToGFF3.pl` script was obtained from utils folder of RepeatMasker and can be found on the [RepeatMasker GitHub repo](https://github.com/Dfam-consortium/RepeatMasker/blob/master/util/rmOutToGFF3.pl).
+Repeat GFF files were created from RepeatMasker output `.out` files using `rmOutToGFF3.pl` which is documented in the script [`repeats_to_gff.sh`](repeats_to_gff.sh). The `rmOutToGFF3.pl` script was obtained from utils folder of RepeatMasker and can be found on the [RepeatMasker GitHub repo](https://github.com/Dfam-consortium/RepeatMasker/blob/master/util/rmOutToGFF3.pl).
 
 Next, the output gff was converted into bed format:
 
