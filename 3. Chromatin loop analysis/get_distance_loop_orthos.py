@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*- 
 # Add column of average intergenic distance of species orthologs to loop file (and include loop size in the output too, to plot later).
 # ==============================================================================
-# Imports=====================================================================
+# Imports======================================================================
 # ==============================================================================
 import argparse
 import sys

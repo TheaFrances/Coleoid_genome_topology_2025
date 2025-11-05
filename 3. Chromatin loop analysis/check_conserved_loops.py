@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*- 
 # This script defines a loop as conserved if there is at least one orthologous gene pair in bin 1 and one in bin 2 (allowing reversed bin orientation across species).
 # ==============================================================================
-# Imports=====================================================================
+# Imports=======================================================================
 # ==============================================================================
 import sys
 import argparse

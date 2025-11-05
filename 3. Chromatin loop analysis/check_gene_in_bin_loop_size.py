@@ -3,7 +3,7 @@
 # This script takes all genes within the start and end of both differential loop bins. As well as genes overlapping the bins (including spanning the whole bin).
 # It also adds a column of loop size.
 # ==============================================================================
-# Main code=====================================================================
+# Imports=======================================================================
 # ==============================================================================
 import argparse
 import sys
@@ -28,8 +28,8 @@ if len(sys.argv)==1:
 	parser.print_help()
 	sys.exit(1)
 args = parser.parse_args()
-
 # ==============================================================================
+# Main code=====================================================================
 # ==============================================================================
 
 def main():
