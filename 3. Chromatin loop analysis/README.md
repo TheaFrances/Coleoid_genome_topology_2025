@@ -657,24 +657,19 @@ eupsc_size    octbi_size    sepof_size
 ...Note
 ```
 
-**Summary of analysis steps:**
+**Summary of script functionality:**
 
-1. **Input data processing**
-   - Adds a loop ID to each row to track conserved loops.
-   - Removes known outlier loops (e.g., a single loop in *E. scolopes* which is likely due to a genome missassembly).
-   - Pivots the wide format into long format (one row per species per loop).
-   - Assigns genome size values to each species.
-
-2. **Per-loop correlation analysis**
-   - Estimates bp increase per 1 Gb genome size.
-   - Summarises the number and proportion of loops showing a positive correlation with genome size.
-   - Performs Wilcoxon signed-rank tests on the distribution of slopes (vs. 0).
-   - This tests whether conserved loops tend to scale with genome size across species.
-
-3. **Scatter plot of individual loops**
-   - Generates a clean scatter/line plot showing each loop's size across species. Species genome sizes are shown on the x-axis; loop sizes on the y-axis.
-   - Each loop is assigned a unique colour using a distinct HCL-based palette.
-   - The final figure is saved.
+- Adds a loop ID to each row to track conserved loops  
+- Removes known outlier loops (e.g., a single loop in *E. scolopes* which is likely due to a genome misassembly)  
+- Pivots the wide format into long format (one row per species per loop)  
+- Assigns genome size values to each species  
+- Estimates bp increase per 1 Gb genome size  
+- Summarises the number and proportion of loops showing a positive correlation with genome size  
+- Performs Wilcoxon signed-rank tests on the distribution of slopes (vs. 0)  
+- This tests whether conserved loops tend to scale with genome size across species  
+- Generates a clean scatter/line plot showing each loop's size across species. Species genome sizes are shown on the x-axis; loop sizes on the y-axis  
+- Each loop is assigned a unique colour using a distinct HCL-based palette  
+- The final figure is saved  
 
 ## Check how many loops are in interacting gene pairs
 
