@@ -699,7 +699,7 @@ eupsc_size    octbi_size    sepof_size
 
 ## Check how many loops are in interacting gene pairs
 
-The script [`check_loops_in_interacting_gene_pairs.py`](check_loops_in_interacting_gene_pairs.py) determines how many interacting gene pairs also overlap with gene-annotated chromatin loops.
+The script [`check_interacting_gene_pairs_in_loops.py`](check_interacting_gene_pairs_in_loops.py) determines how many interacting gene pairs also overlap with gene-annotated chromatin loops.
 
 **Example:**
 ```bash
@@ -707,7 +707,7 @@ python check_loops_in_int_gene_pairs.py 409493_100000_EUPvs212489_50000_OBI_geno
 ```
 Where the file 409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.txt is from [this](../2.%20Interacting%20gene%20pair%20analysis#plot-boxplots-of-genomic-distances-and-barplots-summarising-interaction-and-ancestral-chromosomal-status-categories-for-gene-pairs) step in the interacting gene pair analysis.
 
-**Example output (*E. scolopes*):**
+**Example output:**
 ```bash
 Loop species: eupsc
 Number of unique interacting gene pairs in interaction file: 2413

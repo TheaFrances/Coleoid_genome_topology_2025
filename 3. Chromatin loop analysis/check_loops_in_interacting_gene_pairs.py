@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*- 
-#Check how many loops with genes are categorised as interacting gene pairs
-#E.g. python check_loops_in_int_gene_pairs.py /Users/users/Desktop/Micro-C/topology_strength_analysis/eupsc_100k/409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.txt /Users/users/Desktop/Micro-C/diff_loop_analysis/eupsc/output/eupsc_29cat_50k+100k/eupsc_29cat_50k+100k.tsv.genes_rm_dups
-#=============================================================================
-#=============================================================================
+# Check how many loops with genes are categorised as interacting gene pairs.
+# ==============================================================================
+# Imports=====================================================================
+# ==============================================================================
 import argparse
 import sys
 from collections import defaultdict
 import os
 import random
 import collections
-#==============================================================================
-# Command-line options
-#==============================================================================
+# ==============================================================================
+# Command-line options=====================================================================
+# ==============================================================================
 parser = argparse.ArgumentParser()
 
 parser.add_argument("int_file", type=str, help="Interaction pairs file")
@@ -21,9 +21,11 @@ if len(sys.argv) == 1:
     parser.print_help()
     sys.exit(1)
 args = parser.parse_args()
-#==============================================================================
-# Main function
-#==============================================================================
+
+# ==============================================================================
+# Main code=====================================================================
+# ==============================================================================
+
 def main():
 
     loop_species = args.loop_file.split("/")[-1].split("_")[0]

@@ -6,7 +6,9 @@
 #If a 100 kb loop is within this window of a 50 kb loop, it is discarded in favor of the higher-resolution (50 kb) call.
 
 #This script is specifically for the output of mustache, where the columns are in a specific order.
-#==============================================================================
+# ==============================================================================
+# Imports=======================================================================
+# ==============================================================================
 import argparse
 import sys
 from collections import defaultdict
@@ -14,17 +16,18 @@ import os
 import random
 import collections
 import pandas as pd
-#==============================================================================
-#Command line options==========================================================
-#==============================================================================
+# ==============================================================================
+# Command line options==========================================================
+# ==============================================================================
 parser = argparse.ArgumentParser(description="Merge loops from two resolutions, keeping the loops in the first file if they appear in both files.")
 parser.add_argument("file_reso1", type=str, help="Path to the first and higher resolution loops file. This file will be the 'priority' list.")
 parser.add_argument("file_reso2", type=str, help="Path to the second resolution loops file.")
 parser.add_argument("output_file", type=str, help="Path to save the merged loops file.")
 parser.add_argument("--tolerance", type=int, default=50000, help="Maximum allowed difference between loop positions to be considered overlapping.")
 args = parser.parse_args()
-#==============================================================================
-#==============================================================================
+# ==============================================================================
+# Main code=====================================================================
+# ==============================================================================
 
 #Function to check if two loops overlap based on a given tolerance
 def loops_overlap(loop1, loop2, tolerance=args.tolerance):
