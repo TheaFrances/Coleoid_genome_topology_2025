@@ -48,12 +48,13 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
   - [Make 500 bp windows](#make-500-bp-windows)
   - [Run HOMER](#run-homer)
 - [ATAC peak enrichment analysis](#atac-peak-enrichment-analysis)
-  - [Prepare 3-column BED files of loop anchors](#prepare-3-column-bed-files-of-loop-anchors)
-  - [Sort loop anchor regions and generate complement regions](#sort-loop-anchor-regions-and-generate-complement-regions)
-  - [Generate interloop regions and get their complements](#generate-interloop-regions-and-get-their-complements)
+  - [Prepare files for ATAC peak enrichment analysis](#prepare-files-for-atac-peak-enrichment-analysis)
   - [Run ATAC peak overlap with bedtools coverage](#run-atac-peak-overlap-with-bedtools-coverage)
-  - [Statistical testing of ATAC peak enrichment in loop anchors and interloop regions](#statistical-testing-of-ATAC-peak-enrichment-in-loop-anchors-and-interloop-regions)
-
+  - [Statistical testing of ATAC peak enrichment in loop anchors and interloop regions](#statistical-testing-of-atac-peak-enrichment-in-loop-anchors-and-interloop-regions)
+- [Quantify CNE enrichment in loop anchors and interloop space (example: *E. scolopes* CNEs conserved in *O. bimaculoides*)](#quantify-cne-enrichment-in-loop-anchors-and-interloop-space-example-e-scolopes-cnes-conserved-in-o-bimaculoides)
+  - [Prepare files for CNE enrichment analysis](#prepare-files-for-cne-enrichment-analysis)
+  - [Run CNE overlap with bedtools intersect](#run-CNE-overlap-with-bedtools-intersect)
+  - [Statistical testing of CNE enrichment](#statistical-testing-of-cne-enrichment)
 
 
 ## Get loops and genes in loop anchors
@@ -499,7 +500,7 @@ Number of significant loops =  329
 Number of loop bins with genes in (loop start) =  213
 Number of loop bins with genes in (loop end) =  216
 Number of loop bins with genes in both bins =  160
-Output written to:  eupsc_29cat_50k+100k.loopsize.tsv.genes
+Output written to:  eupsc_loops_50k+100k.loopsize.tsv.genes
 ```
 
 ### Remove duplicate gene interactions
@@ -754,16 +755,17 @@ This step is documented in the [`eupsc_loops_homer.sh`](eupsc_loops_homer.sh), w
 
 ## ATAC peak enrichment analysis
 
-### Prepare 3-column BED files of loop anchors
+### Prepare files for ATAC peak enrichment analysis
 
-First, the first 3 columns (chromosome, start, end) from each loop file were extracted to prepare it for BEDTools analysis.
+**Prepare bed files:**
 
-**Example:**
+The first 3 columns (chromosome, start, end) from each loop file were extracted to prepare it for BEDTools analysis.
+
 ```bash
 cut -f1-3 eupsc_loops_50k+100k.bed > eupsc_loops_50k+100k_3columns.bed
 ```
 
-### Sort loop anchor regions and generate complement regions
+**Sort loop anchor regions and generate complement regions:**
 
 Sort BED files using the same chromosome size reference for consistency. Then create complementary (non-loop) regions using `bedtools complement`:
 
@@ -775,7 +777,7 @@ bedtools sort -i eupsc_loops_50k+100k_3columns.bed -g $CHR > eupsc_loops_50k+100
 bedtools complement -i eupsc_loops_50k+100k_3columns_sorted.bed -g $CHR > eupsc_loops_50k+100k_non_loop_anchor_regions.bed
 ```
 
-### Generate interloop regions and get their complements
+**Generate interloop regions and get their complements:**
 
 Extract interloop space as a BED file:
 
@@ -808,6 +810,80 @@ The ATAC coverage files were analysed in R using a the script [`ATAC_enrichment_
 - Visualises distributions using ridgeline density plots and bar plots with error bars
 - Fits a linear model to test the effects of region type and developmental stage on ATAC coverage
 
+## Quantify CNE enrichment in loop anchors and interloop space
+
+We assessed the enrichment of conserved noncoding elements (CNEs) in 3D chromatin features by counting their overlaps with loop anchors and interloop regions, using BEDTools. The following is an example for *E. scolopes* CNEs conserved in *O. bimaculoides*.
+
+### Prepare files for CNE enrichment analysis
+
+**Prepare BED files for conserved regions:**
+    ```bash
+    awk '{print $1"\t"$2"\t"$3}' blastn.res.filt.notd.rm_scaff > eupsc_consv_in_octbi.bed
+    ```
+
+**Fix BED format if start > end (swap coordinates):**
+    ```bash
+    awk '{ if ($2 < $3) print $0; else print $1 "\t" $3 "\t" $2 }' eupsc_consv_in_octbi.bed > eupsc_consv_in_octbi_fixed.bed
+    ```
+
+**Sort CNE BED files:**
+    ```bash
+    bedtools sort -i eupsc_consv_in_octbi_fixed.bed -g Lachesis_assembly_chrsize_for_cnes.txt > eupsc_consv_in_octbi_cne_sorted.bed
+    ```
+
+**Fix coordinate format in loop anchor and interloop files to match CNE chromosome names:**
+    ```bash
+    awk '{sub(/__.*/, "", $1); print $1"\t"$2"\t"$3}' eupsc_loops_50k+100k_3columns_sorted.bed > eupsc_loops_50k+100k_3columns_sorted_fixed.bed
+    awk '{sub(/__.*/, "", $1); print $1"\t"$2"\t"$3}' eupsc_loops_50k+100k_non_loop_anchor_regions.bed > eupsc_loops_50k+100k_non_loop_anchor_regions_fixed.bed
+    awk '{sub(/__.*/, "", $1); print $1"\t"$2"\t"$3}' eupsc_loops_50k+100k_interloop_space_sorted.bed > eupsc_loops_50k+100k_interloop_space_sorted_fixed.bed
+    awk '{sub(/__.*/, "", $1); print $1"\t"$2"\t"$3}' eupsc_loops_50k+100k_non_interloop_space.bed > eupsc_loops_50k+100k_non_interloop_space_fixed.bed
+    ```
+
+### ### Run CNE overlap with bedtools intersect
+
+Run CNE overlaps in each region using `bedtools intersect -c`.
+
+```bash
+    # Loop anchor regions
+    bedtools intersect -c -a eupsc_loops_50k+100_3columns_sorted_fixed.bed \
+                       -b eupsc_consv_in_octbi_cne_sorted.bed \
+                       > eupsc_loop_anchors_CNE_overlap_counts.bed
+
+    # Non-anchor background
+    bedtools intersect -c -a eupsc_loops_50k+100k_non_loop_anchor_regions_fixed.bed \
+                       -b eupsc_consv_in_octbi_cne_sorted.bed \
+                       > eupsc_non_anchor_CNE_overlap_counts.bed
+
+    # Interloop regions
+    bedtools intersect -c -a eupsc_loops_50k+100k_interloop_space_sorted_fixed.bed \
+                       -b eupsc_consv_in_octbi_cne_sorted.bed \
+                       > eupsc_interloop_CNE_overlap_counts.bed
+
+    # Non-interloop background
+    bedtools intersect -c -a eupsc_loops_50k+100k_non_interloop_space_fixed.bed \
+                       -b eupsc_consv_in_octbi_cne_sorted.bed \
+                       > eupsc_non_interloop_CNE_overlap_counts.bed
+```
+
+These output files contain region-wise CNE overlap counts and can be used for statistical testing and visualisation of enrichment (e.g. via Wilcoxon tests and barplots in R).
+
+### Statistical testing of CNE enrichment
+
+The R script [`CNE_enrichment_loops_sig_test_and_plot.R`](CNE_enrichment_loops_sig_test_and_plot.R) compares the density of conserved non-coding element (CNE) overlaps across different genomic regions involved in chromatin looping using the files generated in the last step. It normalises overlap counts by region length (per kilobase), generates boxplots, and performs Wilcoxon rank-sum tests with BH correction between region types.
+
+The regions tested are:
+
+- Anchor vs Non-anchor  
+- Interloop vs Non-interloop  
+- Interloop vs Anchor  
+
+**Main steps:**
+- Load overlap count BED files for each region and species.
+- Calculate region lengths and normalize CNE counts to overlaps per kilobase.
+- Combine all data into a single long-format dataframe.
+- Plot CNE density (`per_kb`) using `ggplot2`, with separate panels per species.
+- Run Wilcoxon rank-sum tests for all region comparisons.
+- Apply BH correction and print raw and adjusted p-values.
 
 
 
