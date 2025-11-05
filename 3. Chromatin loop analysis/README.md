@@ -219,33 +219,14 @@ The script [`heatmaps_tau_coexp.R`](heatmaps_tau_coexp.R) was run **separately f
 
 **Summary of script functionality:**
 
-This script:
-
-1. **Loads and processes loop-gene mappings**  
-  Loops from all three stages (20, 25, 29) are read and mapped to their associated genes using unique loop IDs derived from genomic bin coordinates.
-
-2. **Identifies stage-specific loops**  
-  For the focal stage (e.g. stage 29), only loops with unique gene content not shared with other stages are retained for visualisation.
-
-3. **Merges expression data**  
-  TPM-normalised expression data are log-transformed and merged with the loop–gene mappings to generate per-loop gene expression matrices.
-
-4. **Generates a clustered heatmap**  
-  A heatmap is created using `pheatmap`, displaying expression of genes grouped by loop.  
-  Genes appearing in multiple loops are shown separately for each loop occurrence, with `gaps_row` separating different loops.
-
-5. **Calculates Tau tissue-specificity**  
-  The tissue-specificity index (Tau) is computed for each gene based on log-transformed expression values, then summarised per loop (mean and median Tau).
-
-6. **Calculates intra-loop co-expression**  
-  For each loop, mean pairwise Pearson correlation between genes is calculated to assess co-regulation within loop domains.
-
-7. **Outputs summary statistics and visualisations**  
-  Final outputs include:
-  - A heatmap for each stage showing loop-level gene expression patterns  
-  - Summary statistics for Tau and co-expression across loops  
-
-Each stage (20, 25, and 29) was analysed independently, producing separate heatmaps and summary outputs.
+- Loops from all three stages (20, 25, 29) are read and mapped to their associated genes using unique loop IDs derived from genomic bin coordinates  
+- For the focal stage (e.g. stage 29), only loops with unique gene content not shared with other stages are retained for visualisation  
+- TPM-normalised expression data are log-transformed and merged with the loop–gene mappings to generate per-loop gene expression matrices  
+- A heatmap is created using `pheatmap`, displaying expression of genes grouped by loop  
+  - Genes appearing in multiple loops are shown separately for each loop occurrence, with `gaps_row` separating different loops  
+- The tissue-specificity index (Tau) is computed for each gene based on log-transformed expression values, then summarised per loop (mean and median Tau)  
+- For each loop, mean pairwise Pearson correlation between genes is calculated to assess co-regulation within loop domains  
+- Outputs summary statistics and visualisations  
 
 ### Gene expression comparison across developmental stage-specific loops
 
@@ -253,30 +234,20 @@ The script [`loop_exp_boxplots.R`](loop_exp_boxplots.R) compares gene expression
 
 **Overview of analysis steps**:
 
-1. **Input preparation:**
-   - Gene lists were extracted from stage-specific loop–gene mappings (`*.genes_list.txt`).
-   - TPM-normalised expression data were read and averaged across replicates for each developmental stage (Stages 14–28).
-
-2. **Stage-specific filtering:**
-   - For each stage (20, 25, 29), expression data were subset to include only genes uniquely present in that stage’s loop set (i.e., genes not found in loops from other stages).
-
-3. **Expression matrix preparation:**
-   - Data were reshaped into long format (gene × tissue × stage).
-   - Expression values were log-transformed using a pseudocount of 0.01.
-
-4. **Statistical comparisons:**
-   - All pairwise comparisons between stages were tested using **Wilcoxon rank-sum tests** within each tissue.
-   - Significance levels were annotated using the `ggsignif` package.
-
-5. **Visualisation:**
-   - A faceted boxplot was created showing gene expression (logTPM) across tissues, grouped by developmental stage.
-   - Custom color schemes and angled axis labels were used for clarity.
-
-6. **Output:**
-   - A multi-panel boxplot (per tissue) of gene expression for genes from stage-specific loops.
-   - A significance summary table including:
-     - Wilcoxon test statistic and p-value
-     - Mean and median expression values per stage
+- Gene lists were extracted from stage-specific loop–gene mappings (`*.genes_list.txt`)  
+- TPM-normalised expression data were read and averaged across replicates for each developmental stage (Stages 14–28)  
+- For each stage (20, 25, 29), expression data were subset to include only genes uniquely present in that stage’s loop set (i.e., genes not found in loops from other stages)  
+- Data were reshaped into long format (gene × tissue × stage)  
+- Expression values were log-transformed using a pseudocount of 0.01  
+- All pairwise comparisons between stages were tested using Wilcoxon rank-sum tests within each tissue  
+  - Significance levels were annotated
+- A faceted boxplot was created showing gene expression (logTPM) across tissues, grouped by developmental stage  
+  - Custom color schemes and angled axis labels were used for clarity  
+- Output includes:  
+  - A multi-panel boxplot (per tissue) of gene expression for genes from stage-specific loops  
+  - A significance summary table including:  
+    - Wilcoxon test statistic and p-value  
+    - Mean and median expression values per stage  
 
 > **Notes:** Genes appearing in multiple stages were **excluded** to focus on genes unique to a single stage’s loops. Optional sections allow toggling between keeping all genes or filtering for stage-specific ones.
 
@@ -366,18 +337,18 @@ python subsetBigWig.py 97309_st29_normalised.bw 97309_st29_chr5.bw Lachesis_grou
 
 To generate triangle heatmaps of chromatin loops alongside gene models and regulatory tracks (e.g., ATAC-seq), we used the R package [`plotgardener`](https://phanstiellab.github.io/plotgardener/). The R script [`plot_diff_loop_plotgardener_with_atac.R`](plot_diff_loop_plotgardener_with_atac.R)  was used to create Figure 4D of the manuscript, highlighting a developmentally dynamic loop in *E. scolopes* chromosome 5.
 
-The script performs the following steps:
+**Summary of script functionality:**
 
-1. Loads a `.hic` file containing KR-normalised Hi-C data for the relevant developmental stage.
-2. Builds a genome assembly using:
+- Loads a `.hic` file containing KR-normalised Hi-C data for the relevant developmental stage.
+- Builds a genome assembly using:
    - A `.fasta` genome file  
    - A `TxDb` object created from an exon-corrected GFF  
    - A `BSgenome` object generated from a `.2bit` file  
    - A custom `OrgDb` package (e.g. `org.Eesc.eg.db`)
-3. Plots a triangular Hi-C map over a specified genomic region.
-4. Overlays gene models using `plotGenes()`, with specific genes of interest highlighted.
-5. Loads and plots ATAC-seq signal from normalised `.bw` files for three developmental stages, scaling the signal tracks using the 99.5th percentile to match the y-axis range.
-6. Saves the figure.
+- Plots a triangular Hi-C map over a specified genomic region.
+- Overlays gene models using `plotGenes()`, with specific genes of interest highlighted.
+- Loads and plots ATAC-seq signal from normalised `.bw` files for three developmental stages, scaling the signal tracks using the 99.5th percentile to match the y-axis range.
+- Saves the figure.
 
 **Required input files:**
 
@@ -645,25 +616,20 @@ The R script [`conserved_loop_sizes.R`](conserved_loop_sizes.R) calculates loop 
 
 **Summary of script functionality:**
 
-1. **Input data processing**
-   - Reads per‑species loop‑size tables from previously processed `.genes_rm_dups` files for *E. scolopes*, *S. officinalis*, and *O. bimaculoides*.
-   - Standardises column names and ensures numeric coordinate formats for the start position of the first loop bin.
-   - Uses a helper function to parse loop IDs of the form `<chromosome>:<start>-<end>` into separate chromosome and start‑position columns.
-   - These parsed identifiers enable consistent joining of loop‑size information across species.
-
-2. **Getting conserved loop sizes**
-   - For each species pair (*E. scolopes–S. officinalis*, *E. scolopes–O. bimaculoides*, and *S. officinalis–O. bimaculoides*), the script joins loop‑size data by matching chromosome and bin‑start coordinates.
-   - This produces new files such as:
-     - `eupsc_sepof_consv_loops_with_sizes.tsv`
-     - `eupsc_octbi_consv_loops_with_sizes.tsv`
-     - `sepof_octbi_consv_loops_with_sizes.tsv`
-   - A combined file containing loops conserved across all three species is read in and joined with loop‑size tables for each species.
-   - The resulting table (`eupsc_octbi_sepof_consv_loops_with_sizes.tsv`) includes loop‑size information from all three species side by side.
-
-3. **Diagnostics**
-   - A simple summary table reports:
-     - The number of loops processed per comparison.
-     - How many loops are missing size information in each species (useful for detecting coordinate mismatches).
+- Reads per-species loop-size tables from previously processed `.genes_rm_dups` files for *E. scolopes*, *S. officinalis*, and *O. bimaculoides*  
+- Standardises column names and ensures numeric coordinate formats for the start position of the first loop bin  
+- Uses a helper function to parse loop IDs of the form `<chromosome>:<start>-<end>` into separate chromosome and start-position columns  
+- These parsed identifiers enable consistent joining of loop-size information across species  
+- For each species pair (*E. scolopes–S. officinalis*, *E. scolopes–O. bimaculoides*, and *S. officinalis–O. bimaculoides*), the script joins loop-size data by matching chromosome and bin-start coordinates
+  - This produces new files such as:  
+    - `eupsc_sepof_consv_loops_with_sizes.tsv`  
+    - `eupsc_octbi_consv_loops_with_sizes.tsv`  
+    - `sepof_octbi_consv_loops_with_sizes.tsv`  
+  - A combined file containing loops conserved across all three species is read in and joined with loop-size tables for each species  
+  - The resulting table (`eupsc_octbi_sepof_consv_loops_with_sizes.tsv`) includes loop-size information from all three species side by side  
+- A simple summary table reports:  
+  - The number of loops processed per comparison  
+  - How many loops are missing size information in each species (useful for detecting coordinate mismatches)  
 
 **Example output table (diagnostic summary):**
 ```
