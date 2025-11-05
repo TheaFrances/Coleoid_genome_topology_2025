@@ -42,7 +42,7 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
   - [Check chromosomal status and intergenic distances of conserved loops](#check-chromosomal-status-and-intergenic-distances-of-conserved-loops)
   - [Expression heatmap of conserved loop anchor genes](#expression-heatmap-of-conserved-loop-anchor-genes)
   - [Correlation of conserved loop size with genome size](#correlation-of-conserved-loop-size-with-genome-size)
-- [Check how many loops are in interacting gene pairs](Check-how-many-loops-are-in-interacting-gene-pairs)
+- [Check how many loops are in interacting gene pairs](#check-how-many-loops-are-in-interacting-gene-pairs)
 
 ## Get loops and genes in loop anchors
 
