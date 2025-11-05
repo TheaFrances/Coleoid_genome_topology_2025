@@ -42,6 +42,7 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
   - [Check chromosomal status and intergenic distances of conserved loops](#check-chromosomal-status-and-intergenic-distances-of-conserved-loops)
   - [Expression heatmap of conserved loop anchor genes](#expression-heatmap-of-conserved-loop-anchor-genes)
   - [Correlation of conserved loop size with genome size](#correlation-of-conserved-loop-size-with-genome-size)
+- [Check how many loops are in interacting gene pairs](Check-how-many-loops-are-in-interacting-gene-pairs)
 
 ## Get loops and genes in loop anchors
 
@@ -695,4 +696,25 @@ eupsc_size    octbi_size    sepof_size
    - Generates a clean scatter/line plot showing each loop's size across species. Species genome sizes are shown on the x-axis; loop sizes on the y-axis.
    - Each loop is assigned a unique colour using a distinct HCL-based palette.
    - The final figure is saved.
+
+## Check how many loops are in interacting gene pairs
+
+The script [`check_loops_in_interacting_gene_pairs.py`](check_loops_in_interacting_gene_pairs.py) determines how many interacting gene pairs also overlap with gene-annotated chromatin loops.
+
+**Example:**
+```bash
+python check_loops_in_int_gene_pairs.py 409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.txt eupsc_loops_50k+100k.tsv.genes_rm_dups
+```
+Where the file 409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.txt is from [this](../2.%20Interacting%20gene%20pair%20analysis#plot-boxplots-of-genomic-distances-and-barplots-summarising-interaction-and-ancestral-chromosomal-status-categories-for-gene-pairs) step in the interacting gene pair analysis.
+
+**Example output (*E. scolopes*):**
+```bash
+Loop species: eupsc
+Number of unique interacting gene pairs in interaction file: 2413
+Number of loops with genes = 156
+Number of interacting gene pairs in loop file = 9
+Percentage of interacting gene pairs in loop file = 0.37
+```
+
+
 
