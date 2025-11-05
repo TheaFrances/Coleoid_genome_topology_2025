@@ -43,6 +43,17 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
   - [Expression heatmap of conserved loop anchor genes](#expression-heatmap-of-conserved-loop-anchor-genes)
   - [Correlation of conserved loop size with genome size](#correlation-of-conserved-loop-size-with-genome-size)
 - [Check how many loops are in interacting gene pairs](#check-how-many-loops-are-in-interacting-gene-pairs)
+- [Motif enrichment analysis of loop anchors](#motif-enrichment-analysis-of-loop-anchors)
+  - [Get bed file of loop anchors](#get-bed-file-of-loop-anchors)
+  - [Make 500 bp windows](#make-500-bp-windows)
+  - [Run HOMER](#run-homer)
+- [ATAC peak enrichment analysis](#atac-peak-enrichment-analysis)
+  - [Prepare 3-column BED files of loop anchors](#prepare-3-column-bed-files-of-loop-anchors)
+  - [Sort loop regions and generate complement (non-loop) regions](#sort-loop-regions-and-generate-complement-non-loop-regions)
+  - [Generate interloop regions and their complements](#generate-interloop-regions-and-their-complements)
+  - [Run ATAC peak overlap with bedtools coverage](#run-atac-peak-overlap-with-bedtools-coverage)
+
+
 
 ## Get loops and genes in loop anchors
 
@@ -715,6 +726,90 @@ Number of loops with genes = 156
 Number of interacting gene pairs in loop file = 9
 Percentage of interacting gene pairs in loop file = 0.37
 ```
+## Motif enrichment analysis of loop anchors
+
+### Get bed file of loop anchors
+
+Get bed file of regions using the script [`get_loop_bed.py`](get_loop_bed.py) you want to test for enrichment because this is a requirement for [HOMER](http://homer.ucsd.edu/homer/ngs/peakMotifs.html).
+
+**Example:**
+```bash
+python3 get_loop_bed.py eupsc_loops_50k+100k.tsv
+```
+
+### Make 500 bp windows
+
+Split bed file of loop anchor regions up into 500 bp windows for more statistical power using [bedtools](https://bedtools.readthedocs.io/en/latest/).
+
+```bash
+ml bedtoools
+# Eupsc
+bedtools makewindows -b eupsc_loops_50k+100k.bed  -w 500 -s 500  > eupsc_loops_50k+100k_500bp_windows.bed
+```
+
+### Run HOMER
+
+This step is documented in the [`eupsc_loops_homer.sh`](eupsc_loops_homer.sh), where Lachesis_assembly.fasta is the *E. scolopes* reference genome.
+
+## ATAC peak enrichment analysis
+
+### Prepare 3-column BED files of loop anchors
+
+First, the first 3 columns (chromosome, start, end) from each loop file were extracted to prepare it for BEDTools analysis.
+
+**Example:**
+```bash
+cut -f1-3 eupsc_loops_50k+100k.bed > eupsc_loops_50k+100k_3columns.bed
+```
+
+### Sort loop anchor regions and generate complement (non-loop) regions
+
+Sort BED files using the same chromosome size reference for consistency. Then create complementary (non-loop) regions using `bedtools complement`:
+
+```bash
+CHR=Lachesis_assembly_chrsize_rm_scaf.sorted.txt
+
+bedtools sort -i eupsc_loops_50k+100k_3columns.bed -g $CHR > eupsc_loops_50k+100k_3columns_sorted.bed
+
+bedtools complement -i eupsc_loops_50k+100k_3columns_sorted.bed -g $CHR > eupsc_loops_50k+100k_non_loop_anchor_regions.bed
+```
+
+### Generate interloop regions and get their complements
+
+Extract interloop space as a BED file:
+
+```bash
+tail -n +2 eupsc_loops_50k+100k.tsv | awk -F'\t' '{print $1, $3, $5}' OFS='\t' > eupsc_loops_50k+100k_interloop_space.bed
+```
+
+Sort and generate complement regions:
+
+```bash
+bedtools sort -i eupsc_loops_50k+100k_interloop_space.bed -g $CHR > eupsc_loops_50k+100k_interloop_space_sorted.bed
+
+bedtools complement -i eupsc_loops_50k+100k_interloop_space_sorted.bed -g $CHR > eupsc_loops_50k+100k_non_interloop_space.bed
+```
+
+### Run ATAC peak overlap with bedtools coverage
+
+Use `bedtools coverage` to count base pair overlaps between ATAC-seq peaks and loop/interloop regions and their backgrounds. This method is robust to differences in binning or region fragmentation. This step is documented in [`bedtools_atac.sh`](bedtools_atac.sh)
+
+### Statistical testing of ATAC peak enrichment in loop anchors and interloop regions
+
+To assess chromatin accessibility within 3D genome structures, we calculated the fraction of each region (loop anchors, interloop space, and their respective background regions) covered by ATAC-seq peaks using `bedtools coverage`.
+
+The ATAC coverage files were analysed in R using a the script [`ATAC_peaks_in_loop_anchors_and_interloop _space_sig_test_and_plot_norm_cov`](ATAC_peaks_in_loop_anchors_and_interloop_space_sig_test_and_plot_norm_cov.R) that:
+
+- Loads coverage outputs and extracts the fraction of each region overlapped by ATAC peaks
+- Merges data from all developmental stages into a long-format table
+- Performs Wilcoxon rank-sum tests between each structure type and its background (e.g., loop anchor vs non-anchor) and adjusts p-values using the Benjamini–Hochberg method
+- Summarises mean and median ATAC coverage per region type and stage
+- Visualizes distributions using ridgeline density plots and bar plots with error bars
+- Fits a linear model to test the effects of region type and developmental stage on ATAC coverage
+
+
+
+
 
 
 
