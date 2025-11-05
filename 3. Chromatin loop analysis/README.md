@@ -839,7 +839,7 @@ We assessed the enrichment of conserved noncoding elements (CNEs) in 3D chromati
     awk '{sub(/__.*/, "", $1); print $1"\t"$2"\t"$3}' eupsc_loops_50k+100k_non_interloop_space.bed > eupsc_loops_50k+100k_non_interloop_space_fixed.bed
     ```
 
-### ### Run CNE overlap with bedtools intersect
+### Run CNE overlap with bedtools intersect
 
 Run CNE overlaps in each region using `bedtools intersect -c`.
 
