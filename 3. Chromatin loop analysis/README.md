@@ -50,7 +50,7 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
 - [ATAC peak enrichment analysis](#atac-peak-enrichment-analysis)
   - [Prepare 3-column BED files of loop anchors](#prepare-3-column-bed-files-of-loop-anchors)
   - [Sort loop anchor regions and generate complement regions](#sort-loop-anchor-regions-and-generate-complement-regions)
-  - [Generate interloop regions and their complements](#generate-interloop-regions-and-their-complements)
+  - [Generate interloop regions and get their complements](#generate-interloop-regions-and-get-their-complements)
   - [Run ATAC peak overlap with bedtools coverage](#run-atac-peak-overlap-with-bedtools-coverage)
   - [Statistical testing of ATAC peak enrichment in loop anchors and interloop regions](#statistical-testing-of-ATAC-peak-enrichment-in-loop-anchors-and-interloop-regions)
 
