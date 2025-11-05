@@ -49,9 +49,10 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
   - [Run HOMER](#run-homer)
 - [ATAC peak enrichment analysis](#atac-peak-enrichment-analysis)
   - [Prepare 3-column BED files of loop anchors](#prepare-3-column-bed-files-of-loop-anchors)
-  - [Sort loop regions and generate complement (non-loop) regions](#sort-loop-regions-and-generate-complement-non-loop-regions)
+  - [Sort loop anchor regions and generate complement regions](#sort-loop-anchor-regions-and-generate-complement-regions)
   - [Generate interloop regions and their complements](#generate-interloop-regions-and-their-complements)
   - [Run ATAC peak overlap with bedtools coverage](#run-atac-peak-overlap-with-bedtools-coverage)
+  - [Statistical testing of ATAC peak enrichment in loop anchors and interloop regions](#statistical-testing-of-ATAC-peak-enrichment-in-loop-anchors-and-interloop-regions)
 
 
 
@@ -762,7 +763,7 @@ First, the first 3 columns (chromosome, start, end) from each loop file were ext
 cut -f1-3 eupsc_loops_50k+100k.bed > eupsc_loops_50k+100k_3columns.bed
 ```
 
-### Sort loop anchor regions and generate complement (non-loop) regions
+### Sort loop anchor regions and generate complement regions
 
 Sort BED files using the same chromosome size reference for consistency. Then create complementary (non-loop) regions using `bedtools complement`:
 
@@ -798,13 +799,13 @@ Use `bedtools coverage` to count base pair overlaps between ATAC-seq peaks and l
 
 To assess chromatin accessibility within 3D genome structures, we calculated the fraction of each region (loop anchors, interloop space, and their respective background regions) covered by ATAC-seq peaks using `bedtools coverage`.
 
-The ATAC coverage files were analysed in R using a the script [`ATAC_peaks_in_loop_anchors_and_interloop _space_sig_test_and_plot_norm_cov`](ATAC_peaks_in_loop_anchors_and_interloop_space_sig_test_and_plot_norm_cov.R) that:
+The ATAC coverage files were analysed in R using a the script [`ATAC_enrichment_in_loops_sig_test_and_plot_norm_cov.R`](ATAC_enrichment_in_loops_sig_test_and_plot_norm_cov.R) that:
 
 - Loads coverage outputs and extracts the fraction of each region overlapped by ATAC peaks
 - Merges data from all developmental stages into a long-format table
 - Performs Wilcoxon rank-sum tests between each structure type and its background (e.g., loop anchor vs non-anchor) and adjusts p-values using the Benjamini–Hochberg method
 - Summarises mean and median ATAC coverage per region type and stage
-- Visualizes distributions using ridgeline density plots and bar plots with error bars
+- Visualises distributions using ridgeline density plots and bar plots with error bars
 - Fits a linear model to test the effects of region type and developmental stage on ATAC coverage
 
 
