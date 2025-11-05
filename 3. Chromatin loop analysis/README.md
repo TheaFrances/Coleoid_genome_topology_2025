@@ -51,7 +51,7 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
   - [Prepare files for ATAC peak enrichment analysis](#prepare-files-for-atac-peak-enrichment-analysis)
   - [Run ATAC peak overlap with bedtools coverage](#run-atac-peak-overlap-with-bedtools-coverage)
   - [Statistical testing of ATAC peak enrichment in loop anchors and interloop regions](#statistical-testing-of-atac-peak-enrichment-in-loop-anchors-and-interloop-regions)
-- [CNE enrichment analysis)](#cne-enrichment-analysis)
+- [CNE enrichment analysis](#cne-enrichment-analysis)
   - [Prepare files for CNE enrichment analysis](#prepare-files-for-cne-enrichment-analysis)
   - [Run CNE overlap with bedtools intersect](#run-CNE-overlap-with-bedtools-intersect)
   - [Statistical testing of CNE enrichment](#statistical-testing-of-cne-enrichment)
