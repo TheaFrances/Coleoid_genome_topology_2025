@@ -232,7 +232,7 @@ The script [`heatmaps_tau_coexp.R`](heatmaps_tau_coexp.R) was run **separately f
 
 The script [`loop_exp_boxplots.R`](loop_exp_boxplots.R) compares gene expression profiles of loop-associated genes that are **unique to stage-specific loops** (Stages 20, 25, and 29) in *E. scolopes*. Expression values are averaged per developmental stage, log-transformed, and statistically compared using Wilcoxon rank-sum tests.
 
-**Overview of analysis steps**:
+**Summary of script functionality**:
 
 - Gene lists were extracted from stage-specific loop–gene mappings (`*.genes_list.txt`)  
 - TPM-normalised expression data were read and averaged across replicates for each developmental stage (Stages 14–28)  
@@ -838,7 +838,7 @@ The regions tested are:
 - Interloop vs Non-interloop  
 - Interloop vs Anchor  
 
-**Main steps:**
+**Summary of script functionality:**
 - Load overlap count BED files for each region and species.
 - Calculate region lengths and normalize CNE counts to overlaps per kilobase.
 - Combine all data into a single long-format dataframe.
