@@ -1,5 +1,6 @@
 rm(list = ls())
 
+# TAD compare example for 
 # Load required packages
 library(ggplot2)
 library(TADCompare)
@@ -8,7 +9,7 @@ library(tidyr)
 library(stringr)
 
 # Get list of all matching input files
-file_list <- Sys.glob("/Users/users/Desktop/Micro-C/scolopes/microc*/KR_norm/*/dumped_100k/*_KR_100000_cleaned.dumped.hic")
+file_list <- Sys.glob("*_KR_100000_cleaned.dumped.hic")
 
 # Extract unique tissues from file paths
 tissues <- unique(str_extract(file_list, "(?<=KR_norm/)[^/]+"))
@@ -126,7 +127,7 @@ all_plot_data$Type <- factor(all_plot_data$Type, levels = c("Split", "Complex", 
 print(paste("Processing comparison:", tissue1, "vs", tissue2))
 
 # Save the combined data to a file
-write.table(all_plot_data, "/Users/users/Desktop/Micro-C/tables_for_paper/diff_tads/tad_changes_eupsc_allchrs_allcomparisons_100k_1mbwindow.txt", row.names = FALSE, quote = FALSE, sep = "\t")
+write.table(all_plot_data, "tad_changes_eupsc_allchrs_allcomparisons_100k_1mbwindow.txt", row.names = FALSE, quote = FALSE, sep = "\t")
 
 # Ensure each comparison sums to 100% per genome
 comparison_totals <- all_plot_data %>%
@@ -155,33 +156,6 @@ category_colors <- c("Complex" = "#b2df8a",
                      "Strength Change" =  "#006400", 
                      "NA" = "lightgrey")
 
-# Create the stacked bar plot for all comparisons
-p <- ggplot(all_plot_data, aes(x = Comparison, y = Percentage_Per_Comparison, fill = Type)) +
-  geom_bar(stat = "identity", position = "stack") +
-  scale_fill_manual(values = category_colors) +
-  labs(title = "Differential TADs across tissues",
-       x = "Tissue Comparison",
-       y = "Percentage") +
-  theme_minimal() +
-  theme(
-    plot.title = element_text(size = 20, face = "bold", margin = margin(b = 15)),
-    axis.title.y = element_text(size = 20),
-    axis.text.y = element_text(size = 18),
-    axis.text.x = element_text(angle = 45, hjust = 1, size = 14),  # Rotate tissue labels
-    legend.text = element_text(size = 18),
-    legend.title = element_text(size = 20),
-    plot.margin = margin(t = 20, r = 12, b = 10, l = 10, unit = "pt")
-  ) +
-  scale_y_continuous(limits = c(0, 100.9))
-
-
-# Print the final combined plot
-print(p)
-
-ggsave("/Users/users/Desktop/Micro-C/figs_for_paper/Figure4/bar_tad_changes_eupsc_allcomparisons_100k_1mbwindow_unlabeled.tiff", 
-       plot = p, width = 10, height = 6, dpi = 200)
-
-#With correct tissue names and ordered----
 # Define a mapping for tissue names
 tissue_name_map <- c(
   "20" = "stage 20",
@@ -211,7 +185,7 @@ all_plot_data_fixed$Comparison <- factor(all_plot_data_fixed$Comparison, levels 
 all_plot_data_fixed$Comparison <- recode(all_plot_data_fixed$Comparison, !!!new_names)
 
 # Create the plot
-p_fixed <- ggplot(all_plot_data_fixed, aes(x = Comparison, y = Percentage_Per_Comparison, fill = Type)) +
+p<- ggplot(all_plot_data_fixed, aes(x = Comparison, y = Percentage_Per_Comparison, fill = Type)) +
   geom_bar(stat = "identity", position = "stack") +
   scale_fill_manual(values = category_colors) +
   labs(title = "Differential TADs across developmental stages",
@@ -231,9 +205,9 @@ p_fixed <- ggplot(all_plot_data_fixed, aes(x = Comparison, y = Percentage_Per_Co
   scale_y_continuous(limits = c(0, 100.9))
 
 # Print the final plot
-print(p_fixed)
+print(p)
 
 # Save the final combined plot
-ggsave("/Users/users/Desktop/Micro-C/figs_for_paper/Figure4/bar_tad_changes_eupsc_allcomparisons_100k_1mbwindow.tiff", 
+ggsave("/bar_tad_changes_eupsc_allcomparisons_100k_1mbwindow.tiff", 
        plot = p_fixed, width = 10, height = 6, dpi = 200)
 

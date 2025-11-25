@@ -98,9 +98,12 @@ Uncleaned files were deleted to avoid redundancy:
 ```bash
 rm *100000.dumped.hic
 ```
+## Differential TAD Analysis in TADCompare
+
+- The script [`TAD_compare.R`](TAD_compare.R) loads the KR-normalised contact matrix dumps for all chromosomes and tissues (100 kb resolution).
+- Performs pairwise comparisons between all tissues using the TADCompare R package, with a 1 Mb sliding window.
+- Converts sparse matrices to dense format and analyzes TAD structure differences for each chromosome and comparison.
+- Categorises change types (e.g. Split, Merge, Strength Change) and normalises them as percentages per chromosome and across the genome.
+- Outputs a summary table with differential TAD counts and percentages and a stacked bar plot showing differential TAD distributions across comparisons.
 
 
-
-Next step: format the adjusted matrices as sparse matrices for TADCompare and compute differential TADs between stages.
-
-(Additional steps to follow in the next section of the README.)
