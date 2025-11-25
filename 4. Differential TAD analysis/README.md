@@ -116,7 +116,7 @@ The script [`diff_TAD_overlap_upset_plot.R`](diff_TAD_overlap_upset_plot.R) visu
 
 **Summary of script functionality**:
 
-- Loads all differential TAD tables from differential_tad files generated in the previous [`TAD_compare.R`](TAD_compare.R) R script.
+- Loads all differential TAD tables from differential_tad files generated in the previous step (using the [`TAD_compare.R`](TAD_compare.R) R script).
 - Keeps only TADs that are marked as differential in at least one comparison and removes any with NA.
 - Assigns unique TAD IDs from chromosome and boundary coordinates. 
 - Converts data to a binary matrix (1 = present, 0 = absent) per comparison.
