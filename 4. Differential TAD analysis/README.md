@@ -4,11 +4,11 @@ This folder documents the pipeline used for differential TAD analysis, using the
 
 ## Contents
 
-- [Prepare files](#prepare-files)\n
-  - [Extract dumped KR-normalised intrachromosomal matrices from .hic files for all chromosomes](#extract-dumped-kr-normalised-intrachromosomal-matrices-from-hic-files-for-all-chromosomes)\n
-  - [Clean dumped matrix files](#clean-dumped-matrix-files)\n
-- [Differential TAD Analysis in TADCompare](#differential-tad-analysis-in-tadcompare)\n
-- [Upset plot of shared differential TADs across samples](#upset-plot-of-shared-differential-tads-across-samples)
+- [Prepare files](#prepare-files)
+  - [Extract dumped KR-normalised intrachromosomal matrices from .hic files for all chromosomes](#extract-dumped-kr-normalised-intrachromosomal-matrices-from-hic-files-for-all-chromosomes)
+  - [Clean dumped matrix files](#clean-dumped-matrix-files)
+- [Differential TAD Analysis in TADCompare](#differential-tad-analysis-in-tadcompare)
+- [UpSet plot of shared differential TADs across samples](#upset-plot-of-shared-differential-tads-across-samples)
 
 ## Prepare files
 
@@ -116,7 +116,7 @@ The script [`TAD_compare.R`](TAD_compare.R) was used for differential TAD analys
 - Categorises change types (e.g. Split, Merge, Strength Change) and normalises them as percentages per chromosome and across the genome.
 - Outputs a summary table with differential TAD counts and percentages and a stacked bar plot showing differential TAD distributions across comparisons.
 
-## Upset plot of shared differential TADs across samples
+## UpSet plot of shared differential TADs across samples
 
 The script [`diff_TAD_overlap_upset_plot.R`](diff_TAD_overlap_upset_plot.R) visualises the overlap of differential TAD boundaries across all stage comparisons in *E. scolopes* using an UpSet plot.
 
