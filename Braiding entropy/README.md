@@ -9,7 +9,7 @@ This section describes how to generate and analyse chromosomal braiding maps bas
 
 ### Step 1: Prepare alignment files for braiding
 
-To generate input `.map` files used for braiding, the script [`getHomChrWindowBraidMap.pl`] =(getHomChrWindowBraidMap.pl) was used. 
+To generate input `.map` files used for braiding, the script [`getHomChrWindowBraidMap.pl`](getHomChrWindowBraidMap.pl) was used. 
 
 * Identify homologous chromosomes between two species using a macrosynteny tool (e.g. output file: `eup-obi.mbh.psynt.tab`)
 * Align genomes using a whole-genome aligner such as `megablast`, and store aligned regions in tabular BED-like format (e.g. `blastn.res.filt.all`)
