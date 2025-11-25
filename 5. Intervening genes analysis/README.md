@@ -1,8 +1,12 @@
 # Quantify intervening gene coverage in loops and interacting gene pairs
 
-This folder contains scripts and output summaries for quantifying intervening gene content and gene coverage within chromatin loops and interacting gene pairs, using *E. scolopes* as the primary example.
+This folder contains scripts and output summaries for quantifying intervening gene content and gene coverage within chromatin loops and interacting gene pairs, using *E. scolopes* as an example.
 
 ## Contents
+
+- [Intervening genes in loops](#intervening-genes-in-loops)
+- [Intervening genes across four interaction categories](#intervening-genes-across-four-interaction-categories)
+- [Compare gene coverage in gene pairs and loops](#compare-gene-coverage-in-gene-pairs-and-loops)
 
 ### Intervening genes in loops
 
