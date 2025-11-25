@@ -23,13 +23,5 @@ This creates a map file with a 10 Mb window and 50 sliding window steps.
 
 Next, open MATLAB and navigate to the directory containing the `.map` file. Load and run [`braiding_commands.mat`](braiding_commands.mat) script in MATLAB, adjusting the file name to match the correct comparison and window size.
 
-Example usage:
-
-```matlab
-load('esc-obi.10m.braid.map');
-% Run custom script or Braidlab functions to analyze braiding patterns
-```
-
----
 
 
