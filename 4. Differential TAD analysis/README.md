@@ -1,14 +1,21 @@
 # Differential TAD Analysis
 
-This README documents the pipeline used for differential TAD analysis, using the data for *E. scolopes* developmental stages as an example.
+This folder documents the pipeline used for differential TAD analysis, using the data for *E. scolopes* developmental stages as an example.
+
+## Contents
+
+- [Prepare files](#prepare-files)\n
+  - [Extract dumped KR-normalised intrachromosomal matrices from .hic files for all chromosomes](#extract-dumped-kr-normalised-intrachromosomal-matrices-from-hic-files-for-all-chromosomes)\n
+  - [Clean dumped matrix files](#clean-dumped-matrix-files)\n
+- [Differential TAD Analysis in TADCompare](#differential-tad-analysis-in-tadcompare)\n
+- [Upset plot of shared differential TADs across samples](#upset-plot-of-shared-differential-tads-across-samples)\n
+
 
 ## Prepare files
 
-### Step 1: Extract KR-normalised intrachromosomal matrices from .hic files
-
 To perform differential TAD calling with TADCompare, we first extracted KR-normalized contact matrices for each chromosome from `.hic` files at 100 kb resolution using `juicer_tools dump observed KR`. This was done separately for each developmental stage: stage 20 (sample 320995), stage 25 (sample 212492), stage 29 (sample 212493). Each script loops over all chromosomes, generates a `.dumped.hic` file per chromosome, and writes output to a dedicated folder.
 
-### Dump individual chromosomes
+### Extract dumped KR-normalised intrachromosomal matrices from .hic files for all chromosomes
 
 Example command for *E. scolopes* sample 29 (212492):
 
@@ -100,7 +107,7 @@ rm *100000.dumped.hic
 ```
 ## Differential TAD Analysis in TADCompare
 
-The script [`TAD_compare.R`](TAD_compare.R) was used for differential TAD analysis using the [`TADcompare R package`](https://github.com/dozmorovlab/TADCompare).
+The script [`TAD_compare.R`](TAD_compare.R) was used for differential TAD analysis using the [`TADCompare`](https://github.com/dozmorovlab/TADCompare)  R package.
 
 **Summary of script functionality**:
 
