@@ -129,21 +129,6 @@ upset_plot_final <- upset(
 
 
 # Save as TIFF
-tiff("/Users/users/Desktop/Micro-C/figs_for_paper/Figure4/diff_tad_tissue_overlap_eupsc_100k_1mbwindow.tiff", width = 14.1, height = 6, units = "in", res = 500)
+tiff("diff_tad_tissue_overlap_eupsc_100k_1mbwindow.tiff", width = 14.1, height = 6, units = "in", res = 500)
 print(upset_plot_final)  # This will plot to the TIFF device
 dev.off()
-
-
-#Count on your terminal he number of differential TADS
-
-#grep -v NA /Users/users/Desktop/Micro-C/tables_for_paper/diff_tads/differential_tads_eupsc_cb_ar_allchrs_1mbwindow.txt | grep 'Non-Differential' | wc -l
-#   1921
-
-#grep -v NA /Users/users/Desktop/Micro-C/tables_for_paper/diff_tads/differential_tads_eupsc_cb_ar_allchrs_1mbwindow.txt | grep -v 'Non-Differential' | wc -l
-#     730
-
-#grep -v NA /Users/users/Desktop/Micro-C/tables_for_paper/diff_tads/differential_tads_eupsc_*_*_allchrs_1mbwindow.txt | grep 'Non-Differential' | wc -l
-#  11411
-
-#grep -v NA /Users/users/Desktop/Micro-C/tables_for_paper/diff_tads/differential_tads_eupsc_*_*_allchrs_1mbwindow.txt | grep -v 'Non-Differential' | wc -l
-#    4703
