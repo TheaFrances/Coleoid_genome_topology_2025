@@ -21,7 +21,7 @@ This creates a map file with a 10 Mb window and 50 sliding window steps.
 
 ### Braiding analysis in MATLAB
 
-Next, open MATLAB and navigate to the directory containing the `.map` file. Load and run [`braiding_commands.mat`](braiding_commands.mat) script in MATLAB, adjusting the file name to match the correct comparison and window size.
+Next, open MATLAB and navigate to the directory containing the `.map` file. Load and run [`braiding_commands.m`](braiding_commands.m) script in MATLAB, adjusting the file name to match the correct comparison and window size.
 
 
 
