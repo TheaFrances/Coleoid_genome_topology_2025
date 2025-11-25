@@ -6,7 +6,7 @@ This folder contains scripts and output summaries for quantifying intervening ge
 
 ### Intervening genes in loops
 
-The script [`count_intervening_genes_loops_size_norm.py`](count_intervening_genes_loops_size_norm.py) was used to count intervening genes and calculate the percentage of each loop covered by genes. Input files include a BED file with species-specific gene coordinates and TSV Mustache output file from [`step 3.`](../3.%20Chromatin%20loop%20analysis) with significant loops. This outputs a file with intervening gene and gene coverage statistics for each loop with the suffix 'intervening_genes'.
+The script [`count_intervening_genes_loops_size_norm.py`](count_intervening_genes_loops_size_norm.py) was used to count intervening genes and calculate the percentage of each loop covered by genes. Input files include a BED file with species-specific gene coordinates and TSV Mustache output file from [`step 3.`](../3.%20Chromatin%20loop%20analysis) with significant loops. This outputs a file with with the suffix 'intervening_genes' and **inner_loop_size (bp)**, **intervening_gene_ids**, **intervening_gene_count**, **total_gene_bp**, **gene_coverage_percentage** columns added to the input TSV.
 
 **Example command** (*E. scolopes* sample 409493 example):
 ```bash
@@ -24,7 +24,8 @@ python3 count_intervening_genes_loops_size_norm.py eupsc.bed eupsc_loops_50k+100
 
 ### Intervening genes across four interaction categories
 
-The script [`count_intervening_genes_gene_pair_size_norm_4cats.py`](count_intervening_genes_gene_pair_size_norm_4cats.py) was used to calculate the number of intervening genes and the proportion of the gene pair span covered by genes within gene pairs for the four interaction categories per species:  *Interacting across the coleoids*, *Decapodiform-only interacting*, *O. bimaculoides-only interacting*, and *Not in conserved coleoid interacting gene pair*. Input files include a BED file with species-specific gene coordinates and the merged interaction threshold file containing gene pair information and interaction categories generated in [`step 2.`](../2.%20Interacting%20gene%20pair%20analysis). This outputs a file with the species name and interaction category and 'intervening_genes' e.g. eupsc_interacting_all_species_intervening_genes.txt.
+The script [`count_intervening_genes_gene_pair_size_norm_4cats.py`](count_intervening_genes_gene_pair_size_norm_4cats.py) was used to calculate the number of intervening genes and the proportion of the gene pair span covered by genes within gene pairs for the four interaction categories per species:  *Interacting across the coleoids*, *Decapodiform-only interacting*, *O. bimaculoides-only interacting*, and *Not in conserved coleoid interacting gene pair*. Input files include a BED file with species-specific gene coordinates and the merged interaction threshold file containing gene pair information and interaction categories generated in [`step 2.`](../2.%20Interacting%20gene%20pair%20analysis). This outputs a file with the species name and interaction category and 'intervening_genes' as the suffix e.g. eupsc_interacting_all_species_intervening_genes.txt, and with the columns **intervening_genes**, **intervening_count**, **total_gene_bp**, **gene_coverage_percentage** added to the input file.
+
 
 **Example command** (*E. scolopes*):
 

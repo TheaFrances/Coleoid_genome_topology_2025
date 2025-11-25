@@ -1,6 +1,9 @@
-### -Plot gene coverage between interacting gene pairs (updated, no CNEs)- ###
+# Plot gene coverage between interacting gene pairs and loops
+
+# Clear workspace
 rm(list = ls())
 
+# Load libraries
 library(ggplot2)
 library(dplyr)
 library(readr)
@@ -10,14 +13,14 @@ library(ggpubr)
 
 # Define new file paths for interacting gene data
 files_gene_pairs <- list(
-  "eupsc_all_species_interacting" = "/Users/users/Desktop/Micro-C/topology_strength_analysis/eupsc_100k/409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.eupsc_interacting_all_species_intervening_genes.txt",
-  "eupsc_deca_only_interacting" = "/Users/users/Desktop/Micro-C/topology_strength_analysis/eupsc_100k/409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.eupsc_interacting_deca_only_intervening_genes.txt",
-  "eupsc_octbi_only_interacting" = "/Users/users/Desktop/Micro-C/topology_strength_analysis/eupsc_100k/409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.eupsc_interacting_octbi_only_intervening_genes.txt",
-  "eupsc_not_interacting" = "/Users/users/Desktop/Micro-C/topology_strength_analysis/eupsc_100k/409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.eupsc_not_interacting_any_species_intervening_genes.txt",
-  "octbi_all_species_interacting" = "/Users/users/Desktop/Micro-C/topology_strength_analysis/eupsc_100k/409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.octbi_interacting_all_species_intervening_genes.txt",
-  "octbi_deca_only_interacting" = "/Users/users/Desktop/Micro-C/topology_strength_analysis/eupsc_100k/409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.octbi_interacting_deca_only_intervening_genes.txt",
-  "octbi_octbi_only_interacting" = "/Users/users/Desktop/Micro-C/topology_strength_analysis/eupsc_100k/409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.octbi_interacting_octbi_only_intervening_genes.txt",
-  "octbi_not_interacting" = "/Users/users/Desktop/Micro-C/topology_strength_analysis/eupsc_100k/409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.octbi_not_interacting_any_species_intervening_genes.txt"
+  "eupsc_all_species_interacting" = "409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.eupsc_interacting_all_species_intervening_genes.txt",
+  "eupsc_deca_only_interacting" = "409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.eupsc_interacting_deca_only_intervening_genes.txt",
+  "eupsc_octbi_only_interacting" = "409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.eupsc_interacting_octbi_only_intervening_genes.txt",
+  "eupsc_not_interacting" = "409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.eupsc_not_interacting_any_species_intervening_genes.txt",
+  "octbi_all_species_interacting" = "409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.octbi_interacting_all_species_intervening_genes.txt",
+  "octbi_deca_only_interacting" = "409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.octbi_interacting_deca_only_intervening_genes.txt",
+  "octbi_octbi_only_interacting" = "409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.octbi_interacting_octbi_only_intervening_genes.txt",
+  "octbi_not_interacting" = "409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.octbi_not_interacting_any_species_intervening_genes.txt"
 )
 
 # Load and format data
@@ -75,7 +78,7 @@ wilcox_results <- gene_data %>%
 
 print(wilcox_results)
 
-write.table(wilcox_results, "/Users/users/Desktop/Micro-C/tables_for_paper/coverage/interacting_gene_coverage_wilcox_4cats.txt",
+write.table(wilcox_results, "interacting_gene_coverage_wilcox_4cats.txt",
             sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 # Medians
@@ -85,11 +88,11 @@ gene_medians <- gene_data %>%
 
 print(gene_medians)
 
-#COMPARE TO LOOPS
+# COMPARE TO LOOPS
 # Load loop files
 loop_files <- list(
-  eupsc = "/Users/users/Desktop/Micro-C/diff_loop_analysis/eupsc/output/eupsc_29cat_50k+100k/eupsc_29cat_50k+100k.tsv.intervening_genes",
-  octbi = "/Users/users/Desktop/Micro-C/diff_loop_analysis/octbi/output/octbi_wt_50k+100k/octbi_wt_50k+100k.tsv.intervening_genes"
+  eupsc = "eupsc_29cat_50k+100k.tsv.intervening_genes",
+  octbi = "octbi_wt_50k+100k/octbi_wt_50k+100k.tsv.intervening_genes"
 )
 
 loop_data <- bind_rows(lapply(names(loop_files), function(sp) {
@@ -103,12 +106,7 @@ loop_data <- bind_rows(lapply(names(loop_files), function(sp) {
     select(species, region_type, gene_coverage_percentage)
 }))
 
-# Load existing gene pair data (from previous steps or file)
-# Make sure this object exists already or replace with your actual data loading
-# Example placeholder:
-# gene_data <- read_tsv("your_cleaned_gene_pair_data.tsv")
-
-# We'll assume 'gene_data' is already loaded with columns: species, interaction_detail, gene_coverage_percentage
+# Assume 'gene_data' is already loaded with columns: species, interaction_detail, gene_coverage_percentage
 # Add region_type column to distinguish gene pairs
 gene_data$region_type <- paste0("gene_pair_", gene_data$interaction_detail)
 
@@ -164,7 +162,7 @@ wilcox_loop_all_gp <- bind_rows(lapply(unique(combined_data$species), function(s
 print(wilcox_loop_all_gp)
 
 # Save to file
-write.table(wilcox_loop_all_gp, "/Users/users/Desktop/Micro-C/tables_for_paper/coverage/loop_vs_all_gene_pairs_wilcox.txt",
+write.table(wilcox_loop_all_gp, "loop_vs_all_gene_pairs_wilcox.txt",
             sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 # Compute loop gene coverage medians
