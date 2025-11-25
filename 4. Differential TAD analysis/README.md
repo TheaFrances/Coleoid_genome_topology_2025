@@ -100,10 +100,26 @@ rm *100000.dumped.hic
 ```
 ## Differential TAD Analysis in TADCompare
 
-- The script [`TAD_compare.R`](TAD_compare.R) loads the KR-normalised contact matrix dumps for all chromosomes and tissues (100 kb resolution).
+The script [`TAD_compare.R`](TAD_compare.R) was used for differential TAD analysis using the [`TADcompare R package`](https://github.com/dozmorovlab/TADCompare).
+
+**Summary of script functionality**:
+
+- loads the KR-normalised contact matrix dumps for all chromosomes and tissues (100 kb resolution).
 - Performs pairwise comparisons between all tissues using the TADCompare R package, with a 1 Mb sliding window.
-- Converts sparse matrices to dense format and analyzes TAD structure differences for each chromosome and comparison.
+- Converts sparse matrices to dense format and analyses TAD structure differences for each chromosome and comparison.
 - Categorises change types (e.g. Split, Merge, Strength Change) and normalises them as percentages per chromosome and across the genome.
 - Outputs a summary table with differential TAD counts and percentages and a stacked bar plot showing differential TAD distributions across comparisons.
+
+## Upset plot of shared differential TADs across samples
+
+The script [`diff_TAD_overlap_upset_plot.R`](diff_TAD_overlap_upset_plot.R) visualises the overlap of differential TAD boundaries across all stage comparisons in *E. scolopes* using an UpSet plot.
+
+**Summary of script functionality**:
+
+- Loads all differential TAD tables from differential_tad files generated in the previous [`TAD_compare.R`](TAD_compare.R) R script.
+- Keeps only TADs that are marked as differential in at least one comparison and removes any with NA.
+- Assigns unique TAD IDs from chromosome and boundary coordinates. 
+- Converts data to a binary matrix (1 = present, 0 = absent) per comparison.
+- Generates an UpSet plot showing intersections of differential TADs across comparisons and outputs it. 
 
 
