@@ -8,8 +8,7 @@ This folder documents the pipeline used for differential TAD analysis, using the
   - [Extract dumped KR-normalised intrachromosomal matrices from .hic files for all chromosomes](#extract-dumped-kr-normalised-intrachromosomal-matrices-from-hic-files-for-all-chromosomes)\n
   - [Clean dumped matrix files](#clean-dumped-matrix-files)\n
 - [Differential TAD Analysis in TADCompare](#differential-tad-analysis-in-tadcompare)\n
-- [Upset plot of shared differential TADs across samples](#upset-plot-of-shared-differential-tads-across-samples)\n
-
+- [Upset plot of shared differential TADs across samples](#upset-plot-of-shared-differential-tads-across-samples)
 
 ## Prepare files
 
