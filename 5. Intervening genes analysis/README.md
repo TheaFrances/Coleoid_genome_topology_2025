@@ -1,88 +1,65 @@
-### Intervening gene analysis in loops and interacting gene pairs
+# Quantify intervening gene coverage in loops and interacting gene pairs
 
-This folder contains scripts and output summaries for quantifying intervening gene content and gene coverage within chromatin loops and interacting gene pairs, using *Euprymna scolopes* as the primary example.
+This folder contains scripts and output summaries for quantifying intervening gene content and gene coverage within chromatin loops and interacting gene pairs, using *E. scolopes* as the primary example.
 
----
+## Contents
 
-### 1. Intervening genes in significant loops
+### Intervening genes in loops
 
-The script `count_intervening_genes_loops_size_norm.py` was used to count intervening genes and calculate the percentage of each loop covered by genes. Input files include:
+The script [`count_intervening_genes_loops_size_norm.py`](count_intervening_genes_loops_size_norm.py) was used to count intervening genes and calculate the percentage of each loop covered by genes. Input files include a BED file with species-specific gene coordinates and TSV Mustache output file from [`step 3.`](../3.%20Chromatin%20loop%20analysis) with significant loops. This outputs a file with intervening gene and gene coverage statistics for each loop with the suffix 'intervening_genes'.
 
-* A BED file with species-specific gene coordinates
-* A TSV file with significant loops
+**Example command** (*E. scolopes* sample 409493 example):
+```bash
+python3 count_intervening_genes_loops_size_norm.py eupsc.bed eupsc_loops_50k+100k.tsv
+```
 
-**Summary of script behavior (eupsc example):**
+**Example output:**
 
 * Total significant loops: 329
 * Mean intervening genes: 13.56
 * Median intervening genes: 4
 * Mean gene coverage: 21.65%
 * Median gene coverage: 16.58%
+* Output written to: eupsc_loops_50k+100k.tsv.intervening_genes
 
-**Output:**
-A file with intervening gene and gene coverage statistics for each loop:
-`eupsc_29cat_50k+100k.tsv.intervening_genes`
+### Intervening genes across four interaction categories
 
----
+The script [`count_intervening_genes_gene_pair_size_norm_4cats.py`](count_intervening_genes_gene_pair_size_norm_4cats.py) was used to calculate the number of intervening genes and the proportion of the gene pair span covered by genes within gene pairs for the four interaction categories per species:  *Interacting across the coleoids*, *Decapodiform-only interacting*, *O. bimaculoides-only interacting*, and *Not in conserved coleoid interacting gene pair*. Input files include a BED file with species-specific gene coordinates and the merged interaction threshold file containing gene pair information and interaction categories generated in [`step 2.`](../2.%20Interacting%20gene%20pair%20analysis). This outputs a file with the species name and interaction category and 'intervening_genes' e.g. eupsc_interacting_all_species_intervening_genes.txt.
 
-### 2. Intervening genes in interacting gene pairs
+**Example command** (*E. scolopes*):
 
-The script `count_intervening_genes_gene_pair_size_norm.py` was used to quantify intervening genes and loop coverage for gene pairs grouped by interaction status: `interacting`, `not_interacting`, or `none`.
+```bash
+python3 count_intervening_genes_gene_pair_size_norm_4cats.py eupsc.bed 409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.txt  interacting_all_species
+```
 
-**Example input:**
+**Example output (*E. scolopes*, interacting_all_species)**
 
-* A BED file with gene coordinates (e.g., `eupsc.bed`)
-* A gene pair list with interaction annotations
+* Total gene pairs: 1592
+* Mean intervening genes: 3.75
+* Median intervening genes: 1
+* Mean gene coverage: 26.60%
+* Median gene coverage: 8.76%
+* Output written to: 409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.eupsc_interacting_all_species_intervening_genes.txt
 
-**Summary output for eupsc:**
+> **Note:** Final plots and statistics use the *R-derived* values after filtering gene pairs with more than one gene per bin. The Python-derived medians were not reported in the paper.
 
-* Interacting:
 
-  * Total gene pairs: 2544
-  * Median intervening genes: 1
-  * Median gene coverage: 21.43%
+### Compare gene coverage in gene pairs and loops
 
-* Not interacting:
+The R script [`boxplots_intervening_genes_gene_pairs_vs_loops.R`](boxplots_intervening_genes_gene_pairs_vs_loops.R) compares gene coverage percentages across different gene pair interaction categories and chromatin loops, using outputs from previous intervening gene analyses.
 
-  * Total gene pairs: 57217
-  * Median intervening genes: 163
-  * Median gene coverage: 32.97%
+**Summary of script functionality**:
 
-* None:
-
-  * Total gene pairs: 59761
-  * Median intervening genes: 154
-  * Median gene coverage: 32.91%
-
-Filtered out gene pairs >1.5Mb apart.
-
----
-
-### 3. Intervening genes across four interaction categories
-
-The script `count_intervening_genes_gene_pair_size_norm_4cats.py` was used to summarize intervening gene content across four gene pair categories:
-
-* `interacting_all_species`
-* `interacting_deca_only`
-* `interacting_octbi_only`
-* `not_interacting_any_species`
-
-**Summary output for eupsc:**
-
-* `interacting_all_species`: Median = 1 intervening gene; 8.76% coverage
-* `interacting_deca_only`: Median = 2 intervening genes; 35.46% coverage
-* `interacting_octbi_only`: Median = 118.5 intervening genes; 33.00% coverage
-* `not_interacting_any_species`: Median = 165 intervening genes; 32.97% coverage
-
-**Note:** Median values from R were used in final plots, as Python script did not exclude gene pairs with >1 intervening gene.
-
----
-
-**Scripts used:**
-
-* `count_intervening_genes_loops_size_norm.py`
-* `count_intervening_genes_gene_pair_size_norm.py`
-* `count_intervening_genes_gene_pair_size_norm_4cats.py`
-
-All scripts accept a BED file and a loop or gene pair file as input and output a summary file with intervening gene and coverage values.
+- Loads gene pair coverage files for four interaction categories per species:  
+  *Interacting across the coleoids*, *Decapodiform-only interacting*, *O. bimaculoides-only interacting*, and *Not in conserved coleoid interacting gene pair*.  
+- Filters gene pairs to include only those with at least one intervening gene.
+- Adds `region_type` labels to distinguish loop data from gene pair categories.
+- Combines loop and gene pair data into a single dataset for comparison.
+- Generates:
+  - A boxplot comparing gene coverage (%) across interaction types and species.
+  - A combined plot comparing gene coverage in loops vs. gene pairs.
+- Performs Wilcoxon rank-sum tests with BH correction to compare:
+  - Interaction categories within species.
+  - Loops vs. all gene pair categories within species.
+- Outputs boxplots, significance tests, and tables of median gene coverage per category
 
