@@ -7,14 +7,11 @@ This section describes how to generate and analyse chromosomal braiding maps bas
 * MATLAB version 2025a or newer
 * [Braidlab toolbox](https://github.com/jeanluct/braidlab)
 
-### Step 1: Prepare alignment files for braiding
+### Prepare alignment files for braiding
 
-To generate input `.map` files used for braiding, the script [`getHomChrWindowBraidMap.pl`](getHomChrWindowBraidMap.pl) was used. 
+To generate input `.map` files used for braiding, the script [`getHomChrWindowBraidMap.pl`](getHomChrWindowBraidMap.pl) was used. This script uses an input file of homologous chromosomes identified via any macrosynteny tool (example input file: [`eup-obi.mbh.psynt.tab`](eup-obi.mbh.psynt.tab), as well as a file of aligned genomes in tabular bed format (example input file: [`blastn.res.filt.all`](blastn.res.filt.all) made with any genome aligner (e.g. `megablast`)
 
-* Identify homologous chromosomes between two species using a macrosynteny tool (e.g. output file: `eup-obi.mbh.psynt.tab`)
-* Align genomes using a whole-genome aligner such as `megablast`, and store aligned regions in tabular BED-like format (e.g. `blastn.res.filt.all`)
-
-Generate the braiding input file using:
+Example command to generate the braiding input file:
 
 ```bash
 perl getHomChrWindowBraidMap.pl eup-obi.mbh.psynt.tab blastn.res.filt.all 10000000 50 > esc-obi.10m.braid.map
@@ -22,11 +19,9 @@ perl getHomChrWindowBraidMap.pl eup-obi.mbh.psynt.tab blastn.res.filt.all 100000
 
 This creates a map file with a 10 Mb window and 50 sliding window steps.
 
-### Step 2: Braiding analysis in MATLAB
+### Braiding analysis in MATLAB
 
-* Open MATLAB
-* Navigate to the directory containing the `.map` file
-* Load and run [`braiding_commands.mat`](braiding_commands.mat) script in MATLAB, adjusting the file name to match the correct comparison and window size.
+Next, open MATLAB and navigate to the directory containing the `.map` file. Load and run [`braiding_commands.mat`](braiding_commands.mat) script in MATLAB, adjusting the file name to match the correct comparison and window size.
 
 Example usage:
 
