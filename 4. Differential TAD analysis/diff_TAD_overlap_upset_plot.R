@@ -1,6 +1,8 @@
-#Note when a TAD appears in only some files, it's considered differential, even if the TADs are non-differential in the files it does appear in.
-#E.g.  if a TAD appears in three out of six files and is marked as "Non-Differential" in those three files, but does not appear in the other three files, it will still be considered differential and included in the plot.
-#Any TADs with NAs in the differential column will be removed from the files
+# Make UpSet plot of differential TADs.
+# Note when a TAD appears in only some files, it's considered differential, even if the TADs are non-differential in the files it does appear in.
+# E.g.  if a TAD appears in three out of six files and is marked as "Non-Differential" in those three files, but does not appear in the other three files, it will still be considered differential and included in the plot.
+# Any TADs with NAs in the differential column will be removed from the files.
+
 rm(list = ls())
 
 # Load required libraries
@@ -10,7 +12,7 @@ library(tidyr)
 library(ggplot2)
 
 # List all comparison files
-file_paths <- Sys.glob("/Users/users/Desktop/Micro-C/tables_for_paper/diff_tads/differential_tads_eupsc*")
+file_paths <- Sys.glob("differential_tads_eupsc*")
 
 # Read all files and extract differential TAD boundaries
 tad_list <- lapply(file_paths, function(file) {
