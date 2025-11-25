@@ -1,6 +1,9 @@
+# TADCompare example for E. scolopes developmental stages.
+
+# Clear workspace
+
 rm(list = ls())
 
-# TAD compare example for 
 # Load required packages
 library(ggplot2)
 library(TADCompare)
