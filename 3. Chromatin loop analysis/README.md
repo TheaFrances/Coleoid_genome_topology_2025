@@ -44,7 +44,7 @@ This folder documents the chromatin loop analyses demonstrated using the *E. sco
   - [Correlation of conserved loop size with genome size](#correlation-of-conserved-loop-size-with-genome-size)
 - [Check how many loops are in interacting gene pairs](#check-how-many-loops-are-in-interacting-gene-pairs)
 - [Motif enrichment analysis of loop anchors](#motif-enrichment-analysis-of-loop-anchors)
-  - [Get bed file of loop anchors](#get-bed-file-of-loop-anchors)
+  - [Get BED file of loop anchors](#get-bed-file-of-loop-anchors)
   - [Make 500 bp windows](#make-500-bp-windows)
   - [Run HOMER](#run-homer)
 - [ATAC peak enrichment analysis](#atac-peak-enrichment-analysis)
@@ -692,9 +692,9 @@ Percentage of interacting gene pairs in loop file = 0.37
 ```
 ## Motif enrichment analysis of loop anchors
 
-### Get bed file of loop anchors
+### Get BED file of loop anchors
 
-Get bed file of regions using the script [`get_loop_bed.py`](get_loop_bed.py) you want to test for enrichment because this is a requirement for [HOMER](http://homer.ucsd.edu/homer/ngs/peakMotifs.html).
+Get BED file of regions using the script [`get_loop_bed.py`](get_loop_bed.py) you want to test for enrichment because this is a requirement for [HOMER](http://homer.ucsd.edu/homer/ngs/peakMotifs.html).
 
 **Example:**
 ```bash
@@ -703,7 +703,7 @@ python3 get_loop_bed.py eupsc_loops_50k+100k.tsv
 
 ### Make 500 bp windows
 
-Split bed file of loop anchor regions up into 500 bp windows for more statistical power using [bedtools](https://bedtools.readthedocs.io/en/latest/).
+Split BED file of loop anchor regions up into 500 bp windows for more statistical power using [bedtools](https://bedtools.readthedocs.io/en/latest/).
 
 ```bash
 ml bedtoools
@@ -719,7 +719,7 @@ This step is documented in the [`eupsc_loops_homer.sh`](eupsc_loops_homer.sh), w
 
 ### Prepare files for ATAC peak enrichment analysis
 
-**Prepare bed files:**
+**Prepare BED files:**
 
 The first 3 columns (chromosome, start, end) from each loop file were extracted to prepare it for BEDTools analysis.
 

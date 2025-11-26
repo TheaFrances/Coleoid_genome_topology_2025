@@ -45,7 +45,7 @@ This folder documents the interacting gene pair analyses. Initital steps are dem
 
 BLASTP (v2.16.0) was run with the parameters: -evalue 1E-2 -max_target_seqs 1 -outfmt 6 to classify reciprocal best hit orthologs between *E. scolopes*, O. bimaculoides* and *P. maximus*. *E. scolopes* was used as the reference (database) in all cases, except for identifying *P. maximus* orthologs of *O. bimaculoides* genes, where *O. bimaculoides* was used as the database. Text files of 1:1 orthologs in both directions were generated: **EUPgeneOBI.txt**, **EUPgenePEC.txt**, **OBIgeneEUP.txt**, and **OBIgenePEC.txt**, where: EUP = *E. scolopes*, OBI = *O. bimaculoides*, PEC = *P. maximus*. If the species abbreviation appears first in the filename, this indicates that the species' genes are in the first column of the file. For example, in [EUPgeneOBI.txt](../Test%20input%20files/EUPgeneOBI.txt), *E. scolopes* genes are in the first column, and their best reciprocal orthologs in *O. bimaculoides* are in the second. This directionality matters in the downstream analyses.
 
-**Note on species bed files:**
+**Note on species BED files:**
 
 Species BED files should contain four columns: chromosome, gene start, gene end, and gene name (in that order), with no additional features. 
 Here, [eupsc.bed](../Test%20input%20files/eupsc.bed) is used as an example, corresponding to *E. scolopes*. 
@@ -78,7 +78,7 @@ Count number of genes left in file:
 wc -l  sanger_sepof_eup_prot_best_hits_rm_scaff.gff
 24431  sanger_sepof_eup_prot_best_hits_rm_scaff.gff # There are 24431 E. scolopes proteins that mapped to the S. officinalis genome that we considered orthologs.
 ```
-The resulting **sanger_sepof_eup_prot_best_hits_rm_scaff.gff** file was then converted into bed format into a file called **sepof.bed**, with chromosome names being from the *S. officinalis* genome file, and gene names being identical to the *E. scolopes* gene names that were the best hits mapped to the *S. officinalis* genome. 
+The resulting **sanger_sepof_eup_prot_best_hits_rm_scaff.gff** file was then converted into BED format into a file called **sepof.bed**, with chromosome names being from the *S. officinalis* genome file, and gene names being identical to the *E. scolopes* gene names that were the best hits mapped to the *S. officinalis* genome. 
 
 Orthology files were also made for downstream analyses: **EUPgeneSOF.txt**, **SOFgeneEUP.txt**, although gene names were identical in both columns, the files were formatted this way to be compatible with downstream scripts.
 
@@ -308,13 +308,13 @@ sort -k1,1 -k2,2n 409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_thresh
 
 Repeat GFF files were created from RepeatMasker output `.out` files using `rmOutToGFF3.pl` which is documented in the script [`repeats_to_gff.sh`](repeats_to_gff.sh). The `rmOutToGFF3.pl` script was obtained from utils folder of RepeatMasker and can be found on the [RepeatMasker GitHub repo](https://github.com/Dfam-consortium/RepeatMasker/blob/master/util/rmOutToGFF3.pl).
 
-Next, the output gff was converted into bed format:
+Next, the output gff was converted into BED format:
 
 ```bash
 awk 'BEGIN{OFS="\t"} { if ($3 == "dispersed_repeat") print $1, $4 - 1, $5, $9 }' repeats_eupsc.gff3 > repeats_eupsc.bed
 ```
 
-Then, the output bed file was sorted for downstream bedtools analyses:
+Then, the output BED file was sorted for downstream bedtools analyses:
 
 ```bash
 sort -k1,1 -k2,2n repeats_eupsc.bed > repeats_eupsc_sorted.bed
@@ -344,7 +344,7 @@ The R script [`co-expression_analysis_of_interacting_gene_pairs_and_categories_e
 
 ### Generate insulation scores
 
-This was done for various resolutions and window sizes using FAN-C v.0.9.287, and files were outputted in both bed and bigwig format. This step is documented in the script [`get_ins_score_fan-c.sh`](get_ins_score_fan-c.sh).
+This was done for various resolutions and window sizes using FAN-C v.0.9.287, and files were outputted in both BED and bigwig format. This step is documented in the script [`get_ins_score_fan-c.sh`](get_ins_score_fan-c.sh).
 
 ### Average insulation scores between gene pairs
 
@@ -353,7 +353,7 @@ We used the script [`get_ave_ins_score_between_gene_pairs.py`](get_ave_ins_score
 ```bash
 python3 get_ave_ins_score_between_gene_pairs.py 409493_intrachrom.allValidPairs.hic@100kb_350kb.bed eupsc.bed 409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi.txt
 # Example output
-#Species: eupsc # i.e the species whose bed file you inputted
+#Species: eupsc # i.e the species whose BED file you inputted
 #Window size: 350kb
 #Results saved to: interactions_pecten_chr_genom_dist_ave_threshold10_eupsc_window350kb_ins_score.txt
 ```
