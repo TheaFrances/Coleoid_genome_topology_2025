@@ -21,13 +21,13 @@ This folder documents the interacting gene pair analyses. Initital steps are dem
 - [Plot scatterplots to define the interaction frequency threshold for interacting gene pairs](#plot-scatterplots-to-define-the-interaction-frequency-threshold-for-interacting-gene-pairs)
 - [Plot boxplots of genomic distances and barplots summarising interaction and ancestral chromosomal status categories for gene pairs](#plot-boxplots-of-genomic-distances-and-barplots-summarising-interaction-and-ancestral-chromosomal-status-categories-for-gene-pairs)
 - [Repeat association analyses of interacting gene pairs](#repeat-association-analyses-of-interacting-gene-pairs)
-  - [Run RepeatModeler and RepeatMasker \[TBC\]](#run-repeatmodeler-and-repeatmasker-tbc)
+  - [Run RepeatModeler and RepeatMasker](#run-repeatmodeler-and-repeatmasker-tbc)
   - [Get intergenic start and end positions for gene pairs](#get-intergenic-start-and-end-positions-for-gene-pairs)
   - [Convert output files to BED format and sort](#convert-output-files-to-bed-format-and-sort)
   - [Convert RepeatMasker output to GFF and then BED format](#convert-repeatmasker-output-to-gff-and-then-bed-format)
   - [Run bedtools intersect with a processing script](#run-bedtools-intersect-with-a-processing-script)
   - [Get repeat content summaries per interaction category](#get-repeat-content-summaries-per-interaction-category)
-  - [Get barplots of simple repeats and RND elements \[TBC\]](#Get-barplots-of-simple-repeats-and-RND-elements)
+  - [Get barplots of simple repeats and RND elements](#Get-barplots-of-simple-repeats-and-RND-elements)
 - [Calculate co-expression of gene pairs across interaction categories](#calculate-co-expression-of-gene-pairs-across-interaction-categories)
 - [Insulation score analyses](#insulation-score-analyses)
   - [Generate insulation scores](#generate-insulation-scores)
@@ -260,7 +260,7 @@ python3 synteny_by_topology_interactions_add_pec_dist.py EUPgenePEC.txt pmax2.be
 ````
 We also used the R script ['plot_boxplots_barplots_by_pecten_dist_bin.R'](plot_boxplots_barplots_by_pecten_dist_bin.R) to:
 - Split gene pairs into three groups, <5 Mb, 5–15 Mb, and ≥15 Mb distance between orthologs on *P. maximus* chromosomes
-- Save the resulting dataframe with these groups for future analyses (this file is named ***409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_pec_bins_with_sof.txt**)
+- Save the resulting dataframe with these groups for future analyses (this file is named [409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_pec_bins_with_sof.txt](../Test%20input%20files/409493_100000_EUPvs212489_50000_OBI_genom_dist_interact_threshold_10eupsc_10octbi_with_sof.txt))
 - Create boxplots of genomic distance between orthologous gene pairs across interaction statuses, coloured by these *P. maximus* distance groups
 - Test for significant differences between genomic distances across *P. maximus* distance bins using BH-corrected Wilcoxon tests
 - Plot a barplot for the number of gene pairs each in interaction category and *P. maximus distance* category
@@ -272,6 +272,7 @@ This section outlines the steps taken to identify associations between repetitiv
 ### Run RepeatModeler and RepeaMasker
 
 Repeats were previously identified RepeatModeler v.2.0.674 and RepeatMasker v.4.1.875 using default parameters. Repeatmodeler identifies highly repeated regions and constructs consensus sequences and repeatmasker searches these consensus sequences in the genome an identified their positions.
+
 ### Get intergenic start and end positions for gene pairs
   
 We outputted intergenic start and end positions for gene pairs using the sctipt ['output_intergenic_start_end_and_dist.py'](output_intergenic_start_end_and_dist.py). This script also recalculates and outputs genomic distance and can be run on any file with the format eupsc_gene1;octbi_gene1, eupsc_gene2;octbi_gene2 in the first column. This script outputs one file per species bedfile inputed.
