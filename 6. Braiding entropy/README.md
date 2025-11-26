@@ -12,7 +12,7 @@ Example command to generate the braiding input file:
 perl getHomChrWindowBraidMap.pl eup-obi.mbh.psynt.tab blastn.res.filt.all 10000000 50 > esc-obi.10m.braid.map
 ```
 
-This creates a map file with a 10 Mb window and 50 sliding window steps.
+This creates a map file with a 10 Mb window and 50 sliding window steps e.g. [esc-obi.10m.braid.map](../Test%20input%20files/)
 
 ### Braiding analysis in MATLAB
 
