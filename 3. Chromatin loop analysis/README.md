@@ -102,7 +102,7 @@ When comparing loop calls across stages using Mustache’s differential mode, th
 | `output.diffloop1`  | Loops **present in `data1.hic`** but **weakened or absent** in `data2.hic` |
 | `output.diffloop2`  | Loops **present in `data2.hic`** but **weakened or absent** in `data1.hic` |
 
-Examples of these can be found [here](../Test%20input%20files).
+Examples of these files can be found [here](../Test%20input%20files).
 
 ### Merge loops across resolutions
 Finally, reproducible loops at 50 kb and 100 kb were merged using the [`merge_loops_in_2_resos.py`](merge_loops_in_2_resos.py) script. Loops in the 100 kb file considered duplicates and removed if they fell within a 50 kb window of those in the 50 kb file. This 50 kb window is specified by the --tolerance parameter.
@@ -375,7 +375,7 @@ Chromatin loops were identified at 50 kb and 100 resolution using the [Mustache]
 python3 mustache.py -f 409493_intrachrom.allValidPairs.hic -r 50kb -norm KR -pt 0.01 -o eupsc_loops_50k.tsv
 ```
 
-Where eupsc_50k_loops.tsv is the specified outfile. This was repeated for each species (samples 212489 - *O. bimaculoides* and 992270 - *S. officinalis*) at both 50 and 100 kb resolution.
+Where eupsc_50k_loops.tsv is the specified outfile. This was repeated for each species (samples 212489 - *O. bimaculoides* and 992270 - *S. officinalis*) at both 50 and 100 kb resolution. Examples of outfiles for *E. scolopes* can be found [here](../Test%20input%20files/eupsc_loops_100k.tsv) at 50 kb resolution and [here](../Test%20input%20files/eupsc_loops_100k.tsv) at 100 kb resolution.
 
 ### Merge loop calls across resolutions
 
