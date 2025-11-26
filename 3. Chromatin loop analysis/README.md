@@ -144,7 +144,7 @@ Number of loops in merged file = 159
 
 ### Extract genes from differential loop and total loop files
 
-To identify genes located within differential chromatin loop anchors, the script [`check_gene_in_bin_loops.py`](check_gene_in_bin_loops.py) was used on both differential loop files and  the files of total loops in each stage/ This script compares loop anchor coordinates to gene locations.
+To identify genes located within differential chromatin loop anchors, the script [`check_gene_in_bin_loops.py`](check_gene_in_bin_loops.py) was used on both differential loop files and  the files of total loops in each stage/ This script compares loop anchor coordinates to gene locations found in the species [bed file](..//Test%20input%20files/EUPgeneOBI.txt).
 
 **Examples:**
 
