@@ -48,7 +48,7 @@ BLASTP (v2.16.0) was run with the parameters: -evalue 1E-2 -max_target_seqs 1 -o
 **Note on species bed files:**
 
 Species BED files should contain four columns: chromosome, gene start, gene end, and gene name (in that order), with no additional features. 
-Here, **eupsc.bed** is used as an example, corresponding to *E. scolopes*. 
+Here, [**eupsc.bed**](../Test%20input%20files/eupsc.bed) is used as an example, corresponding to *E. scolopes*. 
 
 ### Make orthology annotation file for *S. officinalis*
 
