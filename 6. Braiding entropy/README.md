@@ -4,7 +4,7 @@ This section describes how to generate and analyse chromosomal braiding maps bas
 
 ### Prepare alignment files for braiding
 
-To generate input `.map` files used for braiding, the script [`getHomChrWindowBraidMap.pl`](getHomChrWindowBraidMap.pl) was used. This script uses an input file of homologous chromosomes identified via any macrosynteny tool (example input file: [`eup-obi.mbh.psynt.tab`](eup-obi.mbh.psynt.tab), as well as a file of aligned genomes in tabular bed format (example input file: [`blastn.res.filt.all`](blastn.res.filt.all) made with any genome aligner (e.g. `megablast`)
+To generate input `.map` files used for braiding, the script [`getHomChrWindowBraidMap.pl`](getHomChrWindowBraidMap.pl) was used. This script uses an input file of homologous chromosomes identified via any macrosynteny tool (example input file: [`eup-obi.mbh.psynt.tab`](../Test%20input%20files/eup-obi.mbh.psynt.tab), as well as a file of aligned genomes in tabular bed format (example input file: [`blastn.res.filt.all`](../Test%20input%20files/blastn.res.filt.all) made with any genome aligner (e.g. `megablast`)
 
 Example command to generate the braiding input file:
 
@@ -12,7 +12,7 @@ Example command to generate the braiding input file:
 perl getHomChrWindowBraidMap.pl eup-obi.mbh.psynt.tab blastn.res.filt.all 10000000 50 > esc-obi.10m.braid.map
 ```
 
-This creates a map file with a 10 Mb window and 50 sliding window steps e.g. [esc-obi.10m.braid.map](../Test%20input%20files//esc-obi.10m.braid.map)
+This creates a map file with a 10 Mb window and 50 sliding window steps e.g. [esc-obi.10m.braid.map](../Test%20input%20files/esc-obi.10m.braid.map)
 
 ### Braiding analysis in MATLAB
 
