@@ -314,4 +314,65 @@ print(summary_stats_same)
 print(summary_stats_diff)
 print(summary_stats)
 
+# Counts
+nrow(loop_size_eupsc_same_chrom)
+nrow(loop_size_eupsc_diff_chrom)
+
+nrow(loop_size_sepof_same_chrom)
+nrow(loop_size_sepof_diff_chrom)
+
+nrow(loop_size_octbi_same_chrom_esc_chr)
+nrow(loop_size_octbi_diff_chrom_esc_chr)
+
+nrow(loop_size_octbi_same_chrom_sof_chr)
+nrow(loop_size_octbi_diff_chrom_sof_chr)
+
+# Wilcox adjusted Ps. These are the ones reported in the paper! Not geom signif values.
+
+# Fig. 4C 
+raw_p <- c(
+  wilcox.test(loop_size_eupsc_same_chrom$loop_size,
+              loop_size_eupsc_diff_chrom$loop_size)$p.value,
+  
+  wilcox.test(loop_size_sepof_same_chrom$loop_size,
+              loop_size_sepof_diff_chrom$loop_size)$p.value,
+  
+  wilcox.test(loop_size_octbi_same_chrom_esc_chr$loop_size,
+              loop_size_octbi_diff_chrom_esc_chr$loop_size)$p.value,
+  
+  wilcox.test(loop_size_octbi_same_chrom_sof_chr$loop_size,
+              loop_size_octbi_diff_chrom_sof_chr$loop_size)$p.value
+)
+
+bh_p <- p.adjust(raw_p, method = "BH")
+
+data.frame(
+  Species = c(
+    "E. scolopes",
+    "S. officinalis",
+    "O. bimaculoides (E. scolopes chr)",
+    "O. bimaculoides (S. officinalis chr)"
+  ),
+  Raw_P = raw_p,
+  BH_adjusted_P = bh_p
+)
+
+# Fig. 4A
+pairwise_4A <- pairwise.wilcox.test(
+  x = loop_size_combined_all_genes$loop_size,
+  g = loop_size_combined_all_genes$species,
+  p.adjust.method = "BH"
+)
+
+pairwise_4A_table <- as.data.frame(as.table(pairwise_4A$p.value)) %>%
+  filter(!is.na(Freq)) %>%
+  rename(
+    Species_1 = Var1,
+    Species_2 = Var2,
+    BH_adjusted_P = Freq
+  )
+
+print(pairwise_4A_table)
+
+
 
